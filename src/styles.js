@@ -51,11 +51,10 @@ export default css`
   }
 
   main {
-    /* margin: 64px 0 0; */
+    margin: 64px 0 0;
     background-color: var(--primary-color);
     transition: background-color 0.4s ease;
   }
-
   button {
     cursor: pointer;
   }
