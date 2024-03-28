@@ -51,7 +51,7 @@ export default css`
   }
 
   main {
-    margin: 0;
+    margin: 64px auto;
     background-color: var(--primary-color);
     transition: background-color 0.4s ease;
   }

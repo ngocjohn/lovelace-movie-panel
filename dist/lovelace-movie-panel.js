@@ -725,7 +725,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   }
 
   main {
-    margin: 0;
+    margin: 64px auto;
     background-color: var(--primary-color);
     transition: background-color 0.4s ease;
   }
