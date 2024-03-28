@@ -1,0 +1,6 @@
+{
+	"name": "Lovelace Custom Movie Panel",
+	"render_readme": true,
+	"filename": "lovelace-movie-panel.js",
+	"content_in_root": false
+}
