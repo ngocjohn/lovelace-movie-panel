@@ -9,22 +9,18 @@ export default css`
     --maxPrimarySectionWidth: 85vw;
   }
   * {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
     color: white;
     margin: 0;
     overflow: hidden;
   }
-	@media (max-width: 768px) {
-		.header {
-			padding: 1rem 1rem 1rem 1rem !important;
-		}
-	}
   .header {
     position: fixed;
     top: 0;
     right: 0;
-    width: 100%;
-    padding: 1rem 70px;
+    width: calc(100% - 55px);
+    height: 56px !important;
+    padding: 1rem;
     justify-content: space-between;
     box-sizing: border-box;
     background-color: var(--primary-color);
@@ -51,7 +47,7 @@ export default css`
   }
 
   main {
-    margin: 64px auto;
+    margin: 0 auto;
     background-color: var(--primary-color);
     transition: background-color 0.4s ease;
   }
@@ -63,26 +59,58 @@ export default css`
     min-height: 100vh;
   }
 
-  @media (max-width: 768px) {
-    section.inner_content {
-      max-width: 100vw;
+  .search-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    max-width: 400px;
+    width: 100%;
+  }
+
+  .search-icon,
+  .reset-icon {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    order: 2;
+    display: block;
+    flex-shrink: 0;
+    & path {
+      fill: white;
     }
   }
+  .no-results {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+  }
 
-  .search {
+  #form {
+    flex-grow: 0;
+    transition: width 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    width: 0;
+    overflow: hidden;
+    order: 1;
+  }
+
+  #form.show {
+    width: calc(100% - 20px);
+    margin-right: 20px;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 1rem;
+    font-size: 16px;
     background-color: transparent;
     border: 1px solid var(--secondary-color);
-    border-radius: 50px;
-    font-family: inherit;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
   }
 
-  .search::placeholder {
-    color: var(--secondary-color);
-  }
-
-  .search:focus {
+  .search-input:focus {
     outline: none;
     border: 1px solid var(--accent-color);
     color: var(--accent-color);
@@ -98,7 +126,7 @@ export default css`
     position: sticky;
     top: 0;
     left: 1rem;
-    margin: 2rem 1rem 0 1rem;
+    margin: 2rem 1rem 0.5rem 1rem;
   }
   .horizontal-list {
     display: flex;
@@ -165,18 +193,20 @@ export default css`
     flex-direction: column;
     height: 50%;
     justify-content: space-between;
+    backdrop-filter: blur(3px);
+    background-color: #00000024;
     & h3 {
       font-size: 1.4rem;
     }
     & p {
-    margin-top: 0;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    /* Set the maximum number of lines before truncating */
-    overflow: hidden;
-    font-size: 14px;
-    opacity: 0.7;
+      margin-top: 0;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      /* Set the maximum number of lines before truncating */
+      overflow: hidden;
+      font-size: 14px;
+      opacity: 0.7;
     }
   }
 
@@ -185,10 +215,11 @@ export default css`
     display: grid;
     height: 100%;
     width: 100%;
-    grid-template-columns: repeat( auto-fill, minmax(210px, 1fr) );
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
     grid-auto-flow: dense;
     grid-template-rows: auto;
     align-items: stretch;
+    justify-items: center;
   }
   /* #kodi-movies > .horizontal-header > .items-container > .movie-s:nth-child(4), #kodi-movies > .horizontal-header > .items-container > .movie-s:nth-child(7) {
     grid-column: span 2;
@@ -259,6 +290,7 @@ export default css`
     display: flex;
     flex-direction: column;
     justify-content: end;
+    width: 100%;
     top: 0;
     bottom: 0;
     font-size: 12px;
@@ -309,50 +341,5 @@ export default css`
 
   .horizontal-list::-webkit-scrollbar-track {
     margin: 1rem;
-  }
-  #popup-dialog {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    padding: 0;
-    transform: translate(-50%, -50%);
-    max-width: 80vw;
-    max-height: 80vh;
-    height: 100%;
-    width: 100%;
-    overflow: visible;
-    border-radius: 0.75rem;
-    border: none;
-    z-index: 1; /* Ensure dialog is below close button */
-    &::backdrop {
-      position: fixed;
-      inset: 0px;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
-  }
-  .popup-content {
-    height: 100%;
-    width: 100%;
-    overflow-y: hidden;
-  }
-  /* The Close Button */
-  .close {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  color: #aaaaaa;
-  float: right;
-  font-size: 1.4rem;
-  font-weight: bold;
-  background-color: white;
-  border-radius: 100%;
-  padding: 0.4rem 0.7rem;
-  }
-
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
   }
 `;

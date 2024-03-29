@@ -1,8 +1,12 @@
 import { LitElement, html, nothing } from 'lit';
 import { styleMap } from 'lit-html/directives/style-map';
 import styles from './styles';
+import mediaquerystyles from './mediaquerystyles';
+import dialogcss from './dialogcss.js';
 
-import { SEARCH_API, IMG_PATH, API_URL, URL_PATH } from './helpers.js';
+import { mdiMagnify, mdiClose } from '@mdi/js';
+
+import { SEARCH_API, IMG_PATH, API_URL, URL_PATH, loadCSS } from './helpers.js';
 
 export class MovieAppPanel extends LitElement {
   _hass;
@@ -19,21 +23,25 @@ export class MovieAppPanel extends LitElement {
       isSearchActive: { type: Boolean },
     };
   }
-  static styles = [styles];
+  static styles = [styles, mediaquerystyles, dialogcss];
 
   constructor() {
     super();
+    loadCSS();
+    this.boundHandleScroll = this.handleScroll.bind(this);
     this.cinemaMovies = [];
     this.kodiMovies = [];
     this.search = '';
     this.searchResults = [];
     this.isSearchActive = false;
+    this.searchTimeout = null;
     this.API_URL = `${API_URL}`;
     this.IMG_PATH = `${IMG_PATH}`;
     this.URL_PATH = `${URL_PATH}`;
     this.SEARCH_API = `${SEARCH_API}`;
     this.getCinemaMovies(this.API_URL);
   }
+
   // Method to set configuration
   setConfig(config) {
     this._entity = config.entity;
@@ -59,13 +67,14 @@ export class MovieAppPanel extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener('scroll', this.handleScroll.bind(this));
+    window.addEventListener('scroll', this.boundHandleScroll);
   }
 
   disconnectedCallback() {
-    window.removeEventListener('scroll', this.handleScroll.bind(this));
+    window.removeEventListener('scroll', this.boundHandleScroll);
     super.disconnectedCallback();
   }
+
   /* ------------------------------ FETCH MOVIES ------------------------------ */
   async getCinemaMovies(url) {
     try {
@@ -212,6 +221,7 @@ export class MovieAppPanel extends LitElement {
   }
 
   renderSearchResults() {
+    // Render the current or last search results
     return html`
       <div class="searched">
         ${this.searchResults.map((movie) =>
@@ -237,27 +247,24 @@ export class MovieAppPanel extends LitElement {
             ><h1>Cinema</h1></a
           >
         </nav>
-        <form id="form" @submit="${this.handleSearch}">
-          <input
-            type="text"
-            .value="${this.search}"
-            @input="${this.updateSearch}"
-            class="search"
-            placeholder="search"
-          />
-        </form>
+        ${this.renderSearchForm()}
       </div>
       <main>
-        <section id="kodi-movies" class="inner_content">
-          ${this.isSearchActive
-            ? this.renderSearchResults()
-            : this.renderKodiMovies()}
-        </section>
         ${!this.isSearchActive
-          ? html`<section id="tmdb-movies" class="inner_content">
-              ${this.renderMovies()}
-            </section>`
-          : nothing}
+          ? html` <section id="kodi-movies" class="inner_content">
+                ${this.renderKodiMovies()}
+              </section>
+              <section id="tmdb-movies" class="inner_content">
+                ${this.renderMovies()}
+              </section>`
+          : html`<section id="search-results" class="inner_content">
+              ${this.renderSearchResults()}
+            </section>`}
+
+        <div id="toast">
+          <div id="img">I</div>
+          <div id="desc">A notification message..</div>
+        </div>
         <dialog id="popup-dialog"></dialog>
       </main>
     `;
@@ -298,6 +305,7 @@ export class MovieAppPanel extends LitElement {
       if (rect.top >= 0 && rect.top <= headerElement.offsetHeight) {
         isPrimarySectionAtTop = index % 2 === 0;
       }
+      // console.log('top:', rect.top, 'header:', headerElement.offsetHeight);
     });
     // console.log(isPrimarySectionAtTop);
 
@@ -311,19 +319,37 @@ export class MovieAppPanel extends LitElement {
       ? 'var(--primary-color)'
       : 'rgba(0, 0, 0, 0.5)';
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                POPUP DIALOG                                */
+  /* -------------------------------------------------------------------------- */
+
   // Method to open the more info dialog
-  _openPopup(url) {
+
+  _openPopup(content) {
     const dialog = this.shadowRoot.querySelector('#popup-dialog');
-    dialog.innerHTML = `
-    <span class="close">&times;</span>
-    <div class="popup-content">
-    <iframe src="${url}" frameborder="0" width="100%" height="100%" ></iframe>
-    </div>
-  `;
+
+    if (typeof content === 'string') {
+      // Check if content is a URL for an iframe
+      if (content.startsWith('http') || content.startsWith('www')) {
+        dialog.innerHTML = `
+        <span class="close">&times;</span>
+        <div class="popup-content">
+          <iframe src="${content}" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+      `;
+      } else {
+        // Plain text or HTML string
+        dialog.innerHTML = `
+        <span class="close">&times;</span>
+        <div class="popup-content">${content}</div>
+      `;
+      }
+    }
+
     dialog.showModal();
     const closeButton = dialog.querySelector('.close');
     closeButton.addEventListener('click', () => this._closePopup());
-    // Add event listener to close the popup when clicked outside
     dialog.addEventListener('click', (event) => {
       if (event.target === dialog) {
         this._closePopup();
@@ -336,6 +362,22 @@ export class MovieAppPanel extends LitElement {
     dialog.close();
   }
 
+  /* ---------------------------- TOST NOTIFICATION --------------------------- */
+
+  launch_toast(desc) {
+    const toastEl = this.shadowRoot.querySelector('#toast');
+    const descEl = this.shadowRoot.querySelector('#desc');
+
+    if (toastEl) {
+      descEl.innerHTML = desc;
+      toastEl.classList.add('show');
+      setTimeout(() => {
+        toastEl.classList.remove('show');
+      }, 5000);
+    } else {
+      console.error('Toast element not found');
+    }
+  }
   /* ------------------------- PLAY MOVIE CALLSERVICE ------------------------- */
 
   _playMovie(strm_url) {
@@ -345,26 +387,117 @@ export class MovieAppPanel extends LitElement {
   }
 
   /* ------------------------------ SEARCH HANDLE ----------------------------- */
+
+  renderSearchForm() {
+    return html`
+      <div class="search-container">
+        ${this.search.length > 0
+          ? html` <svg
+              class="reset-icon"
+              @click="${this.resetSearch}"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-label="Reset search"
+            >
+              <path d="${mdiClose}" />
+            </svg>`
+          : html` <svg
+              class="search-icon"
+              @click="${this.toggleSearchInput}"
+              @mouseover="${this.toggleSearchInputWithDelay}"
+              @mouseout="${this.hideSearchInputWithDelay}"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              aria-label="Search"
+            >
+              <path d="${mdiMagnify}" />
+            </svg>`}
+        <form id="form" @submit="${this.performSearch}" class="hidden">
+          <input
+            type="text"
+            .value="${this.search}"
+            @input="${this.updateSearch}"
+            class="search-input"
+            placeholder="Search..."
+          />
+        </form>
+      </div>
+    `;
+  }
+
   updateSearch(e) {
     this.search = e.target.value;
   }
 
-  async handleSearch(e) {
+  async performSearch(e) {
     e.preventDefault();
     const searchTerm = this.search.trim();
+
     if (searchTerm) {
       try {
         const response = await fetch(`${this.SEARCH_API}${searchTerm}`);
         const data = await response.json();
-        this.searchResults = data.results;
-        this.isSearchActive = true;
+        if (data.results && data.results.length > 0) {
+          this.searchResults = data.results;
+          this.isSearchActive = true;
+        } else {
+          // If the new search has no results, use last successful results if available
+          this.searchResults.length === 0;
+          const template = `No results found for '${searchTerm}'. Please try a different search.`;
+          this.launch_toast(template);
+        }
       } catch (error) {
         console.error('Error fetching search results:', error);
       }
     } else {
       this.isSearchActive = false;
-      this.getMovies(this.API_URL);
+      this.searchResults = []; // Clear results if search term is empty
     }
+    this.requestUpdate();
+  }
+
+  toggleSearchInput() {
+    if (this.search.length === 0) {
+      this.shadowRoot.querySelector('#form').classList.toggle('show');
+    }
+  }
+
+  // Method to show the input with delay
+  toggleSearchInputWithDelay() {
+    const formEl = this.shadowRoot.querySelector('#form');
+    clearTimeout(this.searchTimeout); // Clear any existing timeout
+
+    this.searchTimeout = setTimeout(() => {
+      if (formEl && !formEl.classList.contains('show')) {
+        formEl.classList.add('show');
+      }
+    }, 1000);
+  }
+
+  // Method to hide the input with delay
+  hideSearchInputWithDelay() {
+    const formEl = this.shadowRoot.querySelector('#form');
+    clearTimeout(this.searchTimeout); // Clear any existing timeout
+
+    this.searchTimeout = setTimeout(() => {
+      if (
+        formEl &&
+        this.search.trim().length === 0 &&
+        formEl.classList.contains('show')
+      ) {
+        formEl.classList.remove('show');
+      }
+    }, 5000);
+  }
+
+  resetSearch() {
+    this.search = '';
+    this.shadowRoot.querySelector('#form').classList.remove('show');
+    this.isSearchActive = false;
+    // Fetch default content or reset
+    this.getCinemaMovies(this.API_URL);
   }
 
   static getStubConfig() {
