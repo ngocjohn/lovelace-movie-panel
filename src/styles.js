@@ -23,7 +23,7 @@ export default css`
     padding: 1rem;
     justify-content: space-between;
     box-sizing: border-box;
-    background-color: var(--primary-color);
+    background-color: var(--app-header-background-color);
     filter: drop-shadow(2px 4px 6px black);
     backdrop-filter: blur(15px) brightness(0.7);
     transition: background-color 0.5s ease;
@@ -33,11 +33,14 @@ export default css`
     align-items: center;
     & nav {
       display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      min-width: 200px;
     }
     & a,
     h1 {
       text-decoration: none;
-      margin: 0 1rem 0 0;
+      margin: 0 0.5rem 0 0;
       color: var(--accent-color);
       text-transform: capitalize;
       &:hover {
@@ -47,7 +50,7 @@ export default css`
   }
 
   main {
-    margin: 0 auto;
+    margin: 56px auto 0;
     background-color: var(--primary-color);
     transition: background-color 0.4s ease;
   }
@@ -290,7 +293,7 @@ export default css`
     display: flex;
     flex-direction: column;
     justify-content: end;
-    width: 100%;
+    width: fit-content;
     top: 0;
     bottom: 0;
     font-size: 12px;
@@ -301,7 +304,7 @@ export default css`
     transition: opacity 0.5s ease;
     overflow: hidden;
     text-overflow: ellipsis;
-    z-index: 4;
+    z-index: 3;
   }
 
   .movie-s .overview.hidden p {

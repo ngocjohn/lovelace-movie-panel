@@ -697,7 +697,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     padding: 1rem;
     justify-content: space-between;
     box-sizing: border-box;
-    background-color: var(--primary-color);
+    background-color: var(--app-header-background-color);
     filter: drop-shadow(2px 4px 6px black);
     backdrop-filter: blur(15px) brightness(0.7);
     transition: background-color 0.5s ease;
@@ -707,11 +707,14 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     align-items: center;
     & nav {
       display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      min-width: 200px;
     }
     & a,
     h1 {
       text-decoration: none;
-      margin: 0 1rem 0 0;
+      margin: 0 0.5rem 0 0;
       color: var(--accent-color);
       text-transform: capitalize;
       &:hover {
@@ -721,7 +724,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   }
 
   main {
-    margin: 0 auto;
+    margin: 56px auto 0;
     background-color: var(--primary-color);
     transition: background-color 0.4s ease;
   }
@@ -964,7 +967,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     display: flex;
     flex-direction: column;
     justify-content: end;
-    width: 100%;
+    width: fit-content;
     top: 0;
     bottom: 0;
     font-size: 12px;
@@ -975,7 +978,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     transition: opacity 0.5s ease;
     overflow: hidden;
     text-overflow: ellipsis;
-    z-index: 4;
+    z-index: 3;
   }
 
   .movie-s .overview.hidden p {
@@ -1022,16 +1025,20 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
 
 var $4024765bee64b760$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf350e5966cf602)`
   @media (max-width: 768px) {
+    .header {
+      width: 100%;
+    }
     section.inner_content {
       max-width: 100vw;
     }
     .items-container,
     .searched {
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     }
     .movie-s {
       /* max-width: 180px !important; */
       min-width: 150px !important;
+      margin: 0.5rem;
     }
   }
 `;
@@ -8936,7 +8943,7 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
         // Apply the background color to the main element based on the section index
         mainElement.style.backgroundColor = isPrimarySectionAtTop ? "var(--primary-color)" : "var(--secondary-bg-color)";
         // Change header background color when a primary-colored section is at the top
-        headerElement.style.backgroundColor = isPrimarySectionAtTop ? "var(--primary-color)" : "rgba(0, 0, 0, 0.5)";
+        headerElement.style.backgroundColor = isPrimarySectionAtTop ? "var(--app-header-background-color)" : "rgba(0, 0, 0, 0.5)";
     }
     /* -------------------------------------------------------------------------- */ /*                                POPUP DIALOG                                */ /* -------------------------------------------------------------------------- */ // Method to open the more info dialog
     _openPopup(content) {

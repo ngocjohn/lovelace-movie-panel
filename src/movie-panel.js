@@ -316,7 +316,7 @@ export class MovieAppPanel extends LitElement {
 
     // Change header background color when a primary-colored section is at the top
     headerElement.style.backgroundColor = isPrimarySectionAtTop
-      ? 'var(--primary-color)'
+      ? 'var(--app-header-background-color)'
       : 'rgba(0, 0, 0, 0.5)';
   }
 
