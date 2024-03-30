@@ -404,9 +404,9 @@ export class MovieAppPanel extends LitElement {
             </svg>`
           : html` <svg
               class="search-icon"
-              @click="${this.toggleSearchInput}"
-              @mouseover="${this.toggleSearchInputWithDelay}"
-              @mouseout="${this.hideSearchInputWithDelay}"
+              @click="${(event) => this.manageSearchInputVisibility(event)}"
+              @mouseover="${(event) => this.manageSearchInputVisibility(event)}"
+              @mouseout="${(event) => this.manageSearchInputVisibility(event)}"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -445,7 +445,7 @@ export class MovieAppPanel extends LitElement {
         } else {
           // If the new search has no results, use last successful results if available
           this.searchResults.length === 0;
-          const template = `No results found for '${searchTerm}'. Please try a different search.`;
+          const template = `No results found for '${searchTerm}'.`;
           this.launch_toast(template);
         }
       } catch (error) {
@@ -458,38 +458,38 @@ export class MovieAppPanel extends LitElement {
     this.requestUpdate();
   }
 
-  toggleSearchInput() {
-    if (this.search.length === 0) {
-      this.shadowRoot.querySelector('#form').classList.toggle('show');
+  manageSearchInputVisibility(event) {
+    const formEl = this.shadowRoot.querySelector('#form');
+    if (!formEl) return;
+
+    clearTimeout(this.searchTimeout); // Clear any existing timeout
+
+    // Handle the click event specifically
+    if (event.type === 'click') {
+      // Toggle the 'show' class immediately on click
+      formEl.classList.toggle('show');
+      return; // Exit the function after handling click
     }
-  }
 
-  // Method to show the input with delay
-  toggleSearchInputWithDelay() {
-    const formEl = this.shadowRoot.querySelector('#form');
-    clearTimeout(this.searchTimeout); // Clear any existing timeout
-
-    this.searchTimeout = setTimeout(() => {
-      if (formEl && !formEl.classList.contains('show')) {
-        formEl.classList.add('show');
-      }
-    }, 1000);
-  }
-
-  // Method to hide the input with delay
-  hideSearchInputWithDelay() {
-    const formEl = this.shadowRoot.querySelector('#form');
-    clearTimeout(this.searchTimeout); // Clear any existing timeout
-
-    this.searchTimeout = setTimeout(() => {
-      if (
-        formEl &&
-        this.search.trim().length === 0 &&
-        formEl.classList.contains('show')
+    // Handle mouseover and mouseout
+    if (this.search.trim().length === 0) {
+      if (!formEl.classList.contains('show') && event.type === 'mouseover') {
+        // Schedule to show the input if it's not already shown
+        this.searchTimeout = setTimeout(
+          () => formEl.classList.add('show'),
+          1000
+        );
+      } else if (
+        formEl.classList.contains('show') &&
+        event.type === 'mouseout'
       ) {
-        formEl.classList.remove('show');
+        // Schedule to hide the input if no search term and input is shown
+        this.searchTimeout = setTimeout(
+          () => formEl.classList.remove('show'),
+          7000
+        );
       }
-    }, 5000);
+    }
   }
 
   resetSearch() {

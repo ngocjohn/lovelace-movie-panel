@@ -752,6 +752,9 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     display: block;
     flex-shrink: 0;
     & path {
+      fill: var(--accent-color);
+    }
+    &:hover path {
       fill: white;
     }
   }
@@ -782,7 +785,8 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     padding: 8px 10px;
     border-radius: 1rem;
     font-size: 16px;
-    background-color: transparent;
+    /* background-color: transparent; */
+    background-color: var(--secondary-bg-color);
     border: 1px solid var(--secondary-color);
     transition: all 0.3s ease;
   }
@@ -835,6 +839,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     overflow: hidden;
     height: 20rem;
     box-shadow: 2px 2px 14px 0px #2d2d2d;
+    background-image: linear-gradient(to top, black, transparent);
   }
 
   .movie-l::after {
@@ -870,8 +875,6 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     flex-direction: column;
     height: 50%;
     justify-content: space-between;
-    backdrop-filter: blur(3px);
-    background-color: #00000024;
     & h3 {
       font-size: 1.4rem;
     }
@@ -916,7 +919,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   .movie-l img {
     width: 100%;
     border-radius: 10px;
-    box-shadow: 2px 2px 14px 0px #000000;
+    /* box-shadow: 2px 2px 14px 0px #000000; */
   }
 
   .movie-s {
@@ -9003,9 +9006,9 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
               <path d="${0, $04557c061247a0a6$export$442c9939d1f788e4}" />
             </svg>` : (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)` <svg
               class="search-icon"
-              @click="${this.toggleSearchInput}"
-              @mouseover="${this.toggleSearchInputWithDelay}"
-              @mouseout="${this.hideSearchInputWithDelay}"
+              @click="${(event)=>this.manageSearchInputVisibility(event)}"
+              @mouseover="${(event)=>this.manageSearchInputVisibility(event)}"
+              @mouseout="${(event)=>this.manageSearchInputVisibility(event)}"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -9040,7 +9043,7 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
             } else {
                 // If the new search has no results, use last successful results if available
                 this.searchResults.length;
-                const template = `No results found for '${searchTerm}'. Please try a different search.`;
+                const template = `No results found for '${searchTerm}'.`;
                 this.launch_toast(template);
             }
         } catch (error) {
@@ -9052,24 +9055,23 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
         }
         this.requestUpdate();
     }
-    toggleSearchInput() {
-        if (this.search.length === 0) this.shadowRoot.querySelector("#form").classList.toggle("show");
-    }
-    // Method to show the input with delay
-    toggleSearchInputWithDelay() {
+    manageSearchInputVisibility(event) {
         const formEl = this.shadowRoot.querySelector("#form");
+        if (!formEl) return;
         clearTimeout(this.searchTimeout); // Clear any existing timeout
-        this.searchTimeout = setTimeout(()=>{
-            if (formEl && !formEl.classList.contains("show")) formEl.classList.add("show");
-        }, 1000);
-    }
-    // Method to hide the input with delay
-    hideSearchInputWithDelay() {
-        const formEl = this.shadowRoot.querySelector("#form");
-        clearTimeout(this.searchTimeout); // Clear any existing timeout
-        this.searchTimeout = setTimeout(()=>{
-            if (formEl && this.search.trim().length === 0 && formEl.classList.contains("show")) formEl.classList.remove("show");
-        }, 5000);
+        // Handle the click event specifically
+        if (event.type === "click") {
+            // Toggle the 'show' class immediately on click
+            formEl.classList.toggle("show");
+            return; // Exit the function after handling click
+        }
+        // Handle mouseover and mouseout
+        if (this.search.trim().length === 0) {
+            if (!formEl.classList.contains("show") && event.type === "mouseover") // Schedule to show the input if it's not already shown
+            this.searchTimeout = setTimeout(()=>formEl.classList.add("show"), 1000);
+            else if (formEl.classList.contains("show") && event.type === "mouseout") // Schedule to hide the input if no search term and input is shown
+            this.searchTimeout = setTimeout(()=>formEl.classList.remove("show"), 7000);
+        }
     }
     resetSearch() {
         this.search = "";
