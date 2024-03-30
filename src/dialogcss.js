@@ -28,23 +28,17 @@ export default css`
     }
     /* The Close Button */
     .close {
+      cursor: pointer;
       position: absolute;
       top: -10px;
       right: -10px;
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      background-color: white;
-      border-radius: 100%;
-      padding: 0.15rem 0.7rem;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
+      fill: white;
+      stroke: black;
+      stroke-width: 2;
+      &:hover,
+      &:active {
+        fill: var(--accent-color);
+      }
     }
   }
 

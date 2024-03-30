@@ -4,7 +4,12 @@ import styles from './styles';
 import mediaquerystyles from './mediaquerystyles';
 import dialogcss from './dialogcss.js';
 
-import { mdiMagnify, mdiClose, mdiAlertCircleOutline } from '@mdi/js';
+import {
+  mdiMagnify,
+  mdiClose,
+  mdiAlertCircleOutline,
+  mdiCloseCircle,
+} from '@mdi/js';
 import { SEARCH_API, IMG_PATH, API_URL, URL_PATH } from './helpers.js';
 import { loadCSS, noImage } from './const.js';
 
@@ -268,9 +273,9 @@ export class MovieAppPanel extends LitElement {
           : html`<section id="search-results" class="inner_content">
               ${this.renderSearchResults()}
             </section>`}
+        ${this.renderToast()}
+        <dialog id="popup-dialog"></dialog>
       </main>
-      ${this.renderToast()}
-      <dialog id="popup-dialog"></dialog>
     `;
   }
 
@@ -339,7 +344,9 @@ export class MovieAppPanel extends LitElement {
       // Check if content is a URL for an iframe
       if (content.startsWith('http') || content.startsWith('www')) {
         dialog.innerHTML = `
-        <span class="close">&times;</span>
+          <svg class="close"  width="24" height="24" viewBox="0 0 24 24">
+            <path d="${mdiCloseCircle}" />
+          </svg>
         <div class="popup-content">
           <iframe src="${content}" frameborder="0" width="100%" height="100%"></iframe>
         </div>
@@ -347,7 +354,9 @@ export class MovieAppPanel extends LitElement {
       } else {
         // Plain text or HTML string
         dialog.innerHTML = `
-        <span class="close">&times;</span>
+          <svg class="close"  width="24" height="24" viewBox="0 0 24 24">
+            <path d="${mdiCloseCircle}" />
+          </svg>
         <div class="popup-content">${content}</div>
       `;
       }

@@ -56,6 +56,7 @@ export default css`
   }
   button {
     cursor: pointer;
+    padding-top: 1rem;
   }
   section.inner_content {
     overflow: auto;
@@ -294,6 +295,9 @@ export default css`
     overflow: hidden;
     text-overflow: ellipsis;
     z-index: 3;
+    & .buttons {
+      padding-top: 1rem;
+    }
   }
 
   .movie-s .overview.hidden p {

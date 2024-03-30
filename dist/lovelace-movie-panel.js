@@ -730,6 +730,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   }
   button {
     cursor: pointer;
+    padding-top: 1rem;
   }
   section.inner_content {
     overflow: auto;
@@ -968,6 +969,9 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     overflow: hidden;
     text-overflow: ellipsis;
     z-index: 3;
+    & .buttons {
+      padding-top: 1rem;
+    }
   }
 
   .movie-s .overview.hidden p {
@@ -1014,6 +1018,10 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
 
 var $4024765bee64b760$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf350e5966cf602)`
   @media (max-width: 768px) {
+    #popup-dialog {
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+    }
     .header {
       width: 100%;
     }
@@ -1055,23 +1063,17 @@ var $9b519db0be023475$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     }
     /* The Close Button */
     .close {
+      cursor: pointer;
       position: absolute;
       top: -10px;
       right: -10px;
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      background-color: white;
-      border-radius: 100%;
-      padding: 0.15rem 0.7rem;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
+      fill: white;
+      stroke: black;
+      stroke-width: 2;
+      &:hover,
+      &:active {
+        fill: var(--accent-color);
+      }
     }
   }
 
@@ -8916,9 +8918,9 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
             ` : (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<section id="search-results" class="inner_content">
               ${this.renderSearchResults()}
             </section>`}
+        ${this.renderToast()}
+        <dialog id="popup-dialog"></dialog>
       </main>
-      ${this.renderToast()}
-      <dialog id="popup-dialog"></dialog>
     `;
     }
     /* -------------------------------------------------------------------------- */ /*                               ACTIONS HANDLER                              */ /* -------------------------------------------------------------------------- */ scrollToSection(event) {
@@ -8964,14 +8966,18 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
         if (typeof content === "string") {
             // Check if content is a URL for an iframe
             if (content.startsWith("http") || content.startsWith("www")) dialog.innerHTML = `
-        <span class="close">&times;</span>
+          <svg class="close"  width="24" height="24" viewBox="0 0 24 24">
+            <path d="${0, $04557c061247a0a6$export$bab1bdd6d953ff42}" />
+          </svg>
         <div class="popup-content">
           <iframe src="${content}" frameborder="0" width="100%" height="100%"></iframe>
         </div>
       `;
             else // Plain text or HTML string
             dialog.innerHTML = `
-        <span class="close">&times;</span>
+          <svg class="close"  width="24" height="24" viewBox="0 0 24 24">
+            <path d="${0, $04557c061247a0a6$export$bab1bdd6d953ff42}" />
+          </svg>
         <div class="popup-content">${content}</div>
       `;
         }
