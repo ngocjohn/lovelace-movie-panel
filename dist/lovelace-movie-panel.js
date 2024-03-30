@@ -8794,39 +8794,104 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
             this.kodiMovies = data;
         } else console.error("Kodi Movies data is not available.");
     }
-    /* -------------------------------------------------------------------------- */ /*                               RENDER SECTIONS                              */ /* -------------------------------------------------------------------------- */ renderMovie(movie, isMostPopular, isKodiMovie = false) {
-        const debug = false;
-        const movieClass = isMostPopular ? "movie-l" : "movie-s";
-        const movieTitle = isKodiMovie ? movie.title : movie.title;
-        const movieRating = isKodiMovie ? movie.rating : movie.vote_average;
-        const moviePlot = isKodiMovie ? movie.plot : movie.overview;
-        const movieURL = isKodiMovie ? movie.tmdb_link : this.URL_PATH + movie.id;
-        const movieStreamUrl = isKodiMovie ? movie.strm_url : "";
-        // console.log(movieStreamUrl);
-        let moviePath;
-        if (isKodiMovie) {
-            if (isMostPopular) // Use fanart_url, but if it's falsy (undefined, null, empty string, etc.), fallback to poster_url
-            moviePath = movie.fanart_url ? movie.fanart_url : movie.poster_url;
-            else moviePath = movie.poster_url;
-        } else moviePath = this.IMG_PATH + (isMostPopular ? movie.backdrop_path : movie.poster_path);
-        let ratingGradient;
-        if (movieRating >= 8 && movieRating <= 10) ratingGradient = `#008704`;
-        else if (movieRating >= 6.5 && movieRating < 8) ratingGradient = `#8a5200`;
-        else ratingGradient = `#0000007d`;
+    /* -------------------------------------------------------------------------- */ /*                               RENDER SECTIONS                              */ /* -------------------------------------------------------------------------- */ // renderMovie(movie, isMostPopular, isKodiMovie = false) {
+    //   const debug = false;
+    //   const movieClass = isMostPopular ? 'movie-l' : 'movie-s';
+    //   const movieTitle = isKodiMovie ? movie.title : movie.title;
+    //   const movieRating = isKodiMovie ? movie.rating : movie.vote_average;
+    //   const moviePlot = isKodiMovie ? movie.plot : movie.overview;
+    //   const movieURL = isKodiMovie ? movie.tmdb_link : this.URL_PATH + movie.id;
+    //   const movieStreamUrl = isKodiMovie ? movie.strm_url : '';
+    //   // console.log(movieStreamUrl);
+    //   let moviePath;
+    //   if (isKodiMovie) {
+    //     if (isMostPopular) {
+    //       // Use fanart_url, but if it's falsy (undefined, null, empty string, etc.), fallback to poster_url
+    //       moviePath = movie.fanart_url ? movie.fanart_url : movie.poster_url;
+    //     } else {
+    //       moviePath = movie.poster_url;
+    //     }
+    //   } else {
+    //     moviePath =
+    //       this.IMG_PATH +
+    //       (isMostPopular ? movie.backdrop_path : movie.poster_path);
+    //   }
+    //   let ratingGradient;
+    //   if (movieRating >= 8 && movieRating <= 10) {
+    //     ratingGradient = `#008704`;
+    //   } else if (movieRating >= 6.5 && movieRating < 8) {
+    //     ratingGradient = `#8a5200`;
+    //   } else {
+    //     ratingGradient = `#0000007d`;
+    //   }
+    //   const ratingGradientBg = {
+    //     background: `linear-gradient(15deg, #bbbbbb 0%, ${ratingGradient} 40%)`,
+    //   };
+    //   if (debug) {
+    //     console.log(
+    //       `%cMovie rating: ${movieRating} Rating gradient color: ${ratingGradient}`,
+    //       `color: white; background: ${ratingGradient}`
+    //     );
+    //   }
+    //   return html`
+    //     <div class="${movieClass}">
+    //       <img src="${moviePath}" alt="${movieTitle}" />
+    //       <div class="movie-info">
+    //         ${!isMostPopular && movieRating
+    //           ? html`<h3>${movieTitle}</h3>
+    //               <span class="vote" style=${styleMap(ratingGradientBg)}
+    //                 >⭐ ${movieRating.toFixed(1)}</span
+    //               >`
+    //           : !movieRating
+    //           ? html`<h3>${movieTitle}</h3>`
+    //           : ''}
+    //       </div>
+    //       <div class="overview ${!isMostPopular ? 'hidden' : 'visible'}">
+    //         <h3>${movieTitle}</h3>
+    //         <p>${moviePlot}</p>
+    //         <div class="buttons">
+    //           <button
+    //             class="watch-now"
+    //             @click="${() => this._playMovie(movieStreamUrl)}"
+    //           >
+    //             Watch now
+    //           </button>
+    //           <button
+    //             class="watch-later"
+    //             @click="${() => this._openPopup(movieURL)}"
+    //           >
+    //             +
+    //           </button>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   `;
+    // }
+    renderMovie(movie, options = {}) {
+        const { isLarge: isLarge = false, useKodiData: useKodiData = false } = options;
+        const movieClass = isLarge ? "movie-l" : "movie-s";
+        const movieTitle = movie.title;
+        const movieRating = useKodiData ? movie.rating : movie.vote_average;
+        const moviePlot = useKodiData ? movie.plot : movie.overview;
+        const movieURL = useKodiData ? movie.tmdb_link : this.URL_PATH + movie.id;
+        const movieStreamUrl = useKodiData ? movie.strm_url : "";
+        let moviePath = useKodiData ? isLarge ? movie.fanart_url || movie.poster_url : movie.poster_url : this.IMG_PATH + (isLarge ? movie.backdrop_path : movie.poster_path);
+        let ratingGradient = "#0000007d"; // default
+        if (movieRating >= 8) ratingGradient = "#008704";
+        else if (movieRating >= 6.5) ratingGradient = "#8a5200";
         const ratingGradientBg = {
             background: `linear-gradient(15deg, #bbbbbb 0%, ${ratingGradient} 40%)`
         };
-        if (debug) console.log(`%cMovie rating: ${movieRating} Rating gradient color: ${ratingGradient}`, `color: white; background: ${ratingGradient}`);
         return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
       <div class="${movieClass}">
         <img src="${moviePath}" alt="${movieTitle}" />
         <div class="movie-info">
-          ${!isMostPopular && movieRating ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<h3>${movieTitle}</h3>
+          ${!isLarge && movieRating ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<h3>${movieTitle}</h3>
                 <span class="vote" style=${(0, $19f464fcda7d2482$export$1e5b4ce2fa884e6a)(ratingGradientBg)}
                   >⭐ ${movieRating.toFixed(1)}</span
                 >` : !movieRating ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<h3>${movieTitle}</h3>` : ""}
         </div>
-        <div class="overview ${!isMostPopular ? "hidden" : "visible"}">
+        <div class="overview ${!isLarge ? "hidden" : "visible"}">
           <h3>${movieTitle}</h3>
           <p>${moviePlot}</p>
           <div class="buttons">
@@ -8847,33 +8912,27 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
       </div>
     `;
     }
-    renderMovies() {
-        const mostPopularMovies = this.cinemaMovies.slice(0, 5).map((movie)=>this.renderMovie(movie, true));
-        const recommendedMovies = this.cinemaMovies.slice(5).map((movie)=>this.renderMovie(movie, false));
-        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-      <div class="horizontal-header">
-        <h2>Most Popular</h2>
-        <div class="horizontal-list">${mostPopularMovies}</div>
-      </div>
-      <div class="horizontal-header">
-        <h2>Recommended for you</h2>
-        <div class="items-container">${recommendedMovies}</div>
-      </div>
-    `;
-    }
-    renderKodiMovies() {
-        const mostPopularKodiMovies = this.kodiMovies.slice(0, 7).map((movie)=>this.renderMovie(movie, true, true));
-        const recommendedKodiMovies = this.kodiMovies.slice(7).map((movie)=>this.renderMovie(movie, false, true));
-        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-      <div class="horizontal-header">
-        <h2>Recently added</h2>
-        <div class="horizontal-list">${mostPopularKodiMovies}</div>
-      </div>
-      <div class="horizontal-header">
-        <h2>Kodi library</h2>
-        <div class="items-container">${recommendedKodiMovies}</div>
-      </div>
-    `;
+    renderMovieSections(sectionId, movies, subsections, useKodiData = false) {
+        const subsectionHtml = subsections.map(({ title: title }, index)=>{
+            // Determine the movie slice for each subsection
+            const sectionMovies = index === 0 ? movies.slice(0, 5) : movies.slice(5);
+            const displayedMovies = sectionMovies.map((movie)=>this.renderMovie(movie, {
+                    isLarge: index === 0,
+                    useKodiData: useKodiData
+                }));
+            // Determine the class for the movie container
+            const containerClass = index === 0 ? "horizontal-list" : "items-container";
+            return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+        <div class="horizontal-header">
+          <h2>${title}</h2>
+          <div class="${containerClass}">${displayedMovies}</div>
+        </div>
+      `;
+        });
+        // Return all subsection divs wrapped in a single section tag
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<section id="${sectionId}" class="inner_content">
+      ${subsectionHtml}
+    </section>`;
     }
     renderSearchResults() {
         // Render the current or last search results
@@ -8898,21 +8957,32 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
         ${this.renderSearchForm()}
       </div>
       <main>
-        ${!this.isSearchActive ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)` <section id="kodi-movies" class="inner_content">
-                ${this.renderKodiMovies()}
-              </section>
-              <section id="tmdb-movies" class="inner_content">
-                ${this.renderMovies()}
-              </section>` : (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<section id="search-results" class="inner_content">
+        ${!this.isSearchActive ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+              ${this.renderMovieSections("kodi-movies", this.kodiMovies, [
+            {
+                title: "Recently added"
+            },
+            {
+                title: "Kodi library"
+            }
+        ], true)}
+              ${this.renderMovieSections("tmdb-movies", this.cinemaMovies, [
+            {
+                title: "Most Popular"
+            },
+            {
+                title: "Recommended for you"
+            }
+        ])}
+            ` : (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<section id="search-results" class="inner_content">
               ${this.renderSearchResults()}
             </section>`}
-
-        <div id="toast">
-          <div id="img">I</div>
-          <div id="desc">A notification message..</div>
-        </div>
-        <dialog id="popup-dialog"></dialog>
       </main>
+      <div id="toast">
+        <div id="img">I</div>
+        <div id="desc">A notification message..</div>
+      </div>
+      <dialog id="popup-dialog"></dialog>
     `;
     }
     /* -------------------------------------------------------------------------- */ /*                               ACTIONS HANDLER                              */ /* -------------------------------------------------------------------------- */ scrollToSection(event) {
