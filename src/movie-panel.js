@@ -4,7 +4,7 @@ import styles from './styles';
 import mediaquerystyles from './mediaquerystyles';
 import dialogcss from './dialogcss.js';
 
-import { mdiMagnify, mdiClose } from '@mdi/js';
+import { mdiMagnify, mdiClose, mdiAlertCircleOutline } from '@mdi/js';
 
 import { SEARCH_API, IMG_PATH, API_URL, URL_PATH, loadCSS } from './helpers.js';
 
@@ -313,10 +313,7 @@ export class MovieAppPanel extends LitElement {
               ${this.renderSearchResults()}
             </section>`}
       </main>
-      <div id="toast">
-        <div id="img">I</div>
-        <div id="desc">A notification message..</div>
-      </div>
+      ${this.renderToast()}
       <dialog id="popup-dialog"></dialog>
     `;
   }
@@ -413,7 +410,19 @@ export class MovieAppPanel extends LitElement {
     dialog.close();
   }
 
-  /* ---------------------------- TOST NOTIFICATION --------------------------- */
+  /* ---------------------------- TOAST NOTIFICATION --------------------------- */
+  renderToast() {
+    return html`
+      <div id="toast">
+        <div id="img">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-label="Error">
+            <path d="${mdiAlertCircleOutline}" />
+          </svg>
+        </div>
+        <div id="desc">asdasdada asdasdasd asd asd</div>
+      </div>
+    `;
+  }
 
   launch_toast(desc) {
     const toastEl = this.shadowRoot.querySelector('#toast');
@@ -517,28 +526,29 @@ export class MovieAppPanel extends LitElement {
 
     // Handle the click event specifically
     if (event.type === 'click') {
-      // Toggle the 'show' class immediately on click
       formEl.classList.toggle('show');
       return; // Exit the function after handling click
     }
 
-    // Handle mouseover and mouseout
+    // Handle mouseover and mouseout for empty search
     if (this.search.trim().length === 0) {
       if (!formEl.classList.contains('show') && event.type === 'mouseover') {
-        // Schedule to show the input if it's not already shown
-        this.searchTimeout = setTimeout(
-          () => formEl.classList.add('show'),
-          1000
-        );
+        // Show the input after a delay if it's not already shown
+        this.searchTimeout = setTimeout(() => {
+          if (this.search.trim().length === 0) {
+            formEl.classList.add('show');
+          }
+        }, 1000);
       } else if (
         formEl.classList.contains('show') &&
         event.type === 'mouseout'
       ) {
-        // Schedule to hide the input if no search term and input is shown
-        this.searchTimeout = setTimeout(
-          () => formEl.classList.remove('show'),
-          7000
-        );
+        // Hide the input after a delay if still no search term
+        this.searchTimeout = setTimeout(() => {
+          if (this.search.trim().length === 0) {
+            formEl.classList.remove('show');
+          }
+        }, 7000);
       }
     }
   }

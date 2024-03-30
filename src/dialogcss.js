@@ -69,15 +69,19 @@ export default css`
     width: 50px;
     height: 50px;
     float: left;
-    padding-top: 16px;
-    padding-bottom: 16px;
     box-sizing: border-box;
     background-color: var(--secondary-bg-color);
-    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & path {
+      fill: var(--accent-color);
+    }
   }
   #toast #desc {
-    color: #fff;
-    padding: 16px;
+    font-size: large;
+    color: #000;
+    padding: 1rem;
     overflow: hidden;
     white-space: nowrap;
   }

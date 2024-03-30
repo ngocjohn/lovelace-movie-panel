@@ -1117,15 +1117,19 @@ var $9b519db0be023475$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     width: 50px;
     height: 50px;
     float: left;
-    padding-top: 16px;
-    padding-bottom: 16px;
     box-sizing: border-box;
     background-color: var(--secondary-bg-color);
-    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & path {
+      fill: var(--accent-color);
+    }
   }
   #toast #desc {
-    color: #fff;
-    padding: 16px;
+    font-size: large;
+    color: #000;
+    padding: 1rem;
     overflow: hidden;
     white-space: nowrap;
   }
@@ -8978,10 +8982,7 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
               ${this.renderSearchResults()}
             </section>`}
       </main>
-      <div id="toast">
-        <div id="img">I</div>
-        <div id="desc">A notification message..</div>
-      </div>
+      ${this.renderToast()}
       <dialog id="popup-dialog"></dialog>
     `;
     }
@@ -9046,7 +9047,19 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
         const dialog = this.shadowRoot.querySelector("#popup-dialog");
         dialog.close();
     }
-    /* ---------------------------- TOST NOTIFICATION --------------------------- */ launch_toast(desc) {
+    /* ---------------------------- TOAST NOTIFICATION --------------------------- */ renderToast() {
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+      <div id="toast">
+        <div id="img">
+          <svg width="24" height="24" viewBox="0 0 24 24" aria-label="Error">
+            <path d="${0, $04557c061247a0a6$export$94c958e911ee2156}" />
+          </svg>
+        </div>
+        <div id="desc">asdasdada asdasdasd asd asd</div>
+      </div>
+    `;
+    }
+    launch_toast(desc) {
         const toastEl = this.shadowRoot.querySelector("#toast");
         const descEl = this.shadowRoot.querySelector("#desc");
         if (toastEl) {
@@ -9131,16 +9144,19 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
         clearTimeout(this.searchTimeout); // Clear any existing timeout
         // Handle the click event specifically
         if (event.type === "click") {
-            // Toggle the 'show' class immediately on click
             formEl.classList.toggle("show");
             return; // Exit the function after handling click
         }
-        // Handle mouseover and mouseout
+        // Handle mouseover and mouseout for empty search
         if (this.search.trim().length === 0) {
-            if (!formEl.classList.contains("show") && event.type === "mouseover") // Schedule to show the input if it's not already shown
-            this.searchTimeout = setTimeout(()=>formEl.classList.add("show"), 1000);
-            else if (formEl.classList.contains("show") && event.type === "mouseout") // Schedule to hide the input if no search term and input is shown
-            this.searchTimeout = setTimeout(()=>formEl.classList.remove("show"), 7000);
+            if (!formEl.classList.contains("show") && event.type === "mouseover") // Show the input after a delay if it's not already shown
+            this.searchTimeout = setTimeout(()=>{
+                if (this.search.trim().length === 0) formEl.classList.add("show");
+            }, 1000);
+            else if (formEl.classList.contains("show") && event.type === "mouseout") // Hide the input after a delay if still no search term
+            this.searchTimeout = setTimeout(()=>{
+                if (this.search.trim().length === 0) formEl.classList.remove("show");
+            }, 7000);
         }
     }
     resetSearch() {
