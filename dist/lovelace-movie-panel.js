@@ -909,7 +909,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   }
 
   .movie-s {
-    flex: ;
+    flex: 1;
     min-width: 200px;
     margin: 1rem;
     position: relative;

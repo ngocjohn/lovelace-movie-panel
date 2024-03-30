@@ -235,7 +235,7 @@ export default css`
   }
 
   .movie-s {
-    flex: ;
+    flex: 1;
     min-width: 200px;
     margin: 1rem;
     position: relative;
