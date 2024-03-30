@@ -182,30 +182,26 @@ export class MovieAppPanel extends LitElement {
   }
 
   renderMovieSections(sectionId, movies, subsections, useKodiData = false) {
-    const subsectionHtml = subsections.map(({ title }, index) => {
-      // Determine the movie slice for each subsection
-      const sectionMovies = index === 0 ? movies.slice(0, 5) : movies.slice(5);
+    return html`
+      <section id="${sectionId}" class="inner_content">
+        ${subsections.map(({ title, id }, index) => {
+          const sectionMovies =
+            index === 0 ? movies.slice(0, 5) : movies.slice(5);
+          const displayedMovies = sectionMovies.map((movie) =>
+            this.renderMovie(movie, { isLarge: index === 0, useKodiData })
+          );
+          const containerClass =
+            index === 0 ? 'horizontal-list' : 'items-container';
 
-      const displayedMovies = sectionMovies.map((movie) =>
-        this.renderMovie(movie, { isLarge: index === 0, useKodiData })
-      );
-
-      // Determine the class for the movie container
-      const containerClass =
-        index === 0 ? 'horizontal-list' : 'items-container';
-
-      return html`
-        <div class="horizontal-header">
-          <h2>${title}</h2>
-          <div class="${containerClass}">${displayedMovies}</div>
-        </div>
-      `;
-    });
-
-    // Return all subsection divs wrapped in a single section tag
-    return html`<section id="${sectionId}" class="inner_content">
-      ${subsectionHtml}
-    </section>`;
+          return html`
+            <div id="${id}" class="subsection">
+              <h2 id="subsection-title">${title}</h2>
+              <div class="${containerClass}">${displayedMovies}</div>
+            </div>
+          `;
+        })}
+      </section>
+    `;
   }
 
   renderSearchResults() {

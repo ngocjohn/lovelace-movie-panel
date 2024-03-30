@@ -686,13 +686,13 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     font-family: 'Raleway', sans-serif;
     color: white;
     margin: 0;
-    overflow: hidden;
   }
   .header {
-    position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
     top: 0;
     right: 0;
-    width: calc(100% - 55px);
+    width: 100%;
     height: 56px !important;
     padding: 1rem;
     justify-content: space-between;
@@ -724,16 +724,45 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   }
 
   main {
-    margin: 56px auto 0;
+    margin: 0 auto 56px;
     background-color: var(--primary-color);
     transition: background-color 0.4s ease;
   }
   button {
     cursor: pointer;
   }
-
   section.inner_content {
-    min-height: 100vh;
+    overflow: auto;
+    display: block;
+    align-items: normal;
+  }
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+  #subsection-title {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0;
+    left: 1rem;
+    margin: 2rem 1rem 0.5rem 1rem;
+    background: inherit; /* This makes sure the title is readable over other content */
+    align-self: flex-start;
+  }
+  .horizontal-list {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+  }
+
+  .items-container,
+  .searched {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .search-container {
@@ -795,24 +824,6 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     outline: none;
     border: 1px solid var(--accent-color);
     color: var(--accent-color);
-  }
-
-  .horizontal-header {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    overflow-x: auto;
-  }
-  .horizontal-header h2 {
-    position: sticky;
-    top: 0;
-    left: 1rem;
-    margin: 2rem 1rem 0.5rem 1rem;
-  }
-  .horizontal-list {
-    display: flex;
-    flex-direction: row;
-    width: fit-content;
   }
 
   .watch-now,
@@ -890,35 +901,6 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     }
   }
 
-  .items-container,
-  .searched {
-    /* display: grid;
-    height: 100%;
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    grid-auto-flow: dense;
-    grid-template-rows: auto;
-    align-items: stretch;
-    justify-items: center; */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  /* #kodi-movies > .horizontal-header > .items-container > .movie-s:nth-child(4), #kodi-movies > .horizontal-header > .items-container > .movie-s:nth-child(7) {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-  #tmdb-movies > .horizontal-header > .items-container > .movie-s:nth-child(2), #tmdb-movies > .horizontal-header > .items-container > .movie-s:nth-child(6) {
-    grid-column: span 2;
-    grid-row: span 2;
-  } */
-
-  .items-container h2 {
-    width: 100%;
-    margin: 2rem 1rem 0 1rem;
-    display: flex;
-  }
-
   .movie-s img,
   .movie-l img {
     width: 100%;
@@ -927,7 +909,7 @@ var $1a7c5d625ead7579$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   }
 
   .movie-s {
-    flex: 1;
+    flex: ;
     min-width: 200px;
     margin: 1rem;
     position: relative;
@@ -1034,13 +1016,6 @@ var $4024765bee64b760$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   @media (max-width: 768px) {
     .header {
       width: 100%;
-    }
-    section.inner_content {
-      max-width: 100vw;
-    }
-    .items-container,
-    .searched {
-      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     }
     .movie-s {
       /* max-width: 180px !important; */
@@ -8859,26 +8834,24 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $ab210b2da7b39b9d$exp
     `;
     }
     renderMovieSections(sectionId, movies, subsections, useKodiData = false) {
-        const subsectionHtml = subsections.map(({ title: title }, index)=>{
-            // Determine the movie slice for each subsection
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+      <section id="${sectionId}" class="inner_content">
+        ${subsections.map(({ title: title, id: id }, index)=>{
             const sectionMovies = index === 0 ? movies.slice(0, 5) : movies.slice(5);
             const displayedMovies = sectionMovies.map((movie)=>this.renderMovie(movie, {
                     isLarge: index === 0,
                     useKodiData: useKodiData
                 }));
-            // Determine the class for the movie container
             const containerClass = index === 0 ? "horizontal-list" : "items-container";
             return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-        <div class="horizontal-header">
-          <h2>${title}</h2>
-          <div class="${containerClass}">${displayedMovies}</div>
-        </div>
-      `;
-        });
-        // Return all subsection divs wrapped in a single section tag
-        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<section id="${sectionId}" class="inner_content">
-      ${subsectionHtml}
-    </section>`;
+            <div id="${id}" class="subsection">
+              <h2 id="subsection-title">${title}</h2>
+              <div class="${containerClass}">${displayedMovies}</div>
+            </div>
+          `;
+        })}
+      </section>
+    `;
     }
     renderSearchResults() {
         // Render the current or last search results
