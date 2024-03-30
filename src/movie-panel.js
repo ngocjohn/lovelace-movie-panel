@@ -5,19 +5,20 @@ import mediaquerystyles from './mediaquerystyles';
 import dialogcss from './dialogcss.js';
 
 import { mdiMagnify, mdiClose, mdiAlertCircleOutline } from '@mdi/js';
-
-import { SEARCH_API, IMG_PATH, API_URL, URL_PATH, loadCSS } from './helpers.js';
+import { SEARCH_API, IMG_PATH, API_URL, URL_PATH } from './helpers.js';
+import { loadCSS, noImage } from './const.js';
 
 export class MovieAppPanel extends LitElement {
   _hass;
   static get properties() {
     return {
       _entity: { state: true },
-      _name: { state: true },
-      _state: { state: true },
-      _status: { state: true },
+      _upcoming: { state: true },
+      _kodiState: { state: true },
+      _upcomingState: { state: true },
       movies: { type: Array },
       kodiMovies: { type: Array },
+      upcomingMovies: { type: Array },
       search: { type: String },
       searchResults: { type: Array },
       isSearchActive: { type: Boolean },
@@ -31,6 +32,7 @@ export class MovieAppPanel extends LitElement {
     this.boundHandleScroll = this.handleScroll.bind(this);
     this.cinemaMovies = [];
     this.kodiMovies = [];
+    this.upcomingMovies = [];
     this.search = '';
     this.searchResults = [];
     this.isSearchActive = false;
@@ -45,6 +47,7 @@ export class MovieAppPanel extends LitElement {
   // Method to set configuration
   setConfig(config) {
     this._entity = config.entity;
+    this._upcoming = config.upcoming;
     if (this._hass) {
       this.hass = this._hass;
     }
@@ -55,13 +58,14 @@ export class MovieAppPanel extends LitElement {
    */
   set hass(hass) {
     this._hass = hass;
-    this._state = hass.states[this._entity];
-    if (this._state) {
-      this._status = this._state.state;
-      let fn = this._state.attributes.friendly_name;
-      this._name = fn ? fn : this._entity;
+    this._kodiState = hass.states[this._entity];
+    this._upcomingState = hass.states[this._upcoming];
+    if (this._kodiState) {
       // Fetch Kodi movies after entity state is updated
       this.getKodiMovies();
+    }
+    if (this._upcomingState) {
+      this.getUpcomingMovies();
     }
   }
 
@@ -90,95 +94,33 @@ export class MovieAppPanel extends LitElement {
   }
 
   getKodiMovies() {
-    if (this._state && this._state.attributes && this._state.attributes.data) {
-      let data = this._state.attributes.data;
+    if (
+      this._kodiState &&
+      this._kodiState.attributes &&
+      this._kodiState.attributes.data
+    ) {
+      let data = this._kodiState.attributes.data;
       this.kodiMovies = data;
     } else {
       console.error('Kodi Movies data is not available.');
     }
   }
 
+  getUpcomingMovies() {
+    if (
+      this._upcomingState &&
+      this._upcomingState.attributes &&
+      this._upcomingState.attributes.data
+    ) {
+      let data = this._upcomingState.attributes.data;
+      this.upcomingMovies = data;
+    } else {
+      console.error('Upcoming Movies data is not available.');
+    }
+  }
   /* -------------------------------------------------------------------------- */
   /*                               RENDER SECTIONS                              */
   /* -------------------------------------------------------------------------- */
-
-  // renderMovie(movie, isMostPopular, isKodiMovie = false) {
-  //   const debug = false;
-  //   const movieClass = isMostPopular ? 'movie-l' : 'movie-s';
-  //   const movieTitle = isKodiMovie ? movie.title : movie.title;
-  //   const movieRating = isKodiMovie ? movie.rating : movie.vote_average;
-  //   const moviePlot = isKodiMovie ? movie.plot : movie.overview;
-  //   const movieURL = isKodiMovie ? movie.tmdb_link : this.URL_PATH + movie.id;
-  //   const movieStreamUrl = isKodiMovie ? movie.strm_url : '';
-  //   // console.log(movieStreamUrl);
-  //   let moviePath;
-  //   if (isKodiMovie) {
-  //     if (isMostPopular) {
-  //       // Use fanart_url, but if it's falsy (undefined, null, empty string, etc.), fallback to poster_url
-  //       moviePath = movie.fanart_url ? movie.fanart_url : movie.poster_url;
-  //     } else {
-  //       moviePath = movie.poster_url;
-  //     }
-  //   } else {
-  //     moviePath =
-  //       this.IMG_PATH +
-  //       (isMostPopular ? movie.backdrop_path : movie.poster_path);
-  //   }
-
-  //   let ratingGradient;
-  //   if (movieRating >= 8 && movieRating <= 10) {
-  //     ratingGradient = `#008704`;
-  //   } else if (movieRating >= 6.5 && movieRating < 8) {
-  //     ratingGradient = `#8a5200`;
-  //   } else {
-  //     ratingGradient = `#0000007d`;
-  //   }
-
-  //   const ratingGradientBg = {
-  //     background: `linear-gradient(15deg, #bbbbbb 0%, ${ratingGradient} 40%)`,
-  //   };
-
-  //   if (debug) {
-  //     console.log(
-  //       `%cMovie rating: ${movieRating} Rating gradient color: ${ratingGradient}`,
-  //       `color: white; background: ${ratingGradient}`
-  //     );
-  //   }
-
-  //   return html`
-  //     <div class="${movieClass}">
-  //       <img src="${moviePath}" alt="${movieTitle}" />
-  //       <div class="movie-info">
-  //         ${!isMostPopular && movieRating
-  //           ? html`<h3>${movieTitle}</h3>
-  //               <span class="vote" style=${styleMap(ratingGradientBg)}
-  //                 >⭐ ${movieRating.toFixed(1)}</span
-  //               >`
-  //           : !movieRating
-  //           ? html`<h3>${movieTitle}</h3>`
-  //           : ''}
-  //       </div>
-  //       <div class="overview ${!isMostPopular ? 'hidden' : 'visible'}">
-  //         <h3>${movieTitle}</h3>
-  //         <p>${moviePlot}</p>
-  //         <div class="buttons">
-  //           <button
-  //             class="watch-now"
-  //             @click="${() => this._playMovie(movieStreamUrl)}"
-  //           >
-  //             Watch now
-  //           </button>
-  //           <button
-  //             class="watch-later"
-  //             @click="${() => this._openPopup(movieURL)}"
-  //           >
-  //             +
-  //           </button>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   `;
-  // }
 
   renderMovie(movie, options = {}) {
     const { isLarge = false, useKodiData = false } = options;
@@ -192,8 +134,8 @@ export class MovieAppPanel extends LitElement {
 
     let moviePath = useKodiData
       ? isLarge
-        ? movie.fanart_url || movie.poster_url
-        : movie.poster_url
+        ? movie.fanart_url || movie.poster_url || noImage
+        : movie.poster_url || noImage
       : this.IMG_PATH + (isLarge ? movie.backdrop_path : movie.poster_path);
 
     let ratingGradient = '#0000007d'; // default
@@ -286,11 +228,23 @@ export class MovieAppPanel extends LitElement {
     return html`
       <div class="header">
         <nav>
-          <a href="#" data-target="kodi-movies" @click="${this.scrollToSection}"
+          <a
+            href="#kodi-movies"
+            data-target="kodi-movies"
+            @click="${this.scrollToSection}"
             ><h1>Kodi</h1></a
           >
-          <a href="#" data-target="tmdb-movies" @click="${this.scrollToSection}"
+          <a
+            href="#upcoming-movies"
+            data-target="upcoming-movies"
+            @click="${this.scrollToSection}"
             ><h1>Cinema</h1></a
+          >
+          <a
+            href="#tmdb-movies"
+            data-target="tmdb-movies"
+            @click="${this.scrollToSection}"
+            ><h1>Popular</h1></a
           >
         </nav>
         ${this.renderSearchForm()}
@@ -302,6 +256,12 @@ export class MovieAppPanel extends LitElement {
                 'kodi-movies',
                 this.kodiMovies,
                 [{ title: 'Recently added' }, { title: 'Kodi library' }],
+                true
+              )}
+              ${this.renderMovieSections(
+                'upcoming-movies',
+                this.upcomingMovies,
+                [{ title: 'In cinemas' }, { title: 'Movies' }],
                 true
               )}
               ${this.renderMovieSections('tmdb-movies', this.cinemaMovies, [
@@ -324,8 +284,8 @@ export class MovieAppPanel extends LitElement {
 
   scrollToSection(event) {
     event.preventDefault(); // Prevent default behavior of anchor tag
-    const targetId = event.currentTarget.getAttribute('data-target'); // Get the hash value
-    const section = this.shadowRoot.querySelector(`#${targetId}`); // Get the corresponding section
+    const targetId = event.currentTarget.getAttribute('href'); // Get the hash value
+    const section = this.shadowRoot.querySelector(`${targetId}`); // Get the corresponding section
     const headerHeight = this.shadowRoot.querySelector('.header').offsetHeight; // Get header height
     if (section) {
       // Calculate the target scroll position considering the header height
@@ -340,32 +300,34 @@ export class MovieAppPanel extends LitElement {
   }
 
   handleScroll() {
-    // console.log('Scrolling....');
-
-    const sections = this.shadowRoot.querySelectorAll('.inner_content');
+    const sections = this.shadowRoot.querySelectorAll('section');
     const mainElement = this.shadowRoot.querySelector('main');
     const headerElement = this.shadowRoot.querySelector('.header');
-    let isPrimarySectionAtTop = false;
 
     sections.forEach((section, index) => {
       const rect = section.getBoundingClientRect();
-      // Check if the top of the section is near the top of the viewport
-      if (rect.top >= 0 && rect.top <= headerElement.offsetHeight) {
-        isPrimarySectionAtTop = index % 2 === 0;
+
+      // Check if the section is at least partially visible in the viewport
+      const isVisible =
+        rect.bottom > headerElement.offsetHeight &&
+        rect.top <
+          (window.innerHeight || document.documentElement.clientHeight) - 56;
+
+      if (isVisible) {
+        // Change the background color based on odd or even index
+        if (index % 2 === 0) {
+          mainElement.style.backgroundColor = 'var(--primary-color)';
+          headerElement.style.backgroundColor =
+            'var(--app-header-background-color)';
+        } else {
+          mainElement.style.backgroundColor = 'var(--secondary-bg-color)';
+          headerElement.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        }
+
+        // Exit the loop once a visible section is found
+        return;
       }
-      // console.log('top:', rect.top, 'header:', headerElement.offsetHeight);
     });
-    // console.log(isPrimarySectionAtTop);
-
-    // Apply the background color to the main element based on the section index
-    mainElement.style.backgroundColor = isPrimarySectionAtTop
-      ? 'var(--primary-color)'
-      : 'var(--secondary-bg-color)';
-
-    // Change header background color when a primary-colored section is at the top
-    headerElement.style.backgroundColor = isPrimarySectionAtTop
-      ? 'var(--app-header-background-color)'
-      : 'rgba(0, 0, 0, 0.5)';
   }
 
   /* -------------------------------------------------------------------------- */
@@ -564,6 +526,7 @@ export class MovieAppPanel extends LitElement {
   static getStubConfig() {
     return {
       entity: 'sensor.kodi_all_movies',
+      upcoming: 'sensor.upcoming_all_movies',
     };
   }
 }

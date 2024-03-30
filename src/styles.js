@@ -218,14 +218,17 @@ export default css`
 
   .items-container,
   .searched {
-    display: grid;
+    /* display: grid;
     height: 100%;
     width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     grid-auto-flow: dense;
     grid-template-rows: auto;
     align-items: stretch;
-    justify-items: center;
+    justify-items: center; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
   /* #kodi-movies > .horizontal-header > .items-container > .movie-s:nth-child(4), #kodi-movies > .horizontal-header > .items-container > .movie-s:nth-child(7) {
     grid-column: span 2;
@@ -235,6 +238,7 @@ export default css`
     grid-column: span 2;
     grid-row: span 2;
   } */
+
   .items-container h2 {
     width: 100%;
     margin: 2rem 1rem 0 1rem;
@@ -296,7 +300,7 @@ export default css`
     display: flex;
     flex-direction: column;
     justify-content: end;
-    width: fit-content;
+    width: -webkit-fill-available;
     top: 0;
     bottom: 0;
     font-size: 12px;
