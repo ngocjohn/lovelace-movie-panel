@@ -245,8 +245,9 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
         ${this.renderNavLink('kodi-movies', 'Kodi')}
         ${this.renderNavLink('upcoming-movies', 'Cinema')}
         ${this.renderNavLink('tmdb-movies', 'Popular')}
-        ${this.renderSearchForm()}
+        <li style="float: right; width: 30%;">${this.renderSearchForm()}</li>
       </ul>
+
       <main>
         ${!this.isSearchActive
           ? html`

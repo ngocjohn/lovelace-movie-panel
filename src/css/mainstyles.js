@@ -27,7 +27,7 @@ export default css`
     padding: 0 1rem;
     overflow: hidden;
     align-content: center;
-
+    width: auto;
     li {
       float: left;
 
@@ -106,6 +106,7 @@ export default css`
     max-width: 400px;
     width: 100%;
     height: 100%;
+    padding-top: 0.5rem;
   }
 
   .search-icon,

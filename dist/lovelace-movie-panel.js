@@ -701,7 +701,7 @@ var $eb33cbce70c5eb42$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     padding: 0 1rem;
     overflow: hidden;
     align-content: center;
-
+    width: auto;
     li {
       float: left;
 
@@ -780,6 +780,7 @@ var $eb33cbce70c5eb42$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     max-width: 400px;
     width: 100%;
     height: 100%;
+    padding-top: 0.5rem;
   }
 
   .search-icon,
@@ -8681,7 +8682,7 @@ var $04557c061247a0a6$export$a14c803a1714faa3 = "M18.5,19.13C20,17.77 20,15.18 2
 const $75b5f07595b25ff0$export$8daf82f2d276f63b = (superclass)=>class extends superclass {
         /* ------------------------------ SEARCH HANDLE ----------------------------- */ renderSearchForm() {
             return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-        <li style="float:right" class="search-container">
+        <div class="search-container">
           ${this.search.length > 0 ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)` <svg
                 class="reset-icon"
                 @click="${this.resetSearch}"
@@ -8712,7 +8713,7 @@ const $75b5f07595b25ff0$export$8daf82f2d276f63b = (superclass)=>class extends su
               placeholder="Search..."
             />
           </form>
-        </li>
+        </div>
       `;
         }
         updateSearch(e) {
@@ -9109,8 +9110,9 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
         ${this.renderNavLink("kodi-movies", "Kodi")}
         ${this.renderNavLink("upcoming-movies", "Cinema")}
         ${this.renderNavLink("tmdb-movies", "Popular")}
-        ${this.renderSearchForm()}
+        <li style="float: right; width: 30%;">${this.renderSearchForm()}</li>
       </ul>
+
       <main>
         ${!this.isSearchActive ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
               ${this.renderMovieSections("kodi-movies", this.kodiMovies, [

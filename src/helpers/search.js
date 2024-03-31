@@ -7,7 +7,7 @@ export const SearchMixin = (superclass) =>
 
     renderSearchForm() {
       return html`
-        <li style="float:right" class="search-container">
+        <div class="search-container">
           ${this.search.length > 0
             ? html` <svg
                 class="reset-icon"
@@ -42,7 +42,7 @@ export const SearchMixin = (superclass) =>
               placeholder="Search..."
             />
           </form>
-        </li>
+        </div>
       `;
     }
 
