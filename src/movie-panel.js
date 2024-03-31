@@ -11,13 +11,13 @@ import { loadCSS, noImage } from './helpers/const.js';
 
 export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
   _hass;
+  _upcomingState;
+  _kodiState;
   static get properties() {
     return {
       _entity: { state: true },
       _upcoming: { state: true },
-      _kodiState: { state: true },
-      _upcomingState: { state: true },
-      movies: { type: Array },
+      cinemaMovies: { type: Array },
       kodiMovies: { type: Array },
       upcomingMovies: { type: Array },
       search: { type: String },
@@ -136,12 +136,27 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
     const movieURL = useKodiData ? movie.tmdb_link : this.URL_PATH + movie.id;
     const movieStreamUrl = useKodiData ? movie.strm_url : '';
 
-    let moviePath = useKodiData
-      ? isLarge
-        ? movie.fanart_url || movie.poster_url || noImage
-        : movie.poster_url || noImage
-      : this.IMG_PATH + (isLarge ? movie.backdrop_path : movie.poster_path);
+    let moviePath;
 
+    if (useKodiData) {
+      // For Kodi movies
+      moviePath = isLarge
+        ? movie.fanart_url || movie.poster_url || noImage
+        : movie.poster_url || noImage;
+    } else {
+      // For non-Kodi movies
+      if (isLarge) {
+        moviePath = movie.backdrop_path
+          ? this.IMG_PATH + movie.backdrop_path
+          : movie.poster_path
+          ? this.IMG_PATH + movie.poster_path
+          : noImage;
+      } else {
+        moviePath = movie.poster_path
+          ? this.IMG_PATH + movie.poster_path
+          : noImage;
+      }
+    }
     let ratingGradient = '#0000007d'; // default
     if (movieRating >= 8) ratingGradient = '#008704';
     else if (movieRating >= 6.5) ratingGradient = '#8a5200';
@@ -239,15 +254,16 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
   /* -------------------------------------------------------------------------- */
 
   render() {
-    console.log(`Rendering with active section: ${this.currentActiveSection}`);
+    // console.log(`Rendering with active section: ${this.currentActiveSection}`);
     return html`
-      <ul class="header">
-        ${this.renderNavLink('kodi-movies', 'Kodi')}
-        ${this.renderNavLink('upcoming-movies', 'Cinema')}
-        ${this.renderNavLink('tmdb-movies', 'Popular')}
-        <li style="float: right; width: 30%;">${this.renderSearchForm()}</li>
-      </ul>
-
+      <div class="header">
+        <ul>
+          ${this.renderNavLink('kodi-movies', 'Kodi')}
+          ${this.renderNavLink('upcoming-movies', 'Cinema')}
+          ${this.renderNavLink('tmdb-movies', 'Popular')}
+        </ul>
+        ${this.renderSearchForm()}
+      </div>
       <main>
         ${!this.isSearchActive
           ? html`

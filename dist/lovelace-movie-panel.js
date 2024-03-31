@@ -687,21 +687,31 @@ var $eb33cbce70c5eb42$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     color: white;
     margin: 0;
   }
-  ul.header {
+  .header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    height: 56px !important;
     background-color: #000;
-    /* filter: drop-shadow(2px 4px 6px black); */
+    filter: drop-shadow(2px 4px 6px black);
     backdrop-filter: blur(15px) brightness(0.7);
     z-index: 5;
-    list-style-type: none;
     margin: 0;
-    padding: 0 1rem;
+    padding: 0 1rem 0 1rem;
     overflow: hidden;
-    align-content: center;
     width: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      align-items: flex-end;
+    }
     li {
       float: left;
 
@@ -715,16 +725,16 @@ var $eb33cbce70c5eb42$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
         font-size: 20px;
         font-weight: 700;
         font-family: 'Raleway';
-        border-bottom: 2px solid transparent; /* Transparent border for all links */
-        transition: border-color 0.3s ease; /* Smooth transition for border color */
-
+        border-bottom: 2px solid transparent;
+        transition: border-bottom 0.3s ease-in;
         &:hover:not(.active) {
           background-color: var(--secondary-bg-color);
           color: white;
         }
 
         &.active {
-          border-bottom: 2px solid var(--accent-color); /* White border for active link */
+          border-bottom: 2px solid var(--accent-color);
+          color: white;
         }
       }
     }
@@ -780,7 +790,6 @@ var $eb33cbce70c5eb42$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     max-width: 400px;
     width: 100%;
     height: 100%;
-    padding-top: 0.5rem;
   }
 
   .search-icon,
@@ -8815,6 +8824,7 @@ const $66c55adb714d3171$export$89545bc5a03b3b4b = (Superclass)=>class extends Su
             }
         }
         handleScroll() {
+            this.updateNavOnLoad();
             const sections = this.shadowRoot.querySelectorAll("section");
             const mainElement = this.shadowRoot.querySelector("main");
             const headerElement = this.shadowRoot.querySelector(".header");
@@ -8842,7 +8852,6 @@ const $66c55adb714d3171$export$89545bc5a03b3b4b = (Superclass)=>class extends Su
             const sections = this.shadowRoot.querySelectorAll("section");
             const navLinks = this.shadowRoot.querySelectorAll(".header li a");
             sections.forEach((section, index)=>{
-                const rect = section.getBoundingClientRect();
                 // Check if the section is at least partially visible in the viewport on load
                 if (index === 0) // Assuming the first section should be active initially
                 navLinks.forEach((link)=>{
@@ -8909,6 +8918,8 @@ const $93459ff6ae50bd6a$export$679d551b26d0b76c = "data:image/svg+xml;base64,PD9
 
 class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$export$89545bc5a03b3b4b)((0, $75b5f07595b25ff0$export$8daf82f2d276f63b)((0, $ab210b2da7b39b9d$export$3f2f9f5909897157))) {
     _hass;
+    _upcomingState;
+    _kodiState;
     static get properties() {
         return {
             _entity: {
@@ -8917,13 +8928,7 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
             _upcoming: {
                 state: true
             },
-            _kodiState: {
-                state: true
-            },
-            _upcomingState: {
-                state: true
-            },
-            movies: {
+            cinemaMovies: {
                 type: Array
             },
             kodiMovies: {
@@ -9024,7 +9029,12 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
         const moviePlot = useKodiData ? movie.plot : movie.overview;
         const movieURL = useKodiData ? movie.tmdb_link : this.URL_PATH + movie.id;
         const movieStreamUrl = useKodiData ? movie.strm_url : "";
-        let moviePath = useKodiData ? isLarge ? movie.fanart_url || movie.poster_url || (0, $93459ff6ae50bd6a$export$679d551b26d0b76c) : movie.poster_url || (0, $93459ff6ae50bd6a$export$679d551b26d0b76c) : this.IMG_PATH + (isLarge ? movie.backdrop_path : movie.poster_path);
+        let moviePath;
+        if (useKodiData) // For Kodi movies
+        moviePath = isLarge ? movie.fanart_url || movie.poster_url || (0, $93459ff6ae50bd6a$export$679d551b26d0b76c) : movie.poster_url || (0, $93459ff6ae50bd6a$export$679d551b26d0b76c);
+        else // For non-Kodi movies
+        if (isLarge) moviePath = movie.backdrop_path ? this.IMG_PATH + movie.backdrop_path : movie.poster_path ? this.IMG_PATH + movie.poster_path : (0, $93459ff6ae50bd6a$export$679d551b26d0b76c);
+        else moviePath = movie.poster_path ? this.IMG_PATH + movie.poster_path : (0, $93459ff6ae50bd6a$export$679d551b26d0b76c);
         let ratingGradient = "#0000007d"; // default
         if (movieRating >= 8) ratingGradient = "#008704";
         else if (movieRating >= 6.5) ratingGradient = "#8a5200";
@@ -9104,15 +9114,16 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
     `;
     }
     /* -------------------------------------------------------------------------- */ /*                              MAIN PAGE RENDER                              */ /* -------------------------------------------------------------------------- */ render() {
-        console.log(`Rendering with active section: ${this.currentActiveSection}`);
+        // console.log(`Rendering with active section: ${this.currentActiveSection}`);
         return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-      <ul class="header">
-        ${this.renderNavLink("kodi-movies", "Kodi")}
-        ${this.renderNavLink("upcoming-movies", "Cinema")}
-        ${this.renderNavLink("tmdb-movies", "Popular")}
-        <li style="float: right; width: 30%;">${this.renderSearchForm()}</li>
-      </ul>
-
+      <div class="header">
+        <ul>
+          ${this.renderNavLink("kodi-movies", "Kodi")}
+          ${this.renderNavLink("upcoming-movies", "Cinema")}
+          ${this.renderNavLink("tmdb-movies", "Popular")}
+        </ul>
+        ${this.renderSearchForm()}
+      </div>
       <main>
         ${!this.isSearchActive ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
               ${this.renderMovieSections("kodi-movies", this.kodiMovies, [

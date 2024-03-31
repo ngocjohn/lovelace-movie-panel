@@ -24,6 +24,7 @@ export const ActionsHandler = (Superclass) =>
     }
 
     handleScroll() {
+      this.updateNavOnLoad();
       const sections = this.shadowRoot.querySelectorAll('section');
       const mainElement = this.shadowRoot.querySelector('main');
       const headerElement = this.shadowRoot.querySelector('.header');
@@ -59,12 +60,11 @@ export const ActionsHandler = (Superclass) =>
         }
       });
     }
+
     updateNavOnLoad() {
       const sections = this.shadowRoot.querySelectorAll('section');
       const navLinks = this.shadowRoot.querySelectorAll('.header li a');
       sections.forEach((section, index) => {
-        const rect = section.getBoundingClientRect();
-
         // Check if the section is at least partially visible in the viewport on load
         if (index === 0) {
           // Assuming the first section should be active initially
