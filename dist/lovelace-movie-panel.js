@@ -687,38 +687,45 @@ var $eb33cbce70c5eb42$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
     color: white;
     margin: 0;
   }
-  .header {
+  ul.header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    right: 0;
-    width: 100%;
     height: 56px !important;
-    padding: 1rem;
-    justify-content: space-between;
-    box-sizing: border-box;
-    background-color: var(--app-header-background-color);
-    filter: drop-shadow(2px 4px 6px black);
+    background-color: #000;
+    /* filter: drop-shadow(2px 4px 6px black); */
     backdrop-filter: blur(15px) brightness(0.7);
-    transition: background-color 0.5s ease;
     z-index: 5;
-    height: auto;
-    display: flex;
-    align-items: center;
-    & nav {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      min-width: 200px;
-    }
-    & a,
-    h1 {
-      text-decoration: none;
-      margin: 0 0.5rem 0 0;
-      color: var(--accent-color);
-      text-transform: capitalize;
-      &:hover {
-        color: white;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 1rem;
+    overflow: hidden;
+    align-content: center;
+
+    li {
+      float: left;
+
+      a {
+        display: block;
+        text-decoration: none;
+        text-align: center;
+        padding: 1rem 16px;
+        text-transform: capitalize;
+        color: var(--accent-color);
+        font-size: 20px;
+        font-weight: 700;
+        font-family: 'Raleway';
+        border-bottom: 2px solid transparent; /* Transparent border for all links */
+        transition: border-color 0.3s ease; /* Smooth transition for border color */
+
+        &:hover:not(.active) {
+          background-color: var(--secondary-bg-color);
+          color: white;
+        }
+
+        &.active {
+          border-bottom: 2px solid var(--accent-color); /* White border for active link */
+        }
       }
     }
   }
@@ -767,11 +774,12 @@ var $eb33cbce70c5eb42$export$2e2bcd8739ae039 = (0, $def2de46b9306e8a$export$dbf3
   }
 
   .search-container {
-    display: flex;
-    justify-content: flex-end;
+    display: inline-flex;
+    justify-content: end;
     align-items: center;
     max-width: 400px;
     width: 100%;
+    height: 100%;
   }
 
   .search-icon,
@@ -8673,7 +8681,7 @@ var $04557c061247a0a6$export$a14c803a1714faa3 = "M18.5,19.13C20,17.77 20,15.18 2
 const $75b5f07595b25ff0$export$8daf82f2d276f63b = (superclass)=>class extends superclass {
         /* ------------------------------ SEARCH HANDLE ----------------------------- */ renderSearchForm() {
             return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-        <div class="search-container">
+        <li style="float:right" class="search-container">
           ${this.search.length > 0 ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)` <svg
                 class="reset-icon"
                 @click="${this.resetSearch}"
@@ -8704,7 +8712,7 @@ const $75b5f07595b25ff0$export$8daf82f2d276f63b = (superclass)=>class extends su
               placeholder="Search..."
             />
           </form>
-        </div>
+        </li>
       `;
         }
         updateSearch(e) {
@@ -8786,7 +8794,6 @@ const $75b5f07595b25ff0$export$8daf82f2d276f63b = (superclass)=>class extends su
             } else console.error("Toast element not found");
         }
     };
-console.log("SearchMixin exported");
 
 
 
@@ -8810,22 +8817,37 @@ const $66c55adb714d3171$export$89545bc5a03b3b4b = (Superclass)=>class extends Su
             const sections = this.shadowRoot.querySelectorAll("section");
             const mainElement = this.shadowRoot.querySelector("main");
             const headerElement = this.shadowRoot.querySelector(".header");
+            const navLinks = this.shadowRoot.querySelectorAll(".header li a");
             sections.forEach((section, index)=>{
                 const rect = section.getBoundingClientRect();
                 // Check if the section is at least partially visible in the viewport
                 const isVisible = rect.bottom > headerElement.offsetHeight && rect.top < (window.innerHeight || document.documentElement.clientHeight) - 56;
                 if (isVisible) {
-                    // Change the background color based on odd or even index
-                    if (index % 2 === 0) {
-                        mainElement.style.backgroundColor = "var(--primary-color)";
-                        headerElement.style.backgroundColor = "var(--app-header-background-color)";
-                    } else {
-                        mainElement.style.backgroundColor = "var(--secondary-bg-color)";
-                        headerElement.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-                    }
+                    // console.log(`Visible section ID: ${section.id}`); // Debug log
+                    // // Change the background color based on odd or even index
+                    if (index % 2 === 0) mainElement.style.backgroundColor = "var(--primary-color)";
+                    else mainElement.style.backgroundColor = "var(--secondary-bg-color)";
+                    // Update navigation link styles
+                    navLinks.forEach((link)=>{
+                        if (link.getAttribute("data-target") === section.id) link.classList.add("active");
+                        else link.classList.remove("active");
+                    });
                     // Exit the loop once a visible section is found
                     return;
                 }
+            });
+        }
+        updateNavOnLoad() {
+            const sections = this.shadowRoot.querySelectorAll("section");
+            const navLinks = this.shadowRoot.querySelectorAll(".header li a");
+            sections.forEach((section, index)=>{
+                const rect = section.getBoundingClientRect();
+                // Check if the section is at least partially visible in the viewport on load
+                if (index === 0) // Assuming the first section should be active initially
+                navLinks.forEach((link)=>{
+                    if (link.getAttribute("data-target") === section.id) link.classList.add("active");
+                    else link.classList.remove("active");
+                });
             });
         }
         /* -------------------------------------------------------------------------- */ /*                                POPUP DIALOG                                */ /* -------------------------------------------------------------------------- */ // Method to open the more info dialog
@@ -8917,6 +8939,9 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
             },
             isSearchActive: {
                 type: Boolean
+            },
+            currentActiveSection: {
+                type: String
             }
         };
     }
@@ -8960,6 +8985,7 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
     }
     connectedCallback() {
         super.connectedCallback();
+        this.updateNavOnLoad();
         window.addEventListener("scroll", this.boundHandleScroll);
     }
     disconnectedCallback() {
@@ -9062,32 +9088,29 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
       </div>
     `;
     }
-    /* -------------------------------------------------------------------------- */ /*                              MAIN PAGE RENDER                              */ /* -------------------------------------------------------------------------- */ render() {
-        // console.log('Rendering component...');
+    renderNavLink(linkId, title) {
+        const isActive = this.currentActiveSection === linkId;
         return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-      <div class="header">
-        <nav>
-          <a
-            href="#kodi-movies"
-            data-target="kodi-movies"
-            @click="${this.scrollToSection}"
-            ><h1>Kodi</h1></a
-          >
-          <a
-            href="#upcoming-movies"
-            data-target="upcoming-movies"
-            @click="${this.scrollToSection}"
-            ><h1>Cinema</h1></a
-          >
-          <a
-            href="#tmdb-movies"
-            data-target="tmdb-movies"
-            @click="${this.scrollToSection}"
-            ><h1>Popular</h1></a
-          >
-        </nav>
+      <li>
+        <a
+          href="#${linkId}"
+          data-target="${linkId}"
+          @click="${this.scrollToSection}"
+          class="${isActive ? "active" : ""}"
+          >${title}</a
+        >
+      </li>
+    `;
+    }
+    /* -------------------------------------------------------------------------- */ /*                              MAIN PAGE RENDER                              */ /* -------------------------------------------------------------------------- */ render() {
+        console.log(`Rendering with active section: ${this.currentActiveSection}`);
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+      <ul class="header">
+        ${this.renderNavLink("kodi-movies", "Kodi")}
+        ${this.renderNavLink("upcoming-movies", "Cinema")}
+        ${this.renderNavLink("tmdb-movies", "Popular")}
         ${this.renderSearchForm()}
-      </div>
+      </ul>
       <main>
         ${!this.isSearchActive ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
               ${this.renderMovieSections("kodi-movies", this.kodiMovies, [

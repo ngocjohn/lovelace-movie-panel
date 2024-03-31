@@ -27,7 +27,7 @@ export const ActionsHandler = (Superclass) =>
       const sections = this.shadowRoot.querySelectorAll('section');
       const mainElement = this.shadowRoot.querySelector('main');
       const headerElement = this.shadowRoot.querySelector('.header');
-
+      const navLinks = this.shadowRoot.querySelectorAll('.header li a');
       sections.forEach((section, index) => {
         const rect = section.getBoundingClientRect();
 
@@ -38,18 +38,43 @@ export const ActionsHandler = (Superclass) =>
             (window.innerHeight || document.documentElement.clientHeight) - 56;
 
         if (isVisible) {
-          // Change the background color based on odd or even index
+          // console.log(`Visible section ID: ${section.id}`); // Debug log
+          // // Change the background color based on odd or even index
           if (index % 2 === 0) {
             mainElement.style.backgroundColor = 'var(--primary-color)';
-            headerElement.style.backgroundColor =
-              'var(--app-header-background-color)';
           } else {
             mainElement.style.backgroundColor = 'var(--secondary-bg-color)';
-            headerElement.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
           }
+          // Update navigation link styles
+          navLinks.forEach((link) => {
+            if (link.getAttribute('data-target') === section.id) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
 
           // Exit the loop once a visible section is found
           return;
+        }
+      });
+    }
+    updateNavOnLoad() {
+      const sections = this.shadowRoot.querySelectorAll('section');
+      const navLinks = this.shadowRoot.querySelectorAll('.header li a');
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+
+        // Check if the section is at least partially visible in the viewport on load
+        if (index === 0) {
+          // Assuming the first section should be active initially
+          navLinks.forEach((link) => {
+            if (link.getAttribute('data-target') === section.id) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
         }
       });
     }

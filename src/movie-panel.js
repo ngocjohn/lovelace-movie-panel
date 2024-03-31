@@ -23,6 +23,7 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
       search: { type: String },
       searchResults: { type: Array },
       isSearchActive: { type: Boolean },
+      currentActiveSection: { type: String },
     };
   }
   static styles = [styles, mediaquerystyles, dialogcss];
@@ -72,6 +73,7 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
 
   connectedCallback() {
     super.connectedCallback();
+    this.updateNavOnLoad();
     window.addEventListener('scroll', this.boundHandleScroll);
   }
 
@@ -217,36 +219,34 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
     `;
   }
 
+  renderNavLink(linkId, title) {
+    const isActive = this.currentActiveSection === linkId;
+    return html`
+      <li>
+        <a
+          href="#${linkId}"
+          data-target="${linkId}"
+          @click="${this.scrollToSection}"
+          class="${isActive ? 'active' : ''}"
+          >${title}</a
+        >
+      </li>
+    `;
+  }
+
   /* -------------------------------------------------------------------------- */
   /*                              MAIN PAGE RENDER                              */
   /* -------------------------------------------------------------------------- */
 
   render() {
-    // console.log('Rendering component...');
+    console.log(`Rendering with active section: ${this.currentActiveSection}`);
     return html`
-      <div class="header">
-        <nav>
-          <a
-            href="#kodi-movies"
-            data-target="kodi-movies"
-            @click="${this.scrollToSection}"
-            ><h1>Kodi</h1></a
-          >
-          <a
-            href="#upcoming-movies"
-            data-target="upcoming-movies"
-            @click="${this.scrollToSection}"
-            ><h1>Cinema</h1></a
-          >
-          <a
-            href="#tmdb-movies"
-            data-target="tmdb-movies"
-            @click="${this.scrollToSection}"
-            ><h1>Popular</h1></a
-          >
-        </nav>
+      <ul class="header">
+        ${this.renderNavLink('kodi-movies', 'Kodi')}
+        ${this.renderNavLink('upcoming-movies', 'Cinema')}
+        ${this.renderNavLink('tmdb-movies', 'Popular')}
         ${this.renderSearchForm()}
-      </div>
+      </ul>
       <main>
         ${!this.isSearchActive
           ? html`

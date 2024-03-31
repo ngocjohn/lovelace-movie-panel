@@ -13,38 +13,45 @@ export default css`
     color: white;
     margin: 0;
   }
-  .header {
+  ul.header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    right: 0;
-    width: 100%;
     height: 56px !important;
-    padding: 1rem;
-    justify-content: space-between;
-    box-sizing: border-box;
-    background-color: var(--app-header-background-color);
-    filter: drop-shadow(2px 4px 6px black);
+    background-color: #000;
+    /* filter: drop-shadow(2px 4px 6px black); */
     backdrop-filter: blur(15px) brightness(0.7);
-    transition: background-color 0.5s ease;
     z-index: 5;
-    height: auto;
-    display: flex;
-    align-items: center;
-    & nav {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      min-width: 200px;
-    }
-    & a,
-    h1 {
-      text-decoration: none;
-      margin: 0 0.5rem 0 0;
-      color: var(--accent-color);
-      text-transform: capitalize;
-      &:hover {
-        color: white;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 1rem;
+    overflow: hidden;
+    align-content: center;
+
+    li {
+      float: left;
+
+      a {
+        display: block;
+        text-decoration: none;
+        text-align: center;
+        padding: 1rem 16px;
+        text-transform: capitalize;
+        color: var(--accent-color);
+        font-size: 20px;
+        font-weight: 700;
+        font-family: 'Raleway';
+        border-bottom: 2px solid transparent; /* Transparent border for all links */
+        transition: border-color 0.3s ease; /* Smooth transition for border color */
+
+        &:hover:not(.active) {
+          background-color: var(--secondary-bg-color);
+          color: white;
+        }
+
+        &.active {
+          border-bottom: 2px solid var(--accent-color); /* White border for active link */
+        }
       }
     }
   }
@@ -93,11 +100,12 @@ export default css`
   }
 
   .search-container {
-    display: flex;
-    justify-content: flex-end;
+    display: inline-flex;
+    justify-content: end;
     align-items: center;
     max-width: 400px;
     width: 100%;
+    height: 100%;
   }
 
   .search-icon,
