@@ -9056,10 +9056,8 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
     updated(changedProperties) {
         super.updated(changedProperties);
         // Check if the relevant property has changed
-        if (changedProperties.has("cinemaMovies") || changedProperties.has("upcomingMovies") || changedProperties.has("kodiMovies")) {
-            console.log("bentoGrid");
-            this.createBentoGrid();
-        }
+        if (changedProperties.has("cinemaMovies") || changedProperties.has("upcomingMovies") || changedProperties.has("kodiMovies")) // console.log('bentoGrid');
+        this.createBentoGrid();
     }
     /* ------------------------------ FETCH MOVIES ------------------------------ */ async getCinemaMovies(url) {
         try {

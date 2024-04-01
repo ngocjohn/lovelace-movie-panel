@@ -91,7 +91,7 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
       changedProperties.has('upcomingMovies') ||
       changedProperties.has('kodiMovies')
     ) {
-      console.log('bentoGrid');
+      // console.log('bentoGrid');
       this.createBentoGrid();
     }
   }
