@@ -79,6 +79,56 @@ export const ActionsHandler = (Superclass) =>
       });
     }
 
+    /* ------------------------- AUTO SPAN GRID COLUMNS ------------------------- */
+
+    // createBentoGrid() {
+    //   const containers = this.shadowRoot.querySelectorAll('.items-container');
+
+    //   containers.forEach((container) => {
+    //     const children = Array.from(container.children).slice(0, 7);
+
+    //     // Check if there are enough children to pick from
+    //     if (children.length >= 2) {
+    //       // Get two unique random indexes
+    //       const randomIndexes = new Set();
+    //       while (randomIndexes.size < 2) {
+    //         const randomIndex = Math.floor(Math.random() * children.length);
+    //         randomIndexes.add(randomIndex);
+    //       }
+
+    //       // Apply styling to the randomly selected children
+    //       randomIndexes.forEach((index) => {
+    //         children[index].classList.add('span-2');
+    //       });
+    //     }
+    //   });
+    // }
+
+    createBentoGrid() {
+      const containers = this.shadowRoot.querySelectorAll('.items-container');
+
+      containers.forEach((container) => {
+        const children = Array.from(container.children).slice(0, 7);
+
+        // Check if there are enough children to pick from
+        if (children.length >= 2) {
+          // Clear existing span-2 classes
+          children.forEach((child) => child.classList.remove('span-2'));
+
+          // Get two unique random indexes
+          const randomIndexes = new Set();
+          while (randomIndexes.size < 2) {
+            const randomIndex = Math.floor(Math.random() * children.length);
+            randomIndexes.add(randomIndex);
+          }
+
+          // Apply styling to the randomly selected children
+          randomIndexes.forEach((index) => {
+            children[index].classList.add('span-2');
+          });
+        }
+      });
+    }
     /* -------------------------------------------------------------------------- */
     /*                                POPUP DIALOG                                */
     /* -------------------------------------------------------------------------- */

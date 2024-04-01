@@ -7,7 +7,7 @@ export const SearchMixin = (superclass) =>
 
     renderSearchForm() {
       return html`
-        <div class="search-container">
+        <div id="search-container">
           ${this.search.length > 0
             ? html` <svg
                 class="reset-icon"

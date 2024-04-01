@@ -3,6 +3,7 @@ import { styleMap } from 'lit-html/directives/style-map';
 import styles from './css/mainstyles.js';
 import mediaquerystyles from './css/mediaquerystyles.js';
 import dialogcss from './css/dialogcss.js';
+import headercss from './css/headercss.js';
 
 import { SearchMixin } from './helpers/search.js';
 import { ActionsHandler } from './helpers/actions.js';
@@ -26,7 +27,7 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
       currentActiveSection: { type: String },
     };
   }
-  static styles = [styles, mediaquerystyles, dialogcss];
+  static styles = [styles, headercss, mediaquerystyles, dialogcss];
 
   constructor() {
     super();
@@ -82,6 +83,19 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
     super.disconnectedCallback();
   }
 
+  updated(changedProperties) {
+    super.updated(changedProperties);
+    // Check if the relevant property has changed
+    if (
+      changedProperties.has('cinemaMovies') ||
+      changedProperties.has('upcomingMovies') ||
+      changedProperties.has('kodiMovies')
+    ) {
+      console.log('bentoGrid');
+      this.createBentoGrid();
+    }
+  }
+
   /* ------------------------------ FETCH MOVIES ------------------------------ */
   async getCinemaMovies(url) {
     try {
@@ -128,7 +142,6 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
 
   renderMovie(movie, options = {}) {
     const { isLarge = false, useKodiData = false } = options;
-
     const movieClass = isLarge ? 'movie-l' : 'movie-s';
     const movieTitle = movie.title;
     const movieRating = useKodiData ? movie.rating : movie.vote_average;

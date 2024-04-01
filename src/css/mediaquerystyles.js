@@ -14,5 +14,9 @@ export default css`
       min-width: 150px !important;
       margin: 0.5rem;
     }
+    .items-container,
+    .searched {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
   }
 `;
