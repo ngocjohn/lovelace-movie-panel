@@ -9025,9 +9025,6 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
             },
             isSearchActive: {
                 type: Boolean
-            },
-            currentActiveSection: {
-                type: String
             }
         };
     }
@@ -9053,6 +9050,7 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
         this.URL_PATH = `${0, $c64838e06ed01d4e$export$4c1fa0ac0eff2ac}`;
         this.SEARCH_API = `${0, $c64838e06ed01d4e$export$bce7bb55f21f013}`;
         this.getCinemaMovies(this.API_URL);
+        this.getUpcomingMovies();
     }
     // Method to set configuration
     setConfig(config) {
@@ -9065,14 +9063,12 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
    */ set hass(hass) {
         this._hass = hass;
         this._kodiState = hass.states[this._entity];
-        this._upcomingState = hass.states[this._upcoming];
         if (this._kodiState) // Fetch Kodi movies after entity state is updated
         this.getKodiMovies();
     }
     connectedCallback() {
         super.connectedCallback();
         this.updateNavOnLoad();
-        this.getUpcomingMovies();
         window.addEventListener("scroll", this.boundHandleScroll);
     }
     disconnectedCallback() {
@@ -9100,7 +9096,8 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
         try {
             const movies = await (0, $c64838e06ed01d4e$export$7e34e99eb2ee781b)();
             this.upcomingMovies = movies;
-            console.log(movies);
+            this.requestUpdate(); // Forces update
+        // console.log(movies);
         } catch (error) {
             console.error("Error fetching upcoming movies:", error);
         }
@@ -9121,7 +9118,7 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
         const movieStreamUrl = useKodiData ? movie.strm_url : "";
         let moviePath;
         if (useKodiData) // For Kodi movies
-        moviePath = isLarge ? movie.fanart_url || movie.poster_url || (0, $93459ff6ae50bd6a$export$679d551b26d0b76c) : movie.poster_url || (0, $93459ff6ae50bd6a$export$679d551b26d0b76c);
+        moviePath = isLarge ? movie.fanart_url || (0, $93459ff6ae50bd6a$export$679d551b26d0b76c) : movie.poster_url || (0, $93459ff6ae50bd6a$export$679d551b26d0b76c);
         else // For non-Kodi movies
         if (isLarge) moviePath = movie.backdrop_path ? this.IMG_PATH + movie.backdrop_path : movie.poster_path ? this.IMG_PATH + movie.poster_path : (0, $93459ff6ae50bd6a$export$679d551b26d0b76c);
         else moviePath = movie.poster_path ? this.IMG_PATH + movie.poster_path : (0, $93459ff6ae50bd6a$export$679d551b26d0b76c);
@@ -9144,12 +9141,13 @@ class $1189ae3e6c799a16$export$904090fa8350021 extends (0, $66c55adb714d3171$exp
           <h3>${movieTitle}</h3>
           <p>${moviePlot}</p>
           <div class="buttons">
-            <button
-              class="watch-now"
-              @click="${()=>this._playMovie(movieStreamUrl)}"
-            >
-              Watch now
-            </button>
+            ${useKodiData ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<button
+                  class="watch-now"
+                  @click="${()=>this._playMovie(movieStreamUrl)}"
+                >
+                  Watch now
+                </button>` : ""}
+
             <button
               class="watch-later"
               @click="${()=>this._openPopup(movieURL)}"

@@ -26,7 +26,6 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
       search: { type: String },
       searchResults: { type: Array },
       isSearchActive: { type: Boolean },
-      currentActiveSection: { type: String },
     };
   }
   static styles = [styles, headercss, mediaquerystyles, dialogcss];
@@ -47,6 +46,7 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
     this.URL_PATH = `${URL_PATH}`;
     this.SEARCH_API = `${SEARCH_API}`;
     this.getCinemaMovies(this.API_URL);
+    this.getUpcomingMovies();
   }
 
   // Method to set configuration
@@ -64,7 +64,6 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
   set hass(hass) {
     this._hass = hass;
     this._kodiState = hass.states[this._entity];
-    this._upcomingState = hass.states[this._upcoming];
     if (this._kodiState) {
       // Fetch Kodi movies after entity state is updated
       this.getKodiMovies();
@@ -74,7 +73,6 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
   connectedCallback() {
     super.connectedCallback();
     this.updateNavOnLoad();
-    this.getUpcomingMovies();
     window.addEventListener('scroll', this.boundHandleScroll);
   }
 
@@ -114,7 +112,8 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
     try {
       const movies = await getResults();
       this.upcomingMovies = movies;
-      console.log(movies);
+      this.requestUpdate(); // Forces update
+      // console.log(movies);
     } catch (error) {
       console.error('Error fetching upcoming movies:', error);
     }
@@ -151,7 +150,7 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
     if (useKodiData) {
       // For Kodi movies
       moviePath = isLarge
-        ? movie.fanart_url || movie.poster_url || noImage
+        ? movie.fanart_url || noImage
         : movie.poster_url || noImage;
     } else {
       // For non-Kodi movies
@@ -192,12 +191,15 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
           <h3>${movieTitle}</h3>
           <p>${moviePlot}</p>
           <div class="buttons">
-            <button
-              class="watch-now"
-              @click="${() => this._playMovie(movieStreamUrl)}"
-            >
-              Watch now
-            </button>
+            ${useKodiData
+              ? html`<button
+                  class="watch-now"
+                  @click="${() => this._playMovie(movieStreamUrl)}"
+                >
+                  Watch now
+                </button>`
+              : ''}
+
             <button
               class="watch-later"
               @click="${() => this._openPopup(movieURL)}"
