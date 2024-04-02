@@ -3,8 +3,9 @@ import { css } from 'lit';
 export default css`
   :host {
     --primary-color: #181625;
-    --secondary-bg-color: #373258;
     --secondary-color: #403c55;
+    --primary-bg-color: #442d47;
+    --secondary-bg-color: #0d324d;
     --accent-color: rgb(146, 144, 195);
     --maxPrimarySectionWidth: 85vw;
   }
@@ -62,14 +63,15 @@ export default css`
   .items-container,
   .searched {
     display: grid;
-    height: 100%;
-    width: 100%;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     grid-auto-flow: dense;
+    padding: 0 1rem;
+    grid-gap: 1rem;
     & .span-2 {
       grid-column: span 2;
       grid-row: span 2;
       align-self: center;
+      margin: 0;
     }
   }
 

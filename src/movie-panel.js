@@ -8,6 +8,8 @@ import headercss from './css/headercss.js';
 import { SearchMixin } from './helpers/search.js';
 import { ActionsHandler } from './helpers/actions.js';
 import { SEARCH_API, IMG_PATH, API_URL, URL_PATH } from './helpers/apiTmdb.js';
+import { getResults } from './helpers/apiTmdb.js';
+
 import { loadCSS, noImage } from './helpers/const.js';
 
 export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
@@ -67,14 +69,12 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
       // Fetch Kodi movies after entity state is updated
       this.getKodiMovies();
     }
-    if (this._upcomingState) {
-      this.getUpcomingMovies();
-    }
   }
 
   connectedCallback() {
     super.connectedCallback();
     this.updateNavOnLoad();
+    this.getUpcomingMovies();
     window.addEventListener('scroll', this.boundHandleScroll);
   }
 
@@ -110,6 +110,16 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
     }
   }
 
+  async getUpcomingMovies() {
+    try {
+      const movies = await getResults();
+      this.upcomingMovies = movies;
+      console.log(movies);
+    } catch (error) {
+      console.error('Error fetching upcoming movies:', error);
+    }
+  }
+
   getKodiMovies() {
     if (
       this._kodiState &&
@@ -120,19 +130,6 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
       this.kodiMovies = data;
     } else {
       console.error('Kodi Movies data is not available.');
-    }
-  }
-
-  getUpcomingMovies() {
-    if (
-      this._upcomingState &&
-      this._upcomingState.attributes &&
-      this._upcomingState.attributes.data
-    ) {
-      let data = this._upcomingState.attributes.data;
-      this.upcomingMovies = data;
-    } else {
-      console.error('Upcoming Movies data is not available.');
     }
   }
 
@@ -289,8 +286,7 @@ export class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
               ${this.renderMovieSections(
                 'upcoming-movies',
                 this.upcomingMovies,
-                [{ title: 'In cinemas' }, { title: 'Movies' }],
-                true
+                [{ title: 'In cinemas' }, { title: 'Movies' }]
               )}
               ${this.renderMovieSections('tmdb-movies', this.cinemaMovies, [
                 { title: 'Most Popular' },
