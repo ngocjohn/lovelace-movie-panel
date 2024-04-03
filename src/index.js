@@ -1,5 +1,5 @@
 import { LitElement, html } from 'lit';
-import { styleMap } from 'lit-html/directives/style-map';
+import { styleMap } from 'lit-html/directives/style-map.js';
 import styles from './css/mainstyles.js';
 import mediaquerystyles from './css/mediaquerystyles.js';
 import dialogcss from './css/dialogcss.js';
