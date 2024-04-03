@@ -5,6 +5,7 @@ export default css`
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+    height: calc(var(--header-height) + 1px);
     background-color: #000;
     filter: drop-shadow(2px 4px 6px black);
     backdrop-filter: blur(15px) brightness(0.7);
@@ -20,6 +21,7 @@ export default css`
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
+
     ul {
       list-style-type: none;
       padding: 0;
