@@ -1,2 +1,1332 @@
-/*! For license information please see lovelace-movie-panel.js.LICENSE.txt */
-(()=>{"use strict";const t=globalThis,e=t.ShadowRoot&&(void 0===t.ShadyCSS||t.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,n=Symbol(),r=new WeakMap;class o{constructor(t,e,r){if(this._$cssResult$=!0,r!==n)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e}get styleSheet(){let t=this.o;const n=this.t;if(e&&void 0===t){const e=void 0!==n&&1===n.length;e&&(t=r.get(n)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&r.set(n,t))}return t}toString(){return this.cssText}}const i=(t,...e)=>{const r=1===t.length?t[0]:e.reduce(((e,n,r)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(n)+t[r+1]),t[0]);return new o(r,t,n)},a=(n,r)=>{if(e)n.adoptedStyleSheets=r.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet));else for(const e of r){const r=document.createElement("style"),o=t.litNonce;void 0!==o&&r.setAttribute("nonce",o),r.textContent=e.cssText,n.appendChild(r)}},s=e?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const n of t.cssRules)e+=n.cssText;return(t=>new o("string"==typeof t?t:t+"",void 0,n))(e)})(t):t,{is:c,defineProperty:l,getOwnPropertyDescriptor:u,getOwnPropertyNames:h,getOwnPropertySymbols:p,getPrototypeOf:f}=Object,d=globalThis,v=d.trustedTypes,y=v?v.emptyScript:"",m=d.reactiveElementPolyfillSupport,g=(t,e)=>t,b={toAttribute(t,e){switch(e){case Boolean:t=t?y:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t)}return t},fromAttribute(t,e){let n=t;switch(e){case Boolean:n=null!==t;break;case Number:n=null===t?null:Number(t);break;case Object:case Array:try{n=JSON.parse(t)}catch(t){n=null}}return n}},w=(t,e)=>!c(t,e),_={attribute:!0,type:String,converter:b,reflect:!1,hasChanged:w};Symbol.metadata??=Symbol("metadata"),d.litPropertyMetadata??=new WeakMap;class x extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,e=_){if(e.state&&(e.attribute=!1),this._$Ei(),this.elementProperties.set(t,e),!e.noAccessor){const n=Symbol(),r=this.getPropertyDescriptor(t,n,e);void 0!==r&&l(this.prototype,t,r)}}static getPropertyDescriptor(t,e,n){const{get:r,set:o}=u(this.prototype,t)??{get(){return this[e]},set(t){this[e]=t}};return{get(){return r?.call(this)},set(e){const i=r?.call(this);o.call(this,e),this.requestUpdate(t,i,n)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??_}static _$Ei(){if(this.hasOwnProperty(g("elementProperties")))return;const t=f(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties)}static finalize(){if(this.hasOwnProperty(g("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(g("properties"))){const t=this.properties,e=[...h(t),...p(t)];for(const n of e)this.createProperty(n,t[n])}const t=this[Symbol.metadata];if(null!==t){const e=litPropertyMetadata.get(t);if(void 0!==e)for(const[t,n]of e)this.elementProperties.set(t,n)}this._$Eh=new Map;for(const[t,e]of this.elementProperties){const n=this._$Eu(t,e);void 0!==n&&this._$Eh.set(n,t)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(t){const e=[];if(Array.isArray(t)){const n=new Set(t.flat(1/0).reverse());for(const t of n)e.unshift(s(t))}else void 0!==t&&e.push(s(t));return e}static _$Eu(t,e){const n=e.attribute;return!1===n?void 0:"string"==typeof n?n:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach((t=>t(this)))}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.()}removeController(t){this._$EO?.delete(t)}_$E_(){const t=new Map,e=this.constructor.elementProperties;for(const n of e.keys())this.hasOwnProperty(n)&&(t.set(n,this[n]),delete this[n]);t.size>0&&(this._$Ep=t)}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return a(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach((t=>t.hostConnected?.()))}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach((t=>t.hostDisconnected?.()))}attributeChangedCallback(t,e,n){this._$AK(t,n)}_$EC(t,e){const n=this.constructor.elementProperties.get(t),r=this.constructor._$Eu(t,n);if(void 0!==r&&!0===n.reflect){const o=(void 0!==n.converter?.toAttribute?n.converter:b).toAttribute(e,n.type);this._$Em=t,null==o?this.removeAttribute(r):this.setAttribute(r,o),this._$Em=null}}_$AK(t,e){const n=this.constructor,r=n._$Eh.get(t);if(void 0!==r&&this._$Em!==r){const t=n.getPropertyOptions(r),o="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:b;this._$Em=r,this[r]=o.fromAttribute(e,t.type),this._$Em=null}}requestUpdate(t,e,n){if(void 0!==t){if(n??=this.constructor.getPropertyOptions(t),!(n.hasChanged??w)(this[t],e))return;this.P(t,e,n)}!1===this.isUpdatePending&&(this._$ES=this._$ET())}P(t,e,n){this._$AL.has(t)||this._$AL.set(t,e),!0===n.reflect&&this._$Em!==t&&(this._$Ej??=new Set).add(t)}async _$ET(){this.isUpdatePending=!0;try{await this._$ES}catch(t){Promise.reject(t)}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,e]of this._$Ep)this[t]=e;this._$Ep=void 0}const t=this.constructor.elementProperties;if(t.size>0)for(const[e,n]of t)!0!==n.wrapped||this._$AL.has(e)||void 0===this[e]||this.P(e,this[e],n)}let t=!1;const e=this._$AL;try{t=this.shouldUpdate(e),t?(this.willUpdate(e),this._$EO?.forEach((t=>t.hostUpdate?.())),this.update(e)):this._$EU()}catch(e){throw t=!1,this._$EU(),e}t&&this._$AE(e)}willUpdate(t){}_$AE(t){this._$EO?.forEach((t=>t.hostUpdated?.())),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t)}_$EU(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return!0}update(t){this._$Ej&&=this._$Ej.forEach((t=>this._$EC(t,this[t]))),this._$EU()}updated(t){}firstUpdated(t){}}x.elementStyles=[],x.shadowRootOptions={mode:"open"},x[g("elementProperties")]=new Map,x[g("finalized")]=new Map,m?.({ReactiveElement:x}),(d.reactiveElementVersions??=[]).push("2.0.4");const S=globalThis,A=S.trustedTypes,k=A?A.createPolicy("lit-html",{createHTML:t=>t}):void 0,$="$lit$",L=`lit$${(Math.random()+"").slice(9)}$`,E="?"+L,O=`<${E}>`,j=document,M=()=>j.createComment(""),P=t=>null===t||"object"!=typeof t&&"function"!=typeof t,T=Array.isArray,C="[ \t\n\f\r]",N=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,R=/-->/g,U=/>/g,z=RegExp(`>|${C}(?:([^\\s"'>=/]+)(${C}*=${C}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),D=/'/g,I=/"/g,H=/^(?:script|style|textarea|title)$/i,B=t=>(e,...n)=>({_$litType$:t,strings:e,values:n}),G=B(1),q=(B(2),Symbol.for("lit-noChange")),F=Symbol.for("lit-nothing"),V=new WeakMap,Z=j.createTreeWalker(j,129);function W(t,e){if(!Array.isArray(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==k?k.createHTML(e):e}const Y=(t,e)=>{const n=t.length-1,r=[];let o,i=2===e?"<svg>":"",a=N;for(let e=0;e<n;e++){const n=t[e];let s,c,l=-1,u=0;for(;u<n.length&&(a.lastIndex=u,c=a.exec(n),null!==c);)u=a.lastIndex,a===N?"!--"===c[1]?a=R:void 0!==c[1]?a=U:void 0!==c[2]?(H.test(c[2])&&(o=RegExp("</"+c[2],"g")),a=z):void 0!==c[3]&&(a=z):a===z?">"===c[0]?(a=o??N,l=-1):void 0===c[1]?l=-2:(l=a.lastIndex-c[2].length,s=c[1],a=void 0===c[3]?z:'"'===c[3]?I:D):a===I||a===D?a=z:a===R||a===U?a=N:(a=z,o=void 0);const h=a===z&&t[e+1].startsWith("/>")?" ":"";i+=a===N?n+O:l>=0?(r.push(s),n.slice(0,l)+$+n.slice(l)+L+h):n+L+(-2===l?e:h)}return[W(t,i+(t[n]||"<?>")+(2===e?"</svg>":"")),r]};class K{constructor({strings:t,_$litType$:e},n){let r;this.parts=[];let o=0,i=0;const a=t.length-1,s=this.parts,[c,l]=Y(t,e);if(this.el=K.createElement(c,n),Z.currentNode=this.el.content,2===e){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes)}for(;null!==(r=Z.nextNode())&&s.length<a;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith($)){const e=l[i++],n=r.getAttribute(t).split(L),a=/([.?@])?(.*)/.exec(e);s.push({type:1,index:o,name:a[2],strings:n,ctor:"."===a[1]?et:"?"===a[1]?nt:"@"===a[1]?rt:tt}),r.removeAttribute(t)}else t.startsWith(L)&&(s.push({type:6,index:o}),r.removeAttribute(t));if(H.test(r.tagName)){const t=r.textContent.split(L),e=t.length-1;if(e>0){r.textContent=A?A.emptyScript:"";for(let n=0;n<e;n++)r.append(t[n],M()),Z.nextNode(),s.push({type:2,index:++o});r.append(t[e],M())}}}else if(8===r.nodeType)if(r.data===E)s.push({type:2,index:o});else{let t=-1;for(;-1!==(t=r.data.indexOf(L,t+1));)s.push({type:7,index:o}),t+=L.length-1}o++}}static createElement(t,e){const n=j.createElement("template");return n.innerHTML=t,n}}function Q(t,e,n=t,r){if(e===q)return e;let o=void 0!==r?n._$Co?.[r]:n._$Cl;const i=P(e)?void 0:e._$litDirective$;return o?.constructor!==i&&(o?._$AO?.(!1),void 0===i?o=void 0:(o=new i(t),o._$AT(t,n,r)),void 0!==r?(n._$Co??=[])[r]=o:n._$Cl=o),void 0!==o&&(e=Q(t,o._$AS(t,e.values),o,r)),e}class J{constructor(t,e){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=e}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:e},parts:n}=this._$AD,r=(t?.creationScope??j).importNode(e,!0);Z.currentNode=r;let o=Z.nextNode(),i=0,a=0,s=n[0];for(;void 0!==s;){if(i===s.index){let e;2===s.type?e=new X(o,o.nextSibling,this,t):1===s.type?e=new s.ctor(o,s.name,s.strings,this,t):6===s.type&&(e=new ot(o,this,t)),this._$AV.push(e),s=n[++a]}i!==s?.index&&(o=Z.nextNode(),i++)}return Z.currentNode=j,r}p(t){let e=0;for(const n of this._$AV)void 0!==n&&(void 0!==n.strings?(n._$AI(t,n,e),e+=n.strings.length-2):n._$AI(t[e])),e++}}class X{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,e,n,r){this.type=2,this._$AH=F,this._$AN=void 0,this._$AA=t,this._$AB=e,this._$AM=n,this.options=r,this._$Cv=r?.isConnected??!0}get parentNode(){let t=this._$AA.parentNode;const e=this._$AM;return void 0!==e&&11===t?.nodeType&&(t=e.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,e=this){t=Q(this,t,e),P(t)?t===F||null==t||""===t?(this._$AH!==F&&this._$AR(),this._$AH=F):t!==this._$AH&&t!==q&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):(t=>T(t)||"function"==typeof t?.[Symbol.iterator])(t)?this.k(t):this._(t)}S(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.S(t))}_(t){this._$AH!==F&&P(this._$AH)?this._$AA.nextSibling.data=t:this.T(j.createTextNode(t)),this._$AH=t}$(t){const{values:e,_$litType$:n}=t,r="number"==typeof n?this._$AC(t):(void 0===n.el&&(n.el=K.createElement(W(n.h,n.h[0]),this.options)),n);if(this._$AH?._$AD===r)this._$AH.p(e);else{const t=new J(r,this),n=t.u(this.options);t.p(e),this.T(n),this._$AH=t}}_$AC(t){let e=V.get(t.strings);return void 0===e&&V.set(t.strings,e=new K(t)),e}k(t){T(this._$AH)||(this._$AH=[],this._$AR());const e=this._$AH;let n,r=0;for(const o of t)r===e.length?e.push(n=new X(this.S(M()),this.S(M()),this,this.options)):n=e[r],n._$AI(o),r++;r<e.length&&(this._$AR(n&&n._$AB.nextSibling,r),e.length=r)}_$AR(t=this._$AA.nextSibling,e){for(this._$AP?.(!1,!0,e);t&&t!==this._$AB;){const e=t.nextSibling;t.remove(),t=e}}setConnected(t){void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t))}}class tt{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,e,n,r,o){this.type=1,this._$AH=F,this._$AN=void 0,this.element=t,this.name=e,this._$AM=r,this.options=o,n.length>2||""!==n[0]||""!==n[1]?(this._$AH=Array(n.length-1).fill(new String),this.strings=n):this._$AH=F}_$AI(t,e=this,n,r){const o=this.strings;let i=!1;if(void 0===o)t=Q(this,t,e,0),i=!P(t)||t!==this._$AH&&t!==q,i&&(this._$AH=t);else{const r=t;let a,s;for(t=o[0],a=0;a<o.length-1;a++)s=Q(this,r[n+a],e,a),s===q&&(s=this._$AH[a]),i||=!P(s)||s!==this._$AH[a],s===F?t=F:t!==F&&(t+=(s??"")+o[a+1]),this._$AH[a]=s}i&&!r&&this.j(t)}j(t){t===F?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"")}}class et extends tt{constructor(){super(...arguments),this.type=3}j(t){this.element[this.name]=t===F?void 0:t}}class nt extends tt{constructor(){super(...arguments),this.type=4}j(t){this.element.toggleAttribute(this.name,!!t&&t!==F)}}class rt extends tt{constructor(t,e,n,r,o){super(t,e,n,r,o),this.type=5}_$AI(t,e=this){if((t=Q(this,t,e,0)??F)===q)return;const n=this._$AH,r=t===F&&n!==F||t.capture!==n.capture||t.once!==n.once||t.passive!==n.passive,o=t!==F&&(n===F||r);r&&this.element.removeEventListener(this.name,this,n),o&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t)}}class ot{constructor(t,e,n){this.element=t,this.type=6,this._$AN=void 0,this._$AM=e,this.options=n}get _$AU(){return this._$AM._$AU}_$AI(t){Q(this,t)}}const it=S.litHtmlPolyfillSupport;it?.(K,X),(S.litHtmlVersions??=[]).push("3.1.2");class at extends x{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const e=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=((t,e,n)=>{const r=n?.renderBefore??e;let o=r._$litPart$;if(void 0===o){const t=n?.renderBefore??null;r._$litPart$=o=new X(e.insertBefore(M(),t),t,void 0,n??{})}return o._$AI(t),o})(e,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return q}}at._$litElement$=!0,at.finalized=!0,globalThis.litElementHydrateSupport?.({LitElement:at});const st=globalThis.litElementPolyfillSupport;st?.({LitElement:at}),(globalThis.litElementVersions??=[]).push("4.0.4");class ct{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,n){this._$Ct=t,this._$AM=e,this._$Ci=n}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}}const lt="important",ut=" !"+lt,ht=(t=>(...e)=>({_$litDirective$:t,values:e}))(class extends ct{constructor(t){if(super(t),1!==t.type||"style"!==t.name||t.strings?.length>2)throw Error("The `styleMap` directive must be used in the `style` attribute and must be the only part in the attribute.")}render(t){return Object.keys(t).reduce(((e,n)=>{const r=t[n];return null==r?e:e+`${n=n.includes("-")?n:n.replace(/(?:^(webkit|moz|ms|o)|)(?=[A-Z])/g,"-$&").toLowerCase()}:${r};`}),"")}update(t,[e]){const{style:n}=t.element;if(void 0===this.ft)return this.ft=new Set(Object.keys(e)),this.render(e);for(const t of this.ft)null==e[t]&&(this.ft.delete(t),t.includes("-")?n.removeProperty(t):n[t]=null);for(const t in e){const r=e[t];if(null!=r){this.ft.add(t);const e="string"==typeof r&&r.endsWith(ut);t.includes("-")||e?n.setProperty(t,e?r.slice(0,-11):r,e?lt:""):n[t]=r}}return q}});var pt;const ft=i(pt||(dt=["\n  :host {\n    --primary-color: #181625;\n    --secondary-color: #403c55;\n    --primary-bg-color: #442d47;\n    --secondary-bg-color: #0d324d;\n    --accent-color: rgb(146, 144, 195);\n    --maxPrimarySectionWidth: 85vw;\n  }\n  * {\n    font-family: 'Raleway', sans-serif;\n    color: white;\n    margin: 0;\n  }\n\n  main {\n    margin: 0 auto 56px;\n    background-color: var(--primary-color);\n    transition: background-color 0.4s ease;\n  }\n  button {\n    cursor: pointer;\n    padding-top: 1rem;\n  }\n\n  section.inner_content {\n    overflow: auto;\n    display: block;\n    align-items: normal;\n  }\n\n  .subsection {\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    height: 100%;\n    overflow: auto;\n  }\n  #subsection-title {\n    position: -webkit-sticky; /* For Safari */\n    position: sticky;\n    top: 0;\n    left: 1rem;\n    margin: 2rem 1rem 0.5rem 1rem;\n    background: inherit; /* This makes sure the title is readable over other content */\n    align-self: flex-start;\n  }\n  .horizontal-list {\n    display: flex;\n    flex-direction: row;\n    width: fit-content;\n  }\n\n  /* .items-container,\n  .searched {\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: space-between;\n  } */\n\n  .items-container,\n  .searched {\n    display: grid;\n    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));\n    grid-auto-flow: dense;\n    padding: 0 1rem;\n    grid-gap: 1rem;\n    & .span-2 {\n      grid-column: span 2;\n      grid-row: span 2;\n      align-self: center;\n      margin: 0;\n    }\n  }\n\n  .watch-now,\n  .watch-later {\n    color: var(--primary-color);\n    background-color: var(--accent-color);\n    border: none;\n    border-radius: 100px;\n  }\n\n  .watch-now {\n    padding: 0.5rem 1rem;\n  }\n\n  .watch-later {\n    padding: 0.5rem 0.7rem;\n  }\n\n  .movie-l {\n    width: 40rem;\n    position: relative;\n    margin: 1rem;\n    border-radius: 10px;\n    overflow: hidden;\n    height: 20rem;\n    box-shadow: 2px 2px 14px 0px #2d2d2d;\n    background-image: linear-gradient(to top, black, transparent);\n  }\n\n  .movie-l::after {\n    content: '';\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    background: linear-gradient(\n      to top,\n      rgba(9, 1, 31, 0.719),\n      rgba(0, 0, 0, 0)\n    );\n    z-index: 1;\n  }\n\n  .movie-l .movie-info {\n    display: none;\n  }\n\n  .movie-l .overview.visible {\n    padding: 1rem;\n    position: absolute;\n    bottom: 0%;\n    width: 80%;\n    z-index: 2;\n    display: flex;\n    flex-direction: column;\n    height: 50%;\n    justify-content: space-between;\n    & h3 {\n      font-size: 1.4rem;\n    }\n    & p {\n      margin-top: 0;\n      display: -webkit-box;\n      -webkit-box-orient: vertical;\n      -webkit-line-clamp: 4;\n      /* Set the maximum number of lines before truncating */\n      overflow: hidden;\n      font-size: 14px;\n      opacity: 0.7;\n    }\n  }\n\n  .movie-s img,\n  .movie-l img {\n    width: 100%;\n    border-radius: 10px;\n    /* box-shadow: 2px 2px 14px 0px #000000; */\n  }\n\n  .movie-s {\n    flex: 1;\n    min-width: 200px;\n    margin: 1rem;\n    position: relative;\n    border-radius: 10px;\n    overflow: hidden;\n    height: min-content;\n  }\n\n  .movie-s .movie-info {\n    display: flex;\n    align-items: start;\n    justify-content: space-between;\n    padding: 0.5rem;\n    letter-spacing: 0.5px;\n    font-size: 12px;\n  }\n\n  .movie-s .movie-info h3 {\n    margin-top: 0;\n    display: -webkit-box;\n    -webkit-box-orient: vertical;\n    -webkit-line-clamp: 2;\n    /* Set the maximum number of lines before truncating */\n    overflow: hidden;\n    font-size: 1rem;\n  }\n\n  .movie-s .movie-info span {\n    white-space: nowrap;\n    display: flex;\n    position: absolute;\n    top: 2%;\n    right: 5%;\n    border: none;\n    padding: 5px 10px;\n    border-radius: 10px;\n    font-size: 0.8rem;\n    /* background: linear-gradient(15deg, #bbbbbb 0%, #008704 40%); */\n    box-sizing: content-box;\n    font-weight: 800;\n  }\n\n  .movie-s .overview.hidden {\n    display: flex;\n    flex-direction: column;\n    justify-content: end;\n    width: -webkit-fill-available;\n    top: 0;\n    bottom: 0;\n    font-size: 12px;\n    background: linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0.281));\n    position: absolute;\n    padding: 1rem;\n    opacity: 0;\n    transition: opacity 0.5s ease;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    z-index: 3;\n    & .buttons {\n      padding-top: 1rem;\n    }\n  }\n\n  .movie-s .overview.hidden p {\n    display: -webkit-box;\n    -webkit-box-orient: vertical;\n    -webkit-line-clamp: 3;\n    overflow: hidden;\n  }\n\n  .movie-s .overview.hidden h3 {\n    margin: 0;\n  }\n\n  .movie-s:hover .overview.hidden {\n    opacity: 1;\n  }\n\n  ::-webkit-scrollbar {\n    width: 0.5rem;\n    height: 0.5rem;\n  }\n\n  ::-webkit-scrollbar-track {\n    background: #f1f1f100;\n  }\n\n  ::-webkit-scrollbar-track:horizontal {\n    margin: 1.5rem;\n  }\n\n  ::-webkit-scrollbar-thumb {\n    background: var(--secondary-color);\n    border-radius: 100px;\n    cursor: -webkit-grab;\n    cursor: grab;\n  }\n\n  .horizontal-list::-webkit-scrollbar-track {\n    margin: 1rem;\n  }\n"],vt||(vt=dt.slice(0)),pt=Object.freeze(Object.defineProperties(dt,{raw:{value:Object.freeze(vt)}}))));var dt,vt,yt;const mt=i(yt||(yt=function(t,e){return e||(e=t.slice(0)),Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}(["\n  @media (max-width: 768px) {\n    #popup-dialog {\n      max-width: 100vw !important;\n      max-height: 100vh !important;\n    }\n    .header {\n      width: 100%;\n    }\n    .movie-s {\n      /* max-width: 180px !important; */\n      min-width: 150px !important;\n      margin: 0.5rem;\n    }\n    .items-container,\n    .searched {\n      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));\n    }\n  }\n"])));var gt;const bt=i(gt||(gt=function(t,e){return e||(e=t.slice(0)),Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}(["\n  #popup-dialog {\n    position: fixed;\n    top: 50%;\n    left: 50%;\n    padding: 0;\n    transform: translate(-50%, -50%);\n    max-width: 80vw;\n    max-height: 80vh;\n    height: 100%;\n    width: 100%;\n    overflow: visible;\n    border-radius: 0.75rem;\n    border: none;\n    z-index: 1; /* Ensure dialog is below close button */\n    &::backdrop {\n      position: fixed;\n      inset: 0px;\n      background: rgba(0, 0, 0, 0.85);\n      backdrop-filter: blur(12px);\n    }\n    .popup-content {\n      height: 100%;\n      width: 100%;\n      overflow-y: hidden;\n    }\n    /* The Close Button */\n    .close {\n      cursor: pointer;\n      position: absolute;\n      top: -10px;\n      right: -10px;\n      fill: white;\n      stroke: black;\n      stroke-width: 2;\n      &:hover,\n      &:active {\n        fill: var(--accent-color);\n      }\n    }\n  }\n\n  #toast {\n    visibility: hidden;\n    max-width: fit-content;\n    height: 50px;\n    margin-left: -125px;\n    margin: auto;\n    background-color: var(--accent-color);\n    text-align: center;\n    border-radius: 10px;\n    position: fixed;\n    z-index: 99;\n    left: 0;\n    right: 0;\n    top: 80px;\n    font-size: 1rem;\n    border: solid black;\n  }\n  #toast #img {\n    width: 50px;\n    height: 50px;\n    float: left;\n    box-sizing: border-box;\n    background-color: var(--secondary-bg-color);\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    & path {\n      fill: var(--accent-color);\n    }\n  }\n  #toast #desc {\n    font-size: large;\n    color: #000;\n    padding: 1rem;\n    overflow: hidden;\n    white-space: nowrap;\n  }\n  #toast.show {\n    visibility: visible;\n    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,\n      fadeout 0.5s 2.5s;\n    animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s,\n      fadeout 0.5s 4.5s;\n  }\n  @-webkit-keyframes fadein {\n    from {\n      top: 0;\n      opacity: 0;\n    }\n    to {\n      top: 80px;\n      opacity: 1;\n    }\n  }\n\n  @keyframes fadein {\n    from {\n      top: 0;\n      opacity: 0;\n    }\n    to {\n      top: 80px;\n      opacity: 1;\n    }\n  }\n\n  @-webkit-keyframes expand {\n    from {\n      min-width: 50px;\n    }\n    to {\n      min-width: 350px;\n    }\n  }\n\n  @keyframes expand {\n    from {\n      min-width: 50px;\n    }\n    to {\n      min-width: 350px;\n    }\n  }\n  @-webkit-keyframes stay {\n    from {\n      min-width: 350px;\n    }\n    to {\n      min-width: 350px;\n    }\n  }\n\n  @keyframes stay {\n    from {\n      min-width: 350px;\n    }\n    to {\n      min-width: 350px;\n    }\n  }\n  @-webkit-keyframes shrink {\n    from {\n      min-width: 350px;\n    }\n    to {\n      min-width: 50px;\n    }\n  }\n\n  @keyframes shrink {\n    from {\n      min-width: 350px;\n    }\n    to {\n      min-width: 50px;\n    }\n  }\n\n  @-webkit-keyframes fadeout {\n    from {\n      top: 80px;\n      opacity: 1;\n    }\n    to {\n      top: 0px;\n      opacity: 0;\n    }\n  }\n\n  @keyframes fadeout {\n    from {\n      top: 80px;\n      opacity: 1;\n    }\n    to {\n      top: 0px;\n      opacity: 0;\n    }\n  }\n"])));var wt;const _t=i(wt||(wt=function(t,e){return e||(e=t.slice(0)),Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}(["\n  .header {\n    position: -webkit-sticky;\n    position: sticky;\n    top: 0;\n    height: calc(var(--header-height) + 1px);\n    background-color: #000;\n    filter: drop-shadow(2px 4px 6px black);\n    backdrop-filter: blur(15px) brightness(0.7);\n    z-index: 5;\n    margin: 0;\n    padding: 0 1rem 0 1rem;\n    overflow: hidden;\n    width: auto;\n    display: flex;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    width: 100%;\n    align-items: center;\n    justify-content: space-between;\n    box-sizing: border-box;\n\n    ul {\n      list-style-type: none;\n      padding: 0;\n      display: flex;\n      align-items: flex-end;\n    }\n    li {\n      float: left;\n\n      a {\n        display: block;\n        text-decoration: none;\n        text-align: center;\n        padding: 1rem 16px;\n        text-transform: capitalize;\n        color: var(--accent-color);\n        font-size: 20px;\n        font-weight: 700;\n        font-family: 'Raleway';\n        border-bottom: 2px solid transparent;\n        transition: border-bottom 0.3s ease-in;\n        &:hover:not(.active) {\n          background-color: var(--secondary-bg-color);\n          color: white;\n        }\n\n        &.active {\n          border-bottom: 2px solid var(--accent-color);\n          color: white;\n        }\n      }\n    }\n  }\n\n  #search-container {\n    display: inline-flex;\n    justify-content: end;\n    align-items: center;\n    max-width: 400px;\n    width: 100%;\n    height: 100%;\n\n    .search-icon,\n    .reset-icon {\n      cursor: pointer;\n      transition: all 0.3s ease;\n      order: 2;\n      display: block;\n      flex-shrink: 0;\n      & path {\n        fill: var(--accent-color);\n      }\n      &:hover path {\n        fill: white;\n      }\n    }\n\n    #form {\n      flex-grow: 0;\n      transition: width 0.3s ease-in-out;\n      display: flex;\n      align-items: center;\n      width: 0;\n      overflow: hidden;\n      order: 1;\n\n      .search-input {\n        width: 100%;\n        padding: 8px 10px;\n        border-radius: 1rem;\n        font-size: 16px;\n        /* background-color: transparent; */\n        background-color: var(--secondary-bg-color);\n        border: 1px solid var(--secondary-color);\n        transition: all 0.3s ease;\n      }\n\n      .search-input:focus {\n        outline: none;\n        border: 1px solid var(--accent-color);\n        color: var(--accent-color);\n      }\n    }\n    #form.show {\n      width: calc(100% - 20px);\n      margin-right: 20px;\n    }\n  }\n"])));var xt,St,At,kt,$t="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z";function Lt(t){return Lt="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},Lt(t)}function Et(){Et=function(){return e};var t,e={},n=Object.prototype,r=n.hasOwnProperty,o=Object.defineProperty||function(t,e,n){t[e]=n.value},i="function"==typeof Symbol?Symbol:{},a=i.iterator||"@@iterator",s=i.asyncIterator||"@@asyncIterator",c=i.toStringTag||"@@toStringTag";function l(t,e,n){return Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}),t[e]}try{l({},"")}catch(t){l=function(t,e,n){return t[e]=n}}function u(t,e,n,r){var i=e&&e.prototype instanceof m?e:m,a=Object.create(i.prototype),s=new j(r||[]);return o(a,"_invoke",{value:$(t,n,s)}),a}function h(t,e,n){try{return{type:"normal",arg:t.call(e,n)}}catch(t){return{type:"throw",arg:t}}}e.wrap=u;var p="suspendedStart",f="suspendedYield",d="executing",v="completed",y={};function m(){}function g(){}function b(){}var w={};l(w,a,(function(){return this}));var _=Object.getPrototypeOf,x=_&&_(_(M([])));x&&x!==n&&r.call(x,a)&&(w=x);var S=b.prototype=m.prototype=Object.create(w);function A(t){["next","throw","return"].forEach((function(e){l(t,e,(function(t){return this._invoke(e,t)}))}))}function k(t,e){function n(o,i,a,s){var c=h(t[o],t,i);if("throw"!==c.type){var l=c.arg,u=l.value;return u&&"object"==Lt(u)&&r.call(u,"__await")?e.resolve(u.__await).then((function(t){n("next",t,a,s)}),(function(t){n("throw",t,a,s)})):e.resolve(u).then((function(t){l.value=t,a(l)}),(function(t){return n("throw",t,a,s)}))}s(c.arg)}var i;o(this,"_invoke",{value:function(t,r){function o(){return new e((function(e,o){n(t,r,e,o)}))}return i=i?i.then(o,o):o()}})}function $(e,n,r){var o=p;return function(i,a){if(o===d)throw Error("Generator is already running");if(o===v){if("throw"===i)throw a;return{value:t,done:!0}}for(r.method=i,r.arg=a;;){var s=r.delegate;if(s){var c=L(s,r);if(c){if(c===y)continue;return c}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(o===p)throw o=v,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);o=d;var l=h(e,n,r);if("normal"===l.type){if(o=r.done?v:f,l.arg===y)continue;return{value:l.arg,done:r.done}}"throw"===l.type&&(o=v,r.method="throw",r.arg=l.arg)}}}function L(e,n){var r=n.method,o=e.iterator[r];if(o===t)return n.delegate=null,"throw"===r&&e.iterator.return&&(n.method="return",n.arg=t,L(e,n),"throw"===n.method)||"return"!==r&&(n.method="throw",n.arg=new TypeError("The iterator does not provide a '"+r+"' method")),y;var i=h(o,e.iterator,n.arg);if("throw"===i.type)return n.method="throw",n.arg=i.arg,n.delegate=null,y;var a=i.arg;return a?a.done?(n[e.resultName]=a.value,n.next=e.nextLoc,"return"!==n.method&&(n.method="next",n.arg=t),n.delegate=null,y):a:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,y)}function E(t){var e={tryLoc:t[0]};1 in t&&(e.catchLoc=t[1]),2 in t&&(e.finallyLoc=t[2],e.afterLoc=t[3]),this.tryEntries.push(e)}function O(t){var e=t.completion||{};e.type="normal",delete e.arg,t.completion=e}function j(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(E,this),this.reset(!0)}function M(e){if(e||""===e){var n=e[a];if(n)return n.call(e);if("function"==typeof e.next)return e;if(!isNaN(e.length)){var o=-1,i=function n(){for(;++o<e.length;)if(r.call(e,o))return n.value=e[o],n.done=!1,n;return n.value=t,n.done=!0,n};return i.next=i}}throw new TypeError(Lt(e)+" is not iterable")}return g.prototype=b,o(S,"constructor",{value:b,configurable:!0}),o(b,"constructor",{value:g,configurable:!0}),g.displayName=l(b,c,"GeneratorFunction"),e.isGeneratorFunction=function(t){var e="function"==typeof t&&t.constructor;return!!e&&(e===g||"GeneratorFunction"===(e.displayName||e.name))},e.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,b):(t.__proto__=b,l(t,c,"GeneratorFunction")),t.prototype=Object.create(S),t},e.awrap=function(t){return{__await:t}},A(k.prototype),l(k.prototype,s,(function(){return this})),e.AsyncIterator=k,e.async=function(t,n,r,o,i){void 0===i&&(i=Promise);var a=new k(u(t,n,r,o),i);return e.isGeneratorFunction(n)?a:a.next().then((function(t){return t.done?t.value:a.next()}))},A(S),l(S,c,"Generator"),l(S,a,(function(){return this})),l(S,"toString",(function(){return"[object Generator]"})),e.keys=function(t){var e=Object(t),n=[];for(var r in e)n.push(r);return n.reverse(),function t(){for(;n.length;){var r=n.pop();if(r in e)return t.value=r,t.done=!1,t}return t.done=!0,t}},e.values=M,j.prototype={constructor:j,reset:function(e){if(this.prev=0,this.next=0,this.sent=this._sent=t,this.done=!1,this.delegate=null,this.method="next",this.arg=t,this.tryEntries.forEach(O),!e)for(var n in this)"t"===n.charAt(0)&&r.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=t)},stop:function(){this.done=!0;var t=this.tryEntries[0].completion;if("throw"===t.type)throw t.arg;return this.rval},dispatchException:function(e){if(this.done)throw e;var n=this;function o(r,o){return s.type="throw",s.arg=e,n.next=r,o&&(n.method="next",n.arg=t),!!o}for(var i=this.tryEntries.length-1;i>=0;--i){var a=this.tryEntries[i],s=a.completion;if("root"===a.tryLoc)return o("end");if(a.tryLoc<=this.prev){var c=r.call(a,"catchLoc"),l=r.call(a,"finallyLoc");if(c&&l){if(this.prev<a.catchLoc)return o(a.catchLoc,!0);if(this.prev<a.finallyLoc)return o(a.finallyLoc)}else if(c){if(this.prev<a.catchLoc)return o(a.catchLoc,!0)}else{if(!l)throw Error("try statement without catch or finally");if(this.prev<a.finallyLoc)return o(a.finallyLoc)}}}},abrupt:function(t,e){for(var n=this.tryEntries.length-1;n>=0;--n){var o=this.tryEntries[n];if(o.tryLoc<=this.prev&&r.call(o,"finallyLoc")&&this.prev<o.finallyLoc){var i=o;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=e&&e<=i.finallyLoc&&(i=null);var a=i?i.completion:{};return a.type=t,a.arg=e,i?(this.method="next",this.next=i.finallyLoc,y):this.complete(a)},complete:function(t,e){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&e&&(this.next=e),y},finish:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var n=this.tryEntries[e];if(n.finallyLoc===t)return this.complete(n.completion,n.afterLoc),O(n),y}},catch:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var n=this.tryEntries[e];if(n.tryLoc===t){var r=n.completion;if("throw"===r.type){var o=r.arg;O(n)}return o}}throw Error("illegal catch attempt")},delegateYield:function(e,n,r){return this.delegate={iterator:M(e),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=t),y}},e}function Ot(t,e,n,r,o,i,a){try{var s=t[i](a),c=s.value}catch(t){return void n(t)}s.done?e(c):Promise.resolve(c).then(r,o)}function jt(t,e){return e||(e=t.slice(0)),Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}function Mt(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,Pt(r.key),r)}}function Pt(t){var e=function(t,e){if("object"!=Lt(t)||!t)return t;var n=t[Symbol.toPrimitive];if(void 0!==n){var r=n.call(t,"string");if("object"!=Lt(r))return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==Lt(e)?e:e+""}function Tt(t,e,n){return e=Nt(e),function(t,e){if(e&&("object"===Lt(e)||"function"==typeof e))return e;if(void 0!==e)throw new TypeError("Derived constructors may only return object or undefined");return function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t)}(t,Ct()?Reflect.construct(e,n||[],Nt(t).constructor):e.apply(t,n))}function Ct(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],(function(){})))}catch(t){}return(Ct=function(){return!!t})()}function Nt(t){return Nt=Object.setPrototypeOf?Object.getPrototypeOf.bind():function(t){return t.__proto__||Object.getPrototypeOf(t)},Nt(t)}function Rt(t,e){return Rt=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(t,e){return t.__proto__=e,t},Rt(t,e)}function Ut(t){return Ut="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},Ut(t)}function zt(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,Dt(r.key),r)}}function Dt(t){var e=function(t,e){if("object"!=Ut(t)||!t)return t;var n=t[Symbol.toPrimitive];if(void 0!==n){var r=n.call(t,"string");if("object"!=Ut(r))return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==Ut(e)?e:e+""}function It(t,e,n){return e=Bt(e),function(t,e){if(e&&("object"===Ut(e)||"function"==typeof e))return e;if(void 0!==e)throw new TypeError("Derived constructors may only return object or undefined");return function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t)}(t,Ht()?Reflect.construct(e,n||[],Bt(t).constructor):e.apply(t,n))}function Ht(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],(function(){})))}catch(t){}return(Ht=function(){return!!t})()}function Bt(t){return Bt=Object.setPrototypeOf?Object.getPrototypeOf.bind():function(t){return t.__proto__||Object.getPrototypeOf(t)},Bt(t)}function Gt(t,e){return Gt=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(t,e){return t.__proto__=e,t},Gt(t,e)}function qt(t){return qt="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},qt(t)}function Ft(){Ft=function(){return e};var t,e={},n=Object.prototype,r=n.hasOwnProperty,o=Object.defineProperty||function(t,e,n){t[e]=n.value},i="function"==typeof Symbol?Symbol:{},a=i.iterator||"@@iterator",s=i.asyncIterator||"@@asyncIterator",c=i.toStringTag||"@@toStringTag";function l(t,e,n){return Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}),t[e]}try{l({},"")}catch(t){l=function(t,e,n){return t[e]=n}}function u(t,e,n,r){var i=e&&e.prototype instanceof m?e:m,a=Object.create(i.prototype),s=new j(r||[]);return o(a,"_invoke",{value:$(t,n,s)}),a}function h(t,e,n){try{return{type:"normal",arg:t.call(e,n)}}catch(t){return{type:"throw",arg:t}}}e.wrap=u;var p="suspendedStart",f="suspendedYield",d="executing",v="completed",y={};function m(){}function g(){}function b(){}var w={};l(w,a,(function(){return this}));var _=Object.getPrototypeOf,x=_&&_(_(M([])));x&&x!==n&&r.call(x,a)&&(w=x);var S=b.prototype=m.prototype=Object.create(w);function A(t){["next","throw","return"].forEach((function(e){l(t,e,(function(t){return this._invoke(e,t)}))}))}function k(t,e){function n(o,i,a,s){var c=h(t[o],t,i);if("throw"!==c.type){var l=c.arg,u=l.value;return u&&"object"==qt(u)&&r.call(u,"__await")?e.resolve(u.__await).then((function(t){n("next",t,a,s)}),(function(t){n("throw",t,a,s)})):e.resolve(u).then((function(t){l.value=t,a(l)}),(function(t){return n("throw",t,a,s)}))}s(c.arg)}var i;o(this,"_invoke",{value:function(t,r){function o(){return new e((function(e,o){n(t,r,e,o)}))}return i=i?i.then(o,o):o()}})}function $(e,n,r){var o=p;return function(i,a){if(o===d)throw Error("Generator is already running");if(o===v){if("throw"===i)throw a;return{value:t,done:!0}}for(r.method=i,r.arg=a;;){var s=r.delegate;if(s){var c=L(s,r);if(c){if(c===y)continue;return c}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(o===p)throw o=v,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);o=d;var l=h(e,n,r);if("normal"===l.type){if(o=r.done?v:f,l.arg===y)continue;return{value:l.arg,done:r.done}}"throw"===l.type&&(o=v,r.method="throw",r.arg=l.arg)}}}function L(e,n){var r=n.method,o=e.iterator[r];if(o===t)return n.delegate=null,"throw"===r&&e.iterator.return&&(n.method="return",n.arg=t,L(e,n),"throw"===n.method)||"return"!==r&&(n.method="throw",n.arg=new TypeError("The iterator does not provide a '"+r+"' method")),y;var i=h(o,e.iterator,n.arg);if("throw"===i.type)return n.method="throw",n.arg=i.arg,n.delegate=null,y;var a=i.arg;return a?a.done?(n[e.resultName]=a.value,n.next=e.nextLoc,"return"!==n.method&&(n.method="next",n.arg=t),n.delegate=null,y):a:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,y)}function E(t){var e={tryLoc:t[0]};1 in t&&(e.catchLoc=t[1]),2 in t&&(e.finallyLoc=t[2],e.afterLoc=t[3]),this.tryEntries.push(e)}function O(t){var e=t.completion||{};e.type="normal",delete e.arg,t.completion=e}function j(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(E,this),this.reset(!0)}function M(e){if(e||""===e){var n=e[a];if(n)return n.call(e);if("function"==typeof e.next)return e;if(!isNaN(e.length)){var o=-1,i=function n(){for(;++o<e.length;)if(r.call(e,o))return n.value=e[o],n.done=!1,n;return n.value=t,n.done=!0,n};return i.next=i}}throw new TypeError(qt(e)+" is not iterable")}return g.prototype=b,o(S,"constructor",{value:b,configurable:!0}),o(b,"constructor",{value:g,configurable:!0}),g.displayName=l(b,c,"GeneratorFunction"),e.isGeneratorFunction=function(t){var e="function"==typeof t&&t.constructor;return!!e&&(e===g||"GeneratorFunction"===(e.displayName||e.name))},e.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,b):(t.__proto__=b,l(t,c,"GeneratorFunction")),t.prototype=Object.create(S),t},e.awrap=function(t){return{__await:t}},A(k.prototype),l(k.prototype,s,(function(){return this})),e.AsyncIterator=k,e.async=function(t,n,r,o,i){void 0===i&&(i=Promise);var a=new k(u(t,n,r,o),i);return e.isGeneratorFunction(n)?a:a.next().then((function(t){return t.done?t.value:a.next()}))},A(S),l(S,c,"Generator"),l(S,a,(function(){return this})),l(S,"toString",(function(){return"[object Generator]"})),e.keys=function(t){var e=Object(t),n=[];for(var r in e)n.push(r);return n.reverse(),function t(){for(;n.length;){var r=n.pop();if(r in e)return t.value=r,t.done=!1,t}return t.done=!0,t}},e.values=M,j.prototype={constructor:j,reset:function(e){if(this.prev=0,this.next=0,this.sent=this._sent=t,this.done=!1,this.delegate=null,this.method="next",this.arg=t,this.tryEntries.forEach(O),!e)for(var n in this)"t"===n.charAt(0)&&r.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=t)},stop:function(){this.done=!0;var t=this.tryEntries[0].completion;if("throw"===t.type)throw t.arg;return this.rval},dispatchException:function(e){if(this.done)throw e;var n=this;function o(r,o){return s.type="throw",s.arg=e,n.next=r,o&&(n.method="next",n.arg=t),!!o}for(var i=this.tryEntries.length-1;i>=0;--i){var a=this.tryEntries[i],s=a.completion;if("root"===a.tryLoc)return o("end");if(a.tryLoc<=this.prev){var c=r.call(a,"catchLoc"),l=r.call(a,"finallyLoc");if(c&&l){if(this.prev<a.catchLoc)return o(a.catchLoc,!0);if(this.prev<a.finallyLoc)return o(a.finallyLoc)}else if(c){if(this.prev<a.catchLoc)return o(a.catchLoc,!0)}else{if(!l)throw Error("try statement without catch or finally");if(this.prev<a.finallyLoc)return o(a.finallyLoc)}}}},abrupt:function(t,e){for(var n=this.tryEntries.length-1;n>=0;--n){var o=this.tryEntries[n];if(o.tryLoc<=this.prev&&r.call(o,"finallyLoc")&&this.prev<o.finallyLoc){var i=o;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=e&&e<=i.finallyLoc&&(i=null);var a=i?i.completion:{};return a.type=t,a.arg=e,i?(this.method="next",this.next=i.finallyLoc,y):this.complete(a)},complete:function(t,e){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&e&&(this.next=e),y},finish:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var n=this.tryEntries[e];if(n.finallyLoc===t)return this.complete(n.completion,n.afterLoc),O(n),y}},catch:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var n=this.tryEntries[e];if(n.tryLoc===t){var r=n.completion;if("throw"===r.type){var o=r.arg;O(n)}return o}}throw Error("illegal catch attempt")},delegateYield:function(e,n,r){return this.delegate={iterator:M(e),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=t),y}},e}function Vt(t){return function(t){if(Array.isArray(t))return Zt(t)}(t)||function(t){if("undefined"!=typeof Symbol&&null!=t[Symbol.iterator]||null!=t["@@iterator"])return Array.from(t)}(t)||function(t,e){if(t){if("string"==typeof t)return Zt(t,e);var n=Object.prototype.toString.call(t).slice(8,-1);return"Object"===n&&t.constructor&&(n=t.constructor.name),"Map"===n||"Set"===n?Array.from(t):"Arguments"===n||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)?Zt(t,e):void 0}}(t)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function Zt(t,e){(null==e||e>t.length)&&(e=t.length);for(var n=0,r=new Array(e);n<e;n++)r[n]=t[n];return r}function Wt(t,e,n,r,o,i,a){try{var s=t[i](a),c=s.value}catch(t){return void n(t)}s.done?e(c):Promise.resolve(c).then(r,o)}function Yt(){return Kt.apply(this,arguments)}function Kt(){var t;return t=Ft().mark((function t(){var e,n,r,o,i,a,s,c,l,u,h;return Ft().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:e="https://api.themoviedb.org/3/discover/movie",n="62dce7dcd2282d8e5f63556d214eaa74",r=new Date,o=new Date(r.getFullYear(),r.getMonth(),1),i=new Date(r.getFullYear(),r.getMonth()+1,0),a=function(t){return t.toISOString().split("T")[0]},s=1,c=[];case 8:return l=new URLSearchParams((p={api_key:n,include_adult:!1,include_video:!1,page:s,region:"CZ",language:"cs-CZ","release_date.gte":a(o),"release_date.lte":a(i),certification_country:"CZ",sort_by:"popularity.desc",with_release_type:"3|2","vote_average.gte":0,"vote_average.lte":10,"vote_count.gte":0,watch_region:"CZ"},d="primary_release_date.asc",f=function(t){var e=function(t,e){if("object"!=qt(t)||!t)return t;var n=t[Symbol.toPrimitive];if(void 0!==n){var r=n.call(t,"string");if("object"!=qt(r))return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==qt(e)?e:e+""}(f="sort_by"),f in p?Object.defineProperty(p,f,{value:d,enumerable:!0,configurable:!0,writable:!0}):p[f]=d,p)),t.next=12,fetch("".concat(e,"?").concat(l.toString()));case 12:if(!(u=t.sent).ok){t.next=25;break}return t.next=16,u.json();case 16:if(h=t.sent,c=[].concat(Vt(c),Vt(h.results)),!(s<h.total_pages)){t.next=22;break}s+=1,t.next=23;break;case 22:return t.abrupt("break",29);case 23:t.next=27;break;case 25:return console.error("Error: Unable to fetch upcoming movies. Status Code: ".concat(u.status)),t.abrupt("break",29);case 27:t.next=8;break;case 29:return t.abrupt("return",c);case 30:case"end":return t.stop()}var p,f,d}),t)})),Kt=function(){var e=this,n=arguments;return new Promise((function(r,o){var i=t.apply(e,n);function a(t){Wt(i,r,o,a,s,"next",t)}function s(t){Wt(i,r,o,a,s,"throw",t)}a(void 0)}))},Kt.apply(this,arguments)}var Qt,Jt,Xt,te,ee,ne,re,oe,ie,ae,se,ce="data:image/svg+xml;base64,PHN2ZyBpZD0iZ2x5cGhpY29ucy1iYXNpYyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMzIgMzIiPgogIDxwYXRoIGZpbGw9IiNiNWI1YjUiIGlkPSJwaWN0dXJlIiBkPSJNMjcuNSw1SDQuNUExLjUwMDA4LDEuNTAwMDgsMCwwLDAsMyw2LjV2MTlBMS41MDAwOCwxLjUwMDA4LDAsMCwwLDQuNSwyN2gyM0ExLjUwMDA4LDEuNTAwMDgsMCwwLDAsMjksMjUuNVY2LjVBMS41MDAwOCwxLjUwMDA4LDAsMCwwLDI3LjUsNVpNMjYsMTguNWwtNC43OTQyNS01LjIzMDFhLjk5MzgzLjk5MzgzLDAsMCwwLTEuNDQ0MjgtLjAzMTM3bC01LjM0NzQxLDUuMzQ3NDFMMTkuODI4MTIsMjRIMTdsLTQuNzkyOTEtNC43OTNhMS4wMDAyMiwxLjAwMDIyLDAsMCwwLTEuNDE0MTgsMEw2LDI0VjhIMjZabS0xNy45LTZhMi40LDIuNCwwLDEsMSwyLjQsMi40QTIuNDAwMDUsMi40MDAwNSwwLDAsMSw4LjEsMTIuNVoiLz4KPC9zdmc+Cg==";function le(t){return le="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},le(t)}function ue(t,e){return e||(e=t.slice(0)),Object.freeze(Object.defineProperties(t,{raw:{value:Object.freeze(e)}}))}function he(){he=function(){return e};var t,e={},n=Object.prototype,r=n.hasOwnProperty,o=Object.defineProperty||function(t,e,n){t[e]=n.value},i="function"==typeof Symbol?Symbol:{},a=i.iterator||"@@iterator",s=i.asyncIterator||"@@asyncIterator",c=i.toStringTag||"@@toStringTag";function l(t,e,n){return Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}),t[e]}try{l({},"")}catch(t){l=function(t,e,n){return t[e]=n}}function u(t,e,n,r){var i=e&&e.prototype instanceof m?e:m,a=Object.create(i.prototype),s=new j(r||[]);return o(a,"_invoke",{value:$(t,n,s)}),a}function h(t,e,n){try{return{type:"normal",arg:t.call(e,n)}}catch(t){return{type:"throw",arg:t}}}e.wrap=u;var p="suspendedStart",f="suspendedYield",d="executing",v="completed",y={};function m(){}function g(){}function b(){}var w={};l(w,a,(function(){return this}));var _=Object.getPrototypeOf,x=_&&_(_(M([])));x&&x!==n&&r.call(x,a)&&(w=x);var S=b.prototype=m.prototype=Object.create(w);function A(t){["next","throw","return"].forEach((function(e){l(t,e,(function(t){return this._invoke(e,t)}))}))}function k(t,e){function n(o,i,a,s){var c=h(t[o],t,i);if("throw"!==c.type){var l=c.arg,u=l.value;return u&&"object"==le(u)&&r.call(u,"__await")?e.resolve(u.__await).then((function(t){n("next",t,a,s)}),(function(t){n("throw",t,a,s)})):e.resolve(u).then((function(t){l.value=t,a(l)}),(function(t){return n("throw",t,a,s)}))}s(c.arg)}var i;o(this,"_invoke",{value:function(t,r){function o(){return new e((function(e,o){n(t,r,e,o)}))}return i=i?i.then(o,o):o()}})}function $(e,n,r){var o=p;return function(i,a){if(o===d)throw Error("Generator is already running");if(o===v){if("throw"===i)throw a;return{value:t,done:!0}}for(r.method=i,r.arg=a;;){var s=r.delegate;if(s){var c=L(s,r);if(c){if(c===y)continue;return c}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if(o===p)throw o=v,r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);o=d;var l=h(e,n,r);if("normal"===l.type){if(o=r.done?v:f,l.arg===y)continue;return{value:l.arg,done:r.done}}"throw"===l.type&&(o=v,r.method="throw",r.arg=l.arg)}}}function L(e,n){var r=n.method,o=e.iterator[r];if(o===t)return n.delegate=null,"throw"===r&&e.iterator.return&&(n.method="return",n.arg=t,L(e,n),"throw"===n.method)||"return"!==r&&(n.method="throw",n.arg=new TypeError("The iterator does not provide a '"+r+"' method")),y;var i=h(o,e.iterator,n.arg);if("throw"===i.type)return n.method="throw",n.arg=i.arg,n.delegate=null,y;var a=i.arg;return a?a.done?(n[e.resultName]=a.value,n.next=e.nextLoc,"return"!==n.method&&(n.method="next",n.arg=t),n.delegate=null,y):a:(n.method="throw",n.arg=new TypeError("iterator result is not an object"),n.delegate=null,y)}function E(t){var e={tryLoc:t[0]};1 in t&&(e.catchLoc=t[1]),2 in t&&(e.finallyLoc=t[2],e.afterLoc=t[3]),this.tryEntries.push(e)}function O(t){var e=t.completion||{};e.type="normal",delete e.arg,t.completion=e}function j(t){this.tryEntries=[{tryLoc:"root"}],t.forEach(E,this),this.reset(!0)}function M(e){if(e||""===e){var n=e[a];if(n)return n.call(e);if("function"==typeof e.next)return e;if(!isNaN(e.length)){var o=-1,i=function n(){for(;++o<e.length;)if(r.call(e,o))return n.value=e[o],n.done=!1,n;return n.value=t,n.done=!0,n};return i.next=i}}throw new TypeError(le(e)+" is not iterable")}return g.prototype=b,o(S,"constructor",{value:b,configurable:!0}),o(b,"constructor",{value:g,configurable:!0}),g.displayName=l(b,c,"GeneratorFunction"),e.isGeneratorFunction=function(t){var e="function"==typeof t&&t.constructor;return!!e&&(e===g||"GeneratorFunction"===(e.displayName||e.name))},e.mark=function(t){return Object.setPrototypeOf?Object.setPrototypeOf(t,b):(t.__proto__=b,l(t,c,"GeneratorFunction")),t.prototype=Object.create(S),t},e.awrap=function(t){return{__await:t}},A(k.prototype),l(k.prototype,s,(function(){return this})),e.AsyncIterator=k,e.async=function(t,n,r,o,i){void 0===i&&(i=Promise);var a=new k(u(t,n,r,o),i);return e.isGeneratorFunction(n)?a:a.next().then((function(t){return t.done?t.value:a.next()}))},A(S),l(S,c,"Generator"),l(S,a,(function(){return this})),l(S,"toString",(function(){return"[object Generator]"})),e.keys=function(t){var e=Object(t),n=[];for(var r in e)n.push(r);return n.reverse(),function t(){for(;n.length;){var r=n.pop();if(r in e)return t.value=r,t.done=!1,t}return t.done=!0,t}},e.values=M,j.prototype={constructor:j,reset:function(e){if(this.prev=0,this.next=0,this.sent=this._sent=t,this.done=!1,this.delegate=null,this.method="next",this.arg=t,this.tryEntries.forEach(O),!e)for(var n in this)"t"===n.charAt(0)&&r.call(this,n)&&!isNaN(+n.slice(1))&&(this[n]=t)},stop:function(){this.done=!0;var t=this.tryEntries[0].completion;if("throw"===t.type)throw t.arg;return this.rval},dispatchException:function(e){if(this.done)throw e;var n=this;function o(r,o){return s.type="throw",s.arg=e,n.next=r,o&&(n.method="next",n.arg=t),!!o}for(var i=this.tryEntries.length-1;i>=0;--i){var a=this.tryEntries[i],s=a.completion;if("root"===a.tryLoc)return o("end");if(a.tryLoc<=this.prev){var c=r.call(a,"catchLoc"),l=r.call(a,"finallyLoc");if(c&&l){if(this.prev<a.catchLoc)return o(a.catchLoc,!0);if(this.prev<a.finallyLoc)return o(a.finallyLoc)}else if(c){if(this.prev<a.catchLoc)return o(a.catchLoc,!0)}else{if(!l)throw Error("try statement without catch or finally");if(this.prev<a.finallyLoc)return o(a.finallyLoc)}}}},abrupt:function(t,e){for(var n=this.tryEntries.length-1;n>=0;--n){var o=this.tryEntries[n];if(o.tryLoc<=this.prev&&r.call(o,"finallyLoc")&&this.prev<o.finallyLoc){var i=o;break}}i&&("break"===t||"continue"===t)&&i.tryLoc<=e&&e<=i.finallyLoc&&(i=null);var a=i?i.completion:{};return a.type=t,a.arg=e,i?(this.method="next",this.next=i.finallyLoc,y):this.complete(a)},complete:function(t,e){if("throw"===t.type)throw t.arg;return"break"===t.type||"continue"===t.type?this.next=t.arg:"return"===t.type?(this.rval=this.arg=t.arg,this.method="return",this.next="end"):"normal"===t.type&&e&&(this.next=e),y},finish:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var n=this.tryEntries[e];if(n.finallyLoc===t)return this.complete(n.completion,n.afterLoc),O(n),y}},catch:function(t){for(var e=this.tryEntries.length-1;e>=0;--e){var n=this.tryEntries[e];if(n.tryLoc===t){var r=n.completion;if("throw"===r.type){var o=r.arg;O(n)}return o}}throw Error("illegal catch attempt")},delegateYield:function(e,n,r){return this.delegate={iterator:M(e),resultName:n,nextLoc:r},"next"===this.method&&(this.arg=t),y}},e}function pe(t,e,n,r,o,i,a){try{var s=t[i](a),c=s.value}catch(t){return void n(t)}s.done?e(c):Promise.resolve(c).then(r,o)}function fe(t){return function(){var e=this,n=arguments;return new Promise((function(r,o){var i=t.apply(e,n);function a(t){pe(i,r,o,a,s,"next",t)}function s(t){pe(i,r,o,a,s,"throw",t)}a(void 0)}))}}function de(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,_e(r.key),r)}}function ve(t,e,n){return e=ge(e),function(t,e){if(e&&("object"===le(e)||"function"==typeof e))return e;if(void 0!==e)throw new TypeError("Derived constructors may only return object or undefined");return function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t)}(t,ye()?Reflect.construct(e,n||[],ge(t).constructor):e.apply(t,n))}function ye(){try{var t=!Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],(function(){})))}catch(t){}return(ye=function(){return!!t})()}function me(){return me="undefined"!=typeof Reflect&&Reflect.get?Reflect.get.bind():function(t,e,n){var r=function(t,e){for(;!Object.prototype.hasOwnProperty.call(t,e)&&null!==(t=ge(t)););return t}(t,e);if(r){var o=Object.getOwnPropertyDescriptor(r,e);return o.get?o.get.call(arguments.length<3?t:n):o.value}},me.apply(this,arguments)}function ge(t){return ge=Object.setPrototypeOf?Object.getPrototypeOf.bind():function(t){return t.__proto__||Object.getPrototypeOf(t)},ge(t)}function be(t,e){return be=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(t,e){return t.__proto__=e,t},be(t,e)}function we(t,e,n){return(e=_e(e))in t?Object.defineProperty(t,e,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[e]=n,t}function _e(t){var e=function(t,e){if("object"!=le(t)||!t)return t;var n=t[Symbol.toPrimitive];if(void 0!==n){var r=n.call(t,"string");if("object"!=le(r))return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==le(e)?e:e+""}var xe,Se=function(t){function e(){var t,n;return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),we(t=ve(this,e),"_hass",void 0),we(t,"_upcomingState",void 0),we(t,"_kodiState",void 0),(n=document.createElement("link")).type="text/css",n.rel="stylesheet",n.href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap",document.head.appendChild(n),t.boundHandleScroll=t.handleScroll.bind(t),t.cinemaMovies=[],t.kodiMovies=[],t.upcomingMovies=[],t.search="",t.searchResults=[],t.isSearchActive=!1,t.searchTimeout=null,t.API_URL="".concat("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&language=cs-CZ&api_key=62dce7dcd2282d8e5f63556d214eaa74&page=1"),t.IMG_PATH="".concat("https://image.tmdb.org/t/p/w1280"),t.URL_PATH="".concat("https://www.themoviedb.org/movie/"),t.SEARCH_API="".concat('https://api.themoviedb.org/3/search/movie?include_adult=false&language=cs-CZ&api_key=62dce7dcd2282d8e5f63556d214eaa74&query="'),t.getCinemaMovies(t.API_URL),t.getUpcomingMovies(),t}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),Object.defineProperty(t,"prototype",{writable:!1}),e&&be(t,e)}(e,t),n=e,r=[{key:"setConfig",value:function(t){this._entity=t.entity,this._upcoming=t.upcoming,this._hass&&(this.hass=this._hass)}},{key:"hass",set:function(t){this._hass=t,this._kodiState=t.states[this._entity],this._kodiState&&this.getKodiMovies()}},{key:"connectedCallback",value:function(){me(ge(e.prototype),"connectedCallback",this).call(this),this.updateNavOnLoad(),window.addEventListener("scroll",this.boundHandleScroll)}},{key:"disconnectedCallback",value:function(){window.removeEventListener("scroll",this.boundHandleScroll),me(ge(e.prototype),"disconnectedCallback",this).call(this)}},{key:"updated",value:function(t){me(ge(e.prototype),"updated",this).call(this,t),(t.has("cinemaMovies")||t.has("upcomingMovies")||t.has("kodiMovies"))&&this.createBentoGrid()}},{key:"getCinemaMovies",value:(a=fe(he().mark((function t(e){var n,r;return he().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:return t.prev=0,t.next=3,fetch(e);case 3:return n=t.sent,t.next=6,n.json();case 6:r=t.sent,this.cinemaMovies=r.results,this.requestUpdate(),t.next=14;break;case 11:t.prev=11,t.t0=t.catch(0),console.error("Error fetching movies:",t.t0);case 14:case"end":return t.stop()}}),t,this,[[0,11]])}))),function(t){return a.apply(this,arguments)})},{key:"getUpcomingMovies",value:(i=fe(he().mark((function t(){var e;return he().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:return t.prev=0,t.next=3,Yt();case 3:e=t.sent,this.upcomingMovies=e,this.requestUpdate(),t.next=11;break;case 8:t.prev=8,t.t0=t.catch(0),console.error("Error fetching upcoming movies:",t.t0);case 11:case"end":return t.stop()}}),t,this,[[0,8]])}))),function(){return i.apply(this,arguments)})},{key:"getKodiMovies",value:function(){if(this._kodiState&&this._kodiState.attributes&&this._kodiState.attributes.data){var t=this._kodiState.attributes.data;this.kodiMovies=t}else console.error("Kodi Movies data is not available.")}},{key:"renderMovie",value:function(t){var e,n=this,r=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},o=r.isLarge,i=void 0!==o&&o,a=r.useKodiData,s=void 0!==a&&a,c=i?"movie-l":"movie-s",l=t.title,u=s?t.rating:t.vote_average,h=s?t.plot:t.overview,p=s?t.tmdb_link:this.URL_PATH+t.id,f=s?t.strm_url:"";e=s?i?t.fanart_url||ce:t.poster_url||ce:i&&t.backdrop_path?this.IMG_PATH+t.backdrop_path:t.poster_path?this.IMG_PATH+t.poster_path:ce;var d="#0000007d";u>=8?d="#008704":u>=6.5&&(d="#8a5200");var v={background:"linear-gradient(15deg, #bbbbbb 0%, ".concat(d," 40%)")};return G(Qt||(Qt=ue(['\n      <div class="','">\n        <img src="','" alt="','" />\n        <div class="movie-info">\n          ','\n        </div>\n        <div class="overview ','">\n          <h3>',"</h3>\n          <p>",'</p>\n          <div class="buttons">\n            ','\n\n            <button\n              class="watch-later"\n              @click="','"\n            >\n              +\n            </button>\n          </div>\n        </div>\n      </div>\n    '])),c,e,l,!i&&u?G(Jt||(Jt=ue(["<h3>",'</h3>\n                <span class="vote" style=',"\n                  >⭐ ","</span\n                >"])),l,ht(v),u.toFixed(1)):u?"":G(Xt||(Xt=ue(["<h3>","</h3>"])),l),i?"visible":"hidden",l,h,s?G(te||(te=ue(['<button\n                  class="watch-now"\n                  @click="','"\n                >\n                  Watch now\n                </button>'])),(function(){return n._playMovie(f)})):"",(function(){return n._openPopup(p)}))}},{key:"renderMovieSections",value:function(t,e,n){var r=this,o=arguments.length>3&&void 0!==arguments[3]&&arguments[3];return G(ee||(ee=ue(['\n      <section id="','" class="inner_content">\n        ',"\n      </section>\n    "])),t,n.map((function(t,n){var i=t.title,a=t.id,s=(0===n?e.slice(0,5):e.slice(5)).map((function(t){return r.renderMovie(t,{isLarge:0===n,useKodiData:o})})),c=0===n?"horizontal-list":"items-container";return G(ne||(ne=ue(['\n            <div id="','" class="subsection">\n              <h2 id="subsection-title">','</h2>\n              <div class="','">',"</div>\n            </div>\n          "])),a,i,c,s)})))}},{key:"renderSearchResults",value:function(){var t=this;return G(re||(re=ue(['\n      <div class="searched">\n        ',"\n      </div>\n    "])),this.searchResults.map((function(e){return t.renderMovie(e,!1,!1)})))}},{key:"renderNavLink",value:function(t,e){var n=this.currentActiveSection===t;return G(oe||(oe=ue(['\n      <li>\n        <a\n          href="#','"\n          data-target="','"\n          @click="','"\n          class="','"\n          >',"</a\n        >\n      </li>\n    "])),t,t,this.scrollToSection,n?"active":"",e)}},{key:"render",value:function(){return G(ie||(ie=ue(['\n      <div class="header">\n        <ul>\n          ',"\n          ","\n          ","\n        </ul>\n        ","\n      </div>\n      <main>\n        ","\n        ",'\n        <dialog id="popup-dialog"></dialog>\n      </main>\n    '])),this.renderNavLink("kodi-movies","Kodi"),this.renderNavLink("upcoming-movies","Cinema"),this.renderNavLink("tmdb-movies","Popular"),this.renderSearchForm(),this.isSearchActive?G(se||(se=ue(['<section id="search-results" class="inner_content">\n              ',"\n            </section>"])),this.renderSearchResults()):G(ae||(ae=ue(["\n              ","\n              ","\n              ","\n            "])),this.renderMovieSections("kodi-movies",this.kodiMovies,[{title:"Recently added"},{title:"Kodi library"}],!0),this.renderMovieSections("upcoming-movies",this.upcomingMovies,[{title:"In cinemas"},{title:"Movies"}]),this.renderMovieSections("tmdb-movies",this.cinemaMovies,[{title:"Most Popular"},{title:"Recommended for you"}])),this.renderToast())}}],o=[{key:"properties",get:function(){return{_entity:{state:!0},_upcoming:{state:!0},cinemaMovies:{type:Array},kodiMovies:{type:Array},upcomingMovies:{type:Array},search:{type:String},searchResults:{type:Array},isSearchActive:{type:Boolean}}}},{key:"getStubConfig",value:function(){return{entity:"sensor.kodi_all_movies",upcoming:"sensor.upcoming_all_movies"}}}],r&&de(n.prototype,r),o&&de(n,o),Object.defineProperty(n,"prototype",{writable:!1}),n;var n,r,o,i,a}((xe=function(t){function e(){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),Tt(this,e,arguments)}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),Object.defineProperty(t,"prototype",{writable:!1}),e&&Rt(t,e)}(e,t),n=e,r=[{key:"renderSearchForm",value:function(){var t=this;return G(xt||(xt=jt(['\n        <div id="search-container">\n          ','\n          <form id="form" @submit="','" class="hidden">\n            <input\n              type="text"\n              .value="','"\n              @input="','"\n              class="search-input"\n              placeholder="Search..."\n            />\n          </form>\n        </div>\n      '])),this.search.length>0?G(St||(St=jt([' <svg\n                class="reset-icon"\n                @click="','"\n                width="24"\n                height="24"\n                viewBox="0 0 24 24"\n                aria-label="Reset search"\n              >\n                <path d="','" />\n              </svg>'])),this.resetSearch,"M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"):G(At||(At=jt([' <svg\n                class="search-icon"\n                @click="','"\n                @mouseover="','"\n                @mouseout="','"\n                width="24"\n                height="24"\n                viewBox="0 0 24 24"\n                aria-label="Search"\n              >\n                <path d="','" />\n              </svg>'])),(function(e){return t.manageSearchInputVisibility(e)}),(function(e){return t.manageSearchInputVisibility(e)}),(function(e){return t.manageSearchInputVisibility(e)}),"M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"),this.performSearch,this.search,this.updateSearch)}},{key:"updateSearch",value:function(t){this.search=t.target.value}},{key:"performSearch",value:(o=Et().mark((function t(e){var n,r,o,i;return Et().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(e.preventDefault(),!(n=this.search.trim())){t.next=18;break}return t.prev=3,t.next=6,fetch("".concat(this.SEARCH_API).concat(n));case 6:return r=t.sent,t.next=9,r.json();case 9:(o=t.sent).results&&o.results.length>0?(this.searchResults=o.results,this.isSearchActive=!0):(this.searchResults.length,i="No results found for '".concat(n,"'."),this.launch_toast(i)),t.next=16;break;case 13:t.prev=13,t.t0=t.catch(3),console.error("Error fetching search results:",t.t0);case 16:t.next=20;break;case 18:this.isSearchActive=!1,this.searchResults=[];case 20:this.requestUpdate();case 21:case"end":return t.stop()}}),t,this,[[3,13]])})),i=function(){var t=this,e=arguments;return new Promise((function(n,r){var i=o.apply(t,e);function a(t){Ot(i,n,r,a,s,"next",t)}function s(t){Ot(i,n,r,a,s,"throw",t)}a(void 0)}))},function(t){return i.apply(this,arguments)})},{key:"manageSearchInputVisibility",value:function(t){var e=this,n=this.shadowRoot.querySelector("#form");n&&(clearTimeout(this.searchTimeout),"click"!==t.type?0===this.search.trim().length&&(n.classList.contains("show")||"mouseover"!==t.type?n.classList.contains("show")&&"mouseout"===t.type&&(this.searchTimeout=setTimeout((function(){0===e.search.trim().length&&n.classList.remove("show")}),7e3)):this.searchTimeout=setTimeout((function(){0===e.search.trim().length&&n.classList.add("show")}),1e3)):n.classList.toggle("show"))}},{key:"resetSearch",value:function(){this.search="",this.shadowRoot.querySelector("#form").classList.remove("show"),this.isSearchActive=!1,this.getCinemaMovies(this.API_URL)}},{key:"renderToast",value:function(){return G(kt||(kt=jt(['\n        <div id="toast">\n          <div id="img">\n            <svg width="24" height="24" viewBox="0 0 24 24" aria-label="Error">\n              <path d="','" />\n            </svg>\n          </div>\n          <div id="desc">Notification search results</div>\n        </div>\n      '])),"M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z")}},{key:"launch_toast",value:function(t){var e=this.shadowRoot.querySelector("#toast"),n=this.shadowRoot.querySelector("#desc");e?(n.innerHTML=t,e.classList.add("show"),setTimeout((function(){e.classList.remove("show")}),5e3)):console.error("Toast element not found")}}],r&&Mt(n.prototype,r),Object.defineProperty(n,"prototype",{writable:!1}),n;var n,r,o,i}(at),function(t){function e(){return function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}(this,e),It(this,e,arguments)}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),Object.defineProperty(t,"prototype",{writable:!1}),e&&Gt(t,e)}(e,t),n=e,(r=[{key:"scrollToSection",value:function(t){t.preventDefault();var e=t.currentTarget.getAttribute("href"),n=this.shadowRoot.querySelector("".concat(e)),r=this.shadowRoot.querySelector(".header").offsetHeight;if(n){var o=n.getBoundingClientRect().top+window.scrollY-r;window.scrollTo({top:o,behavior:"smooth"})}}},{key:"handleScroll",value:function(){this.updateNavOnLoad();var t=this.shadowRoot.querySelectorAll("section"),e=this.shadowRoot.querySelector("main"),n=this.shadowRoot.querySelector(".header"),r=this.shadowRoot.querySelectorAll(".header li a");t.forEach((function(t,o){var i=t.getBoundingClientRect();if(i.bottom>n.offsetHeight&&i.top<(window.innerHeight||document.documentElement.clientHeight)-56)return e.style.backgroundColor=o%2==0?"var(--secondary-color)":"var(--primary-color)",void r.forEach((function(e){e.getAttribute("data-target")===t.id?e.classList.add("active"):e.classList.remove("active")}))}))}},{key:"updateNavOnLoad",value:function(){var t=this.shadowRoot.querySelectorAll("section"),e=this.shadowRoot.querySelectorAll(".header li a");t.forEach((function(t,n){0===n&&e.forEach((function(e){e.getAttribute("data-target")===t.id?e.classList.add("active"):e.classList.remove("active")}))}))}},{key:"createBentoGrid",value:function(){this.shadowRoot.querySelectorAll(".items-container").forEach((function(t){var e=Array.from(t.children).slice(3,10);if(e.length>=2){e.forEach((function(t){return t.classList.remove("span-2")}));var n=Math.floor(Math.random()*(e.length-3)),r=n+3+Math.floor(Math.random()*(e.length-n-3));n<e.length&&r<e.length&&(e[n].classList.add("span-2"),e[r].classList.add("span-2"))}}))}},{key:"_openPopup",value:function(t){var e=this,n=this.shadowRoot.querySelector("#popup-dialog");"string"==typeof t&&(t.startsWith("http")||t.startsWith("www")?n.innerHTML='\n          <svg class="close"  width="24" height="24" viewBox="0 0 24 24">\n            <path d="'.concat($t,'" />\n          </svg>\n        <div class="popup-content">\n          <iframe src="').concat(t,'" frameborder="0" width="100%" height="100%"></iframe>\n        </div>\n      '):n.innerHTML='\n          <svg class="close"  width="24" height="24" viewBox="0 0 24 24">\n            <path d="'.concat($t,'" />\n          </svg>\n        <div class="popup-content">').concat(t,"</div>\n      ")),n.showModal(),n.querySelector(".close").addEventListener("click",(function(){return e._closePopup()})),n.addEventListener("click",(function(t){t.target===n&&e._closePopup()}))}},{key:"_closePopup",value:function(){this.shadowRoot.querySelector("#popup-dialog").close()}},{key:"_playMovie",value:function(t){this._hass.callService("script","run_plugin",{file:t})}}])&&zt(n.prototype,r),Object.defineProperty(n,"prototype",{writable:!1}),n;var n,r}(xe)));we(Se,"styles",[ft,_t,mt,bt]),customElements.define("movie-app-panel",Se),console.info("%c 📻 Movie App Panel ","background: #222; color: #bada55"),window.customCards=window.customCards||[],window.customCards.push({preview:!1,type:"movie-app-panel",name:"Movie App Panel"})})();
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+const t$2=globalThis,e$3=t$2.ShadowRoot&&(void 0===t$2.ShadyCSS||t$2.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$2=Symbol(),o$3=new WeakMap;let n$3 = class n{constructor(t,e,o){if(this._$cssResult$=!0,o!==s$2)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$3&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=o$3.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&o$3.set(s,t));}return t}toString(){return this.cssText}};const r$3=t=>new n$3("string"==typeof t?t:t+"",void 0,s$2),i$4=(t,...e)=>{const o=1===t.length?t[0]:e.reduce(((e,s,o)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[o+1]),t[0]);return new n$3(o,t,s$2)},S$1=(s,o)=>{if(e$3)s.adoptedStyleSheets=o.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet));else for(const e of o){const o=document.createElement("style"),n=t$2.litNonce;void 0!==n&&o.setAttribute("nonce",n),o.textContent=e.cssText,s.appendChild(o);}},c$2=e$3?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$3(e)})(t):t;
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */const{is:i$3,defineProperty:e$2,getOwnPropertyDescriptor:r$2,getOwnPropertyNames:h$1,getOwnPropertySymbols:o$2,getPrototypeOf:n$2}=Object,a$1=globalThis,c$1=a$1.trustedTypes,l$1=c$1?c$1.emptyScript:"",p$1=a$1.reactiveElementPolyfillSupport,d$1=(t,s)=>t,u$1={toAttribute(t,s){switch(s){case Boolean:t=t?l$1:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,s){let i=t;switch(s){case Boolean:i=null!==t;break;case Number:i=null===t?null:Number(t);break;case Object:case Array:try{i=JSON.parse(t);}catch(t){i=null;}}return i}},f$1=(t,s)=>!i$3(t,s),y$1={attribute:!0,type:String,converter:u$1,reflect:!1,hasChanged:f$1};Symbol.metadata??=Symbol("metadata"),a$1.litPropertyMetadata??=new WeakMap;class b extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t);}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,s=y$1){if(s.state&&(s.attribute=!1),this._$Ei(),this.elementProperties.set(t,s),!s.noAccessor){const i=Symbol(),r=this.getPropertyDescriptor(t,i,s);void 0!==r&&e$2(this.prototype,t,r);}}static getPropertyDescriptor(t,s,i){const{get:e,set:h}=r$2(this.prototype,t)??{get(){return this[s]},set(t){this[s]=t;}};return {get(){return e?.call(this)},set(s){const r=e?.call(this);h.call(this,s),this.requestUpdate(t,r,i);},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??y$1}static _$Ei(){if(this.hasOwnProperty(d$1("elementProperties")))return;const t=n$2(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties);}static finalize(){if(this.hasOwnProperty(d$1("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(d$1("properties"))){const t=this.properties,s=[...h$1(t),...o$2(t)];for(const i of s)this.createProperty(i,t[i]);}const t=this[Symbol.metadata];if(null!==t){const s=litPropertyMetadata.get(t);if(void 0!==s)for(const[t,i]of s)this.elementProperties.set(t,i);}this._$Eh=new Map;for(const[t,s]of this.elementProperties){const i=this._$Eu(t,s);void 0!==i&&this._$Eh.set(i,t);}this.elementStyles=this.finalizeStyles(this.styles);}static finalizeStyles(s){const i=[];if(Array.isArray(s)){const e=new Set(s.flat(1/0).reverse());for(const s of e)i.unshift(c$2(s));}else void 0!==s&&i.push(c$2(s));return i}static _$Eu(t,s){const i=s.attribute;return !1===i?void 0:"string"==typeof i?i:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev();}_$Ev(){this._$ES=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach((t=>t(this)));}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.();}removeController(t){this._$EO?.delete(t);}_$E_(){const t=new Map,s=this.constructor.elementProperties;for(const i of s.keys())this.hasOwnProperty(i)&&(t.set(i,this[i]),delete this[i]);t.size>0&&(this._$Ep=t);}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return S$1(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach((t=>t.hostConnected?.()));}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach((t=>t.hostDisconnected?.()));}attributeChangedCallback(t,s,i){this._$AK(t,i);}_$EC(t,s){const i=this.constructor.elementProperties.get(t),e=this.constructor._$Eu(t,i);if(void 0!==e&&!0===i.reflect){const r=(void 0!==i.converter?.toAttribute?i.converter:u$1).toAttribute(s,i.type);this._$Em=t,null==r?this.removeAttribute(e):this.setAttribute(e,r),this._$Em=null;}}_$AK(t,s){const i=this.constructor,e=i._$Eh.get(t);if(void 0!==e&&this._$Em!==e){const t=i.getPropertyOptions(e),r="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:u$1;this._$Em=e,this[e]=r.fromAttribute(s,t.type),this._$Em=null;}}requestUpdate(t,s,i){if(void 0!==t){if(i??=this.constructor.getPropertyOptions(t),!(i.hasChanged??f$1)(this[t],s))return;this.P(t,s,i);}!1===this.isUpdatePending&&(this._$ES=this._$ET());}P(t,s,i){this._$AL.has(t)||this._$AL.set(t,s),!0===i.reflect&&this._$Em!==t&&(this._$Ej??=new Set).add(t);}async _$ET(){this.isUpdatePending=!0;try{await this._$ES;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,s]of this._$Ep)this[t]=s;this._$Ep=void 0;}const t=this.constructor.elementProperties;if(t.size>0)for(const[s,i]of t)!0!==i.wrapped||this._$AL.has(s)||void 0===this[s]||this.P(s,this[s],i);}let t=!1;const s=this._$AL;try{t=this.shouldUpdate(s),t?(this.willUpdate(s),this._$EO?.forEach((t=>t.hostUpdate?.())),this.update(s)):this._$EU();}catch(s){throw t=!1,this._$EU(),s}t&&this._$AE(s);}willUpdate(t){}_$AE(t){this._$EO?.forEach((t=>t.hostUpdated?.())),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t);}_$EU(){this._$AL=new Map,this.isUpdatePending=!1;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return !0}update(t){this._$Ej&&=this._$Ej.forEach((t=>this._$EC(t,this[t]))),this._$EU();}updated(t){}firstUpdated(t){}}b.elementStyles=[],b.shadowRootOptions={mode:"open"},b[d$1("elementProperties")]=new Map,b[d$1("finalized")]=new Map,p$1?.({ReactiveElement:b}),(a$1.reactiveElementVersions??=[]).push("2.0.4");
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+const t$1=globalThis,i$2=t$1.trustedTypes,s$1=i$2?i$2.createPolicy("lit-html",{createHTML:t=>t}):void 0,e$1="$lit$",h=`lit$${(Math.random()+"").slice(9)}$`,o$1="?"+h,n$1=`<${o$1}>`,r$1=document,l=()=>r$1.createComment(""),c=t=>null===t||"object"!=typeof t&&"function"!=typeof t,a=Array.isArray,u=t=>a(t)||"function"==typeof t?.[Symbol.iterator],d="[ \t\n\f\r]",f=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,v=/-->/g,_=/>/g,m=RegExp(`>|${d}(?:([^\\s"'>=/]+)(${d}*=${d}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),p=/'/g,g=/"/g,$=/^(?:script|style|textarea|title)$/i,y=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),x=y(1),w=Symbol.for("lit-noChange"),T=Symbol.for("lit-nothing"),A=new WeakMap,E=r$1.createTreeWalker(r$1,129);function C(t,i){if(!Array.isArray(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==s$1?s$1.createHTML(i):i}const P=(t,i)=>{const s=t.length-1,o=[];let r,l=2===i?"<svg>":"",c=f;for(let i=0;i<s;i++){const s=t[i];let a,u,d=-1,y=0;for(;y<s.length&&(c.lastIndex=y,u=c.exec(s),null!==u);)y=c.lastIndex,c===f?"!--"===u[1]?c=v:void 0!==u[1]?c=_:void 0!==u[2]?($.test(u[2])&&(r=RegExp("</"+u[2],"g")),c=m):void 0!==u[3]&&(c=m):c===m?">"===u[0]?(c=r??f,d=-1):void 0===u[1]?d=-2:(d=c.lastIndex-u[2].length,a=u[1],c=void 0===u[3]?m:'"'===u[3]?g:p):c===g||c===p?c=m:c===v||c===_?c=f:(c=m,r=void 0);const x=c===m&&t[i+1].startsWith("/>")?" ":"";l+=c===f?s+n$1:d>=0?(o.push(a),s.slice(0,d)+e$1+s.slice(d)+h+x):s+h+(-2===d?i:x);}return [C(t,l+(t[s]||"<?>")+(2===i?"</svg>":"")),o]};class V{constructor({strings:t,_$litType$:s},n){let r;this.parts=[];let c=0,a=0;const u=t.length-1,d=this.parts,[f,v]=P(t,s);if(this.el=V.createElement(f,n),E.currentNode=this.el.content,2===s){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes);}for(;null!==(r=E.nextNode())&&d.length<u;){if(1===r.nodeType){if(r.hasAttributes())for(const t of r.getAttributeNames())if(t.endsWith(e$1)){const i=v[a++],s=r.getAttribute(t).split(h),e=/([.?@])?(.*)/.exec(i);d.push({type:1,index:c,name:e[2],strings:s,ctor:"."===e[1]?k:"?"===e[1]?H:"@"===e[1]?I:R}),r.removeAttribute(t);}else t.startsWith(h)&&(d.push({type:6,index:c}),r.removeAttribute(t));if($.test(r.tagName)){const t=r.textContent.split(h),s=t.length-1;if(s>0){r.textContent=i$2?i$2.emptyScript:"";for(let i=0;i<s;i++)r.append(t[i],l()),E.nextNode(),d.push({type:2,index:++c});r.append(t[s],l());}}}else if(8===r.nodeType)if(r.data===o$1)d.push({type:2,index:c});else {let t=-1;for(;-1!==(t=r.data.indexOf(h,t+1));)d.push({type:7,index:c}),t+=h.length-1;}c++;}}static createElement(t,i){const s=r$1.createElement("template");return s.innerHTML=t,s}}function N(t,i,s=t,e){if(i===w)return i;let h=void 0!==e?s._$Co?.[e]:s._$Cl;const o=c(i)?void 0:i._$litDirective$;return h?.constructor!==o&&(h?._$AO?.(!1),void 0===o?h=void 0:(h=new o(t),h._$AT(t,s,e)),void 0!==e?(s._$Co??=[])[e]=h:s._$Cl=h),void 0!==h&&(i=N(t,h._$AS(t,i.values),h,e)),i}class S{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:i},parts:s}=this._$AD,e=(t?.creationScope??r$1).importNode(i,!0);E.currentNode=e;let h=E.nextNode(),o=0,n=0,l=s[0];for(;void 0!==l;){if(o===l.index){let i;2===l.type?i=new M(h,h.nextSibling,this,t):1===l.type?i=new l.ctor(h,l.name,l.strings,this,t):6===l.type&&(i=new L(h,this,t)),this._$AV.push(i),l=s[++n];}o!==l?.index&&(h=E.nextNode(),o++);}return E.currentNode=r$1,e}p(t){let i=0;for(const s of this._$AV)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class M{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,i,s,e){this.type=2,this._$AH=T,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cv=e?.isConnected??!0;}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===t?.nodeType&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=N(this,t,i),c(t)?t===T||null==t||""===t?(this._$AH!==T&&this._$AR(),this._$AH=T):t!==this._$AH&&t!==w&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):u(t)?this.k(t):this._(t);}S(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.S(t));}_(t){this._$AH!==T&&c(this._$AH)?this._$AA.nextSibling.data=t:this.T(r$1.createTextNode(t)),this._$AH=t;}$(t){const{values:i,_$litType$:s}=t,e="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=V.createElement(C(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===e)this._$AH.p(i);else {const t=new S(e,this),s=t.u(this.options);t.p(i),this.T(s),this._$AH=t;}}_$AC(t){let i=A.get(t.strings);return void 0===i&&A.set(t.strings,i=new V(t)),i}k(t){a(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const h of t)e===i.length?i.push(s=new M(this.S(l()),this.S(l()),this,this.options)):s=i[e],s._$AI(h),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){for(this._$AP?.(!1,!0,i);t&&t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t));}}class R{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,i,s,e,h){this.type=1,this._$AH=T,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=h,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=T;}_$AI(t,i=this,s,e){const h=this.strings;let o=!1;if(void 0===h)t=N(this,t,i,0),o=!c(t)||t!==this._$AH&&t!==w,o&&(this._$AH=t);else {const e=t;let n,r;for(t=h[0],n=0;n<h.length-1;n++)r=N(this,e[s+n],i,n),r===w&&(r=this._$AH[n]),o||=!c(r)||r!==this._$AH[n],r===T?t=T:t!==T&&(t+=(r??"")+h[n+1]),this._$AH[n]=r;}o&&!e&&this.j(t);}j(t){t===T?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"");}}class k extends R{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===T?void 0:t;}}class H extends R{constructor(){super(...arguments),this.type=4;}j(t){this.element.toggleAttribute(this.name,!!t&&t!==T);}}class I extends R{constructor(t,i,s,e,h){super(t,i,s,e,h),this.type=5;}_$AI(t,i=this){if((t=N(this,t,i,0)??T)===w)return;const s=this._$AH,e=t===T&&s!==T||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,h=t!==T&&(s===T||e);e&&this.element.removeEventListener(this.name,this,s),h&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t);}}class L{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){N(this,t);}}const Z=t$1.litHtmlPolyfillSupport;Z?.(V,M),(t$1.litHtmlVersions??=[]).push("3.1.2");const j=(t,i,s)=>{const e=s?.renderBefore??i;let h=e._$litPart$;if(void 0===h){const t=s?.renderBefore??null;e._$litPart$=h=new M(i.insertBefore(l(),t),t,void 0,s??{});}return h._$AI(t),h};
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */class s extends b{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const i=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=j(i,this.renderRoot,this.renderOptions);}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0);}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1);}render(){return w}}s._$litElement$=!0,s[("finalized")]=!0,globalThis.litElementHydrateSupport?.({LitElement:s});const r=globalThis.litElementPolyfillSupport;r?.({LitElement:s});(globalThis.litElementVersions??=[]).push("4.0.4");
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+const t={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},e=t=>(...e)=>({_$litDirective$:t,values:e});let i$1 = class i{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,i){this._$Ct=t,this._$AM=e,this._$Ci=i;}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}};
+
+/**
+ * @license
+ * Copyright 2018 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */const n="important",i=" !"+n,o=e(class extends i$1{constructor(t$1){if(super(t$1),t$1.type!==t.ATTRIBUTE||"style"!==t$1.name||t$1.strings?.length>2)throw Error("The `styleMap` directive must be used in the `style` attribute and must be the only part in the attribute.")}render(t){return Object.keys(t).reduce(((e,r)=>{const s=t[r];return null==s?e:e+`${r=r.includes("-")?r:r.replace(/(?:^(webkit|moz|ms|o)|)(?=[A-Z])/g,"-$&").toLowerCase()}:${s};`}),"")}update(e,[r]){const{style:s}=e.element;if(void 0===this.ft)return this.ft=new Set(Object.keys(r)),this.render(r);for(const t of this.ft)null==r[t]&&(this.ft.delete(t),t.includes("-")?s.removeProperty(t):s[t]=null);for(const t in r){const e=r[t];if(null!=e){this.ft.add(t);const r="string"==typeof e&&e.endsWith(i);t.includes("-")||r?s.setProperty(t,r?e.slice(0,-11):e,r?n:""):s[t]=e;}}return w}});
+
+var dialogCss = i$4`
+  #popup-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    padding: 0;
+    transform: translate(-50%, -50%);
+    max-width: 80vw;
+    max-height: 80vh;
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+    border-radius: 0.75rem;
+    border: none;
+    z-index: 1; /* Ensure dialog is below close button */
+    &::backdrop {
+      position: fixed;
+      inset: 0px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+    }
+    .popup-content {
+      height: 100%;
+      width: 100%;
+      overflow-y: hidden;
+    }
+    /* The Close Button */
+    .close {
+      cursor: pointer;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      fill: white;
+      stroke: black;
+      stroke-width: 2;
+      &:hover,
+      &:active {
+        fill: var(--accent-color);
+      }
+    }
+  }
+
+  #toast {
+    visibility: hidden;
+    max-width: fit-content;
+    height: 50px;
+    margin-left: -125px;
+    margin: auto;
+    background-color: var(--accent-color);
+    text-align: center;
+    border-radius: 10px;
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    right: 0;
+    top: 80px;
+    font-size: 1rem;
+    border: solid black;
+  }
+  #toast #img {
+    width: 50px;
+    height: 50px;
+    float: left;
+    box-sizing: border-box;
+    background-color: var(--secondary-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & path {
+      fill: var(--accent-color);
+    }
+  }
+  #toast #desc {
+    font-size: large;
+    color: #000;
+    padding: 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  #toast.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 2s,
+      fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, expand 0.5s 0.5s, stay 3s 1s, shrink 0.5s 4s,
+      fadeout 0.5s 4.5s;
+  }
+  @-webkit-keyframes fadein {
+    from {
+      top: 0;
+      opacity: 0;
+    }
+    to {
+      top: 80px;
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadein {
+    from {
+      top: 0;
+      opacity: 0;
+    }
+    to {
+      top: 80px;
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes expand {
+    from {
+      min-width: 50px;
+    }
+    to {
+      min-width: 350px;
+    }
+  }
+
+  @keyframes expand {
+    from {
+      min-width: 50px;
+    }
+    to {
+      min-width: 350px;
+    }
+  }
+  @-webkit-keyframes stay {
+    from {
+      min-width: 350px;
+    }
+    to {
+      min-width: 350px;
+    }
+  }
+
+  @keyframes stay {
+    from {
+      min-width: 350px;
+    }
+    to {
+      min-width: 350px;
+    }
+  }
+  @-webkit-keyframes shrink {
+    from {
+      min-width: 350px;
+    }
+    to {
+      min-width: 50px;
+    }
+  }
+
+  @keyframes shrink {
+    from {
+      min-width: 350px;
+    }
+    to {
+      min-width: 50px;
+    }
+  }
+
+  @-webkit-keyframes fadeout {
+    from {
+      top: 80px;
+      opacity: 1;
+    }
+    to {
+      top: 0px;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeout {
+    from {
+      top: 80px;
+      opacity: 1;
+    }
+    to {
+      top: 0px;
+      opacity: 0;
+    }
+  }
+`;
+
+var headerCss = i$4`
+  .header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: calc(var(--header-height) + 1px);
+    background-color: #000;
+    filter: drop-shadow(2px 4px 6px black);
+    backdrop-filter: blur(15px) brightness(0.7);
+    z-index: 5;
+    margin: 0;
+    padding: 0 1rem 0 1rem;
+    overflow: hidden;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      display: flex;
+      align-items: flex-end;
+    }
+    li {
+      float: left;
+
+      a {
+        display: block;
+        text-decoration: none;
+        text-align: center;
+        padding: 1rem 16px;
+        text-transform: capitalize;
+        color: var(--accent-color);
+        font-size: 20px;
+        font-weight: 700;
+        font-family: 'Raleway';
+        border-bottom: 2px solid transparent;
+        transition: border-bottom 0.3s ease-in;
+        &:hover:not(.active) {
+          background-color: var(--secondary-bg-color);
+          color: white;
+        }
+
+        &.active {
+          border-bottom: 2px solid var(--accent-color);
+          color: white;
+        }
+      }
+    }
+  }
+
+  #search-container {
+    display: inline-flex;
+    justify-content: end;
+    align-items: center;
+    max-width: 400px;
+    width: 100%;
+    height: 100%;
+    .search-icon,
+    .reset-icon {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      order: 2;
+      display: block;
+      flex-shrink: 0;
+      & path {
+        fill: var(--accent-color);
+      }
+      &:hover path {
+        fill: white;
+      }
+    }
+
+    #form {
+      flex-grow: 0;
+      transition: width 0.3s ease-in-out;
+      display: flex;
+      align-items: center;
+      width: 0;
+      overflow: hidden;
+      order: 1;
+
+      .search-input {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 1rem;
+        font-size: 16px;
+        /* background-color: transparent; */
+        background-color: var(--secondary-bg-color);
+        border: 1px solid var(--secondary-color);
+        transition: all 0.3s ease;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+      }
+    }
+    #form.show {
+      width: calc(100% - 20px);
+      margin-right: 20px;
+    }
+  }
+`;
+
+var mainStyles = i$4`
+  :host {
+    --primary-color: #181625;
+    --secondary-color: #403c55;
+    --primary-bg-color: #442d47;
+    --secondary-bg-color: #0d324d;
+    --accent-color: rgb(146, 144, 195);
+    --maxPrimarySectionWidth: 85vw;
+  }
+  * {
+    font-family: 'Raleway', sans-serif;
+    color: white;
+    margin: 0;
+  }
+
+  main {
+    margin: 0 auto 56px;
+    background-color: var(--primary-color);
+    transition: background-color 0.4s ease;
+  }
+  button {
+    cursor: pointer;
+    padding-top: 1rem;
+  }
+
+  section.inner_content {
+    overflow: auto;
+    display: block;
+    align-items: normal;
+  }
+
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }
+  #subsection-title {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0;
+    left: 1rem;
+    margin: 2rem 1rem 0.5rem 1rem;
+    background: inherit; /* This makes sure the title is readable over other content */
+    align-self: flex-start;
+  }
+  .horizontal-list {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+  }
+
+  .items-container,
+  .searched {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-auto-flow: dense;
+    padding: 0 1rem;
+    grid-gap: 1rem;
+    & .span-2 {
+      grid-column: span 2;
+      grid-row: span 2;
+      align-self: center;
+      margin: 0;
+    }
+  }
+
+  .watch-now,
+  .watch-later {
+    color: var(--primary-color);
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 100px;
+  }
+
+  .watch-now {
+    padding: 0.5rem 1rem;
+  }
+
+  .watch-later {
+    padding: 0.5rem 0.7rem;
+  }
+
+  .movie-l {
+    width: 40rem;
+    position: relative;
+    margin: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20rem;
+    box-shadow: 2px 2px 14px 0px #2d2d2d;
+    background-image: linear-gradient(to top, black, transparent);
+  }
+
+  .movie-l::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to top,
+      rgba(9, 1, 31, 0.719),
+      rgba(0, 0, 0, 0)
+    );
+    z-index: 1;
+  }
+
+  .movie-l .movie-info {
+    display: none;
+  }
+
+  .movie-l .overview.visible {
+    padding: 1rem;
+    position: absolute;
+    bottom: 0%;
+    width: 80%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    justify-content: space-between;
+    & h3 {
+      font-size: 1.4rem;
+    }
+    & p {
+      margin-top: 0;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      /* Set the maximum number of lines before truncating */
+      overflow: hidden;
+      font-size: 14px;
+      opacity: 0.7;
+    }
+  }
+
+  .movie-s img,
+  .movie-l img {
+    width: 100%;
+    border-radius: 10px;
+    /* box-shadow: 2px 2px 14px 0px #000000; */
+  }
+
+  .movie-s {
+    flex: 1;
+    min-width: 200px;
+    margin: 1rem;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    height: min-content;
+  }
+
+  .movie-s .movie-info {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    padding: 0.5rem;
+    letter-spacing: 0.5px;
+    font-size: 12px;
+  }
+
+  .movie-s .movie-info h3 {
+    margin-top: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    /* Set the maximum number of lines before truncating */
+    overflow: hidden;
+    font-size: 1rem;
+  }
+
+  .movie-s .movie-info span {
+    white-space: nowrap;
+    display: flex;
+    position: absolute;
+    top: 2%;
+    right: 5%;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    /* background: linear-gradient(15deg, #bbbbbb 0%, #008704 40%); */
+    box-sizing: content-box;
+    font-weight: 800;
+  }
+
+  .movie-s .overview.hidden {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: -webkit-fill-available;
+    top: 0;
+    bottom: 0;
+    font-size: 12px;
+    background: linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0.281));
+    position: absolute;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 3;
+    & .buttons {
+      padding-top: 1rem;
+    }
+  }
+
+  .movie-s .overview.hidden p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  .movie-s .overview.hidden h3 {
+    margin: 0;
+  }
+
+  .movie-s:hover .overview.hidden {
+    opacity: 1;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f100;
+  }
+
+  ::-webkit-scrollbar-track:horizontal {
+    margin: 1.5rem;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 100px;
+    cursor: -webkit-grab;
+    cursor: grab;
+  }
+
+  .horizontal-list::-webkit-scrollbar-track {
+    margin: 1rem;
+  }
+`;
+
+var mediaQueryStyles = i$4`
+  @media (max-width: 768px) {
+    #popup-dialog {
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+    }
+    .header {
+      width: 100%;
+    }
+    .movie-s {
+      /* max-width: 180px !important; */
+      min-width: 150px !important;
+      margin: 0.5rem;
+    }
+    .items-container,
+    .searched {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+  }
+`;
+
+// combinedStyles.js
+
+const combinedStyles = i$4`
+  ${mainStyles}
+  ${headerCss}
+  ${dialogCss}
+  ${mediaQueryStyles}
+`;
+
+// Material Design Icons v7.4.47
+var mdiAlertCircleOutline = "M11,15H13V17H11V15M11,7H13V13H11V7M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z";
+var mdiClose = "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z";
+var mdiCloseCircle = "M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z";
+var mdiMagnify = "M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z";
+
+const SearchMixin = (superclass) =>
+  class extends superclass {
+    /* ------------------------------ SEARCH HANDLE ----------------------------- */
+
+    renderSearchForm() {
+      return x`
+        <div id="search-container">
+          ${this.search.length > 0
+            ? x` <svg
+                class="reset-icon"
+                @click="${this.resetSearch}"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                aria-label="Reset search"
+              >
+                <path d="${mdiClose}" />
+              </svg>`
+            : x` <svg
+                class="search-icon"
+                @click="${(event) => this.manageSearchInputVisibility(event)}"
+                @mouseover="${(event) =>
+                  this.manageSearchInputVisibility(event)}"
+                @mouseout="${(event) =>
+                  this.manageSearchInputVisibility(event)}"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                aria-label="Search"
+              >
+                <path d="${mdiMagnify}" />
+              </svg>`}
+          <form id="form" @submit="${this.performSearch}" class="hidden">
+            <input
+              type="text"
+              .value="${this.search}"
+              @input="${this.updateSearch}"
+              class="search-input"
+              placeholder="Search..."
+            />
+          </form>
+        </div>
+      `;
+    }
+
+    updateSearch(e) {
+      this.search = e.target.value;
+    }
+
+    async performSearch(e) {
+      e.preventDefault();
+      const searchTerm = this.search.trim();
+
+      if (searchTerm) {
+        try {
+          const response = await fetch(`${this.SEARCH_API}${searchTerm}`);
+          const data = await response.json();
+          if (data.results && data.results.length > 0) {
+            this.searchResults = data.results;
+            this.isSearchActive = true;
+          } else {
+            // If the new search has no results, use last successful results if available
+            this.searchResults.length === 0;
+            const template = `No results found for '${searchTerm}'.`;
+            this.launch_toast(template);
+          }
+        } catch (error) {
+          console.error('Error fetching search results:', error);
+        }
+      } else {
+        this.isSearchActive = false;
+        this.searchResults = []; // Clear results if search term is empty
+      }
+      this.requestUpdate();
+    }
+
+    manageSearchInputVisibility(event) {
+      const formEl = this.shadowRoot.querySelector('#form');
+      if (!formEl) return;
+
+      clearTimeout(this.searchTimeout); // Clear any existing timeout
+
+      // Handle the click event specifically
+      if (event.type === 'click') {
+        formEl.classList.toggle('show');
+        return; // Exit the function after handling click
+      }
+
+      // Handle mouseover and mouseout for empty search
+      if (this.search.trim().length === 0) {
+        if (!formEl.classList.contains('show') && event.type === 'mouseover') {
+          // Show the input after a delay if it's not already shown
+          this.searchTimeout = setTimeout(() => {
+            if (this.search.trim().length === 0) {
+              formEl.classList.add('show');
+            }
+          }, 1000);
+        } else if (
+          formEl.classList.contains('show') &&
+          event.type === 'mouseout'
+        ) {
+          // Hide the input after a delay if still no search term
+          this.searchTimeout = setTimeout(() => {
+            if (this.search.trim().length === 0) {
+              formEl.classList.remove('show');
+            }
+          }, 7000);
+        }
+      }
+    }
+
+    resetSearch() {
+      this.search = '';
+      this.shadowRoot.querySelector('#form').classList.remove('show');
+      this.isSearchActive = false;
+      // Fetch default content or reset
+      this.getCinemaMovies(this.API_URL);
+    }
+
+    /* ---------------------------- TOAST NOTIFICATION --------------------------- */
+    renderToast() {
+      return x`
+        <div id="toast">
+          <div id="img">
+            <svg width="24" height="24" viewBox="0 0 24 24" aria-label="Error">
+              <path d="${mdiAlertCircleOutline}" />
+            </svg>
+          </div>
+          <div id="desc">Notification search results</div>
+        </div>
+      `;
+    }
+
+    launch_toast(desc) {
+      const toastEl = this.shadowRoot.querySelector('#toast');
+      const descEl = this.shadowRoot.querySelector('#desc');
+
+      if (toastEl) {
+        descEl.innerHTML = desc;
+        toastEl.classList.add('show');
+        setTimeout(() => {
+          toastEl.classList.remove('show');
+        }, 5000);
+      } else {
+        console.error('Toast element not found');
+      }
+    }
+  };
+
+const ActionsHandler = (Superclass) =>
+  class extends Superclass {
+    /* -------------------------------------------------------------------------- */
+    /*                               ACTIONS HANDLER                              */
+    /* -------------------------------------------------------------------------- */
+    scrollToSection(event) {
+      event.preventDefault(); // Prevent default behavior of anchor tag
+      const targetId = event.currentTarget.getAttribute('href'); // Get the hash value
+      const section = this.shadowRoot.querySelector(`${targetId}`); // Get the corresponding section
+      const headerHeight =
+        this.shadowRoot.querySelector('.header').offsetHeight; // Get header height
+      if (section) {
+        // Calculate the target scroll position considering the header height
+        const targetScrollPosition =
+          section.getBoundingClientRect().top + window.scrollY - headerHeight;
+        // Scroll to the target position
+        window.scrollTo({
+          top: targetScrollPosition,
+          behavior: 'smooth',
+        });
+      }
+    }
+
+    handleScroll() {
+      this.updateNavOnLoad();
+      const sections = this.shadowRoot.querySelectorAll('section');
+      const mainElement = this.shadowRoot.querySelector('main');
+      const headerElement = this.shadowRoot.querySelector('.header');
+      const navLinks = this.shadowRoot.querySelectorAll('.header li a');
+      sections.forEach((section, index) => {
+        const rect = section.getBoundingClientRect();
+
+        // Check if the section is at least partially visible in the viewport
+        const isVisible =
+          rect.bottom > headerElement.offsetHeight &&
+          rect.top <
+            (window.innerHeight || document.documentElement.clientHeight) - 56;
+
+        if (isVisible) {
+          // console.log(`Visible section ID: ${section.id}`); // Debug log
+          // // Change the background color based on odd or even index
+          if (index % 2 === 0) {
+            mainElement.style.backgroundColor = 'var(--secondary-color)';
+          } else {
+            mainElement.style.backgroundColor = 'var(--primary-color)';
+          }
+          // Update navigation link styles
+          navLinks.forEach((link) => {
+            if (link.getAttribute('data-target') === section.id) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+
+          // Exit the loop once a visible section is found
+          return;
+        }
+      });
+    }
+
+    updateNavOnLoad() {
+      const sections = this.shadowRoot.querySelectorAll('section');
+      const navLinks = this.shadowRoot.querySelectorAll('.header li a');
+      sections.forEach((section, index) => {
+        // Check if the section is at least partially visible in the viewport on load
+        if (index === 0) {
+          // Assuming the first section should be active initially
+          navLinks.forEach((link) => {
+            if (link.getAttribute('data-target') === section.id) {
+              link.classList.add('active');
+            } else {
+              link.classList.remove('active');
+            }
+          });
+        }
+      });
+    }
+
+    /* ------------------------- AUTO SPAN GRID COLUMNS ------------------------- */
+
+    createBentoGrid() {
+      const containers = this.shadowRoot.querySelectorAll('.items-container');
+
+      containers.forEach((container) => {
+        const children = Array.from(container.children).slice(3, 10);
+
+        if (children.length >= 2) {
+          // Clear existing span-2 classes
+          children.forEach((child) => child.classList.remove('span-2'));
+
+          // Get two unique random indexes with a gap
+          let firstRandomIndex = Math.floor(
+            Math.random() * (children.length - 3)
+          );
+          let secondRandomIndex =
+            firstRandomIndex +
+            3 +
+            Math.floor(
+              Math.random() * (children.length - firstRandomIndex - 3)
+            );
+
+          // Apply styling to the randomly selected children
+          if (
+            firstRandomIndex < children.length &&
+            secondRandomIndex < children.length
+          ) {
+            children[firstRandomIndex].classList.add('span-2');
+            children[secondRandomIndex].classList.add('span-2');
+          }
+        }
+      });
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                POPUP DIALOG                                */
+    /* -------------------------------------------------------------------------- */
+
+    // Method to open the more info dialog
+
+    _openPopup(content) {
+      const dialog = this.shadowRoot.querySelector('#popup-dialog');
+
+      if (typeof content === 'string') {
+        // Check if content is a URL for an iframe
+        if (content.startsWith('http') || content.startsWith('www')) {
+          dialog.innerHTML = `
+          <svg class="close"  width="24" height="24" viewBox="0 0 24 24">
+            <path d="${mdiCloseCircle}" />
+          </svg>
+        <div class="popup-content">
+          <iframe src="${content}" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+      `;
+        } else {
+          // Plain text or HTML string
+          dialog.innerHTML = `
+          <svg class="close"  width="24" height="24" viewBox="0 0 24 24">
+            <path d="${mdiCloseCircle}" />
+          </svg>
+        <div class="popup-content">${content}</div>
+      `;
+        }
+      }
+
+      dialog.showModal();
+      const closeButton = dialog.querySelector('.close');
+      closeButton.addEventListener('click', () => this._closePopup());
+      dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) {
+          this._closePopup();
+        }
+      });
+    }
+
+    _closePopup() {
+      const dialog = this.shadowRoot.querySelector('#popup-dialog');
+      dialog.close();
+    }
+
+    /* ------------------------- PLAY MOVIE CALLSERVICE ------------------------- */
+
+    _playMovie(strm_url) {
+      this._hass.callService('script', 'run_plugin', {
+        file: strm_url,
+      });
+    }
+  };
+
+const SEARCH_API =
+  'https://api.themoviedb.org/3/search/movie?include_adult=false&language=cs-CZ&api_key=62dce7dcd2282d8e5f63556d214eaa74&query="';
+
+const IMG_PATH = 'https://image.tmdb.org/t/p/w1280';
+const API_URL =
+  'https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&language=cs-CZ&api_key=62dce7dcd2282d8e5f63556d214eaa74&page=1';
+const URL_PATH = 'https://www.themoviedb.org/movie/';
+
+async function getResults() {
+  const api_url = 'https://api.themoviedb.org/3/discover/movie';
+  const apiKey = '62dce7dcd2282d8e5f63556d214eaa74';
+  const currentDate = new Date();
+  const startOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1
+  );
+  const endOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    0
+  );
+
+  const formatDate = (date) => date.toISOString().split('T')[0];
+  let page = 1;
+  let allResults = [];
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const criteria = new URLSearchParams({
+      api_key: apiKey,
+      include_adult: false,
+      include_video: false,
+      page: page,
+      region: 'CZ',
+      language: 'cs-CZ',
+      'release_date.gte': formatDate(startOfMonth),
+      'release_date.lte': formatDate(endOfMonth),
+      certification_country: 'CZ',
+      sort_by: 'primary_release_date.asc',
+      with_release_type: '3|2',
+      'vote_average.gte': 0,
+      'vote_average.lte': 10,
+      'vote_count.gte': 0,
+      watch_region: 'CZ',
+    });
+
+    const response = await fetch(`${api_url}?${criteria.toString()}`);
+
+    if (response.ok) {
+      const data = await response.json();
+      allResults = [...allResults, ...data.results];
+
+      if (page < data.total_pages) {
+        page += 1;
+      } else {
+        break;
+      }
+    } else {
+      console.error(
+        `Error: Unable to fetch upcoming movies. Status Code: ${response.status}`
+      );
+      break;
+    }
+  }
+
+  return allResults;
+}
+
+function loadCSS() {
+  const link = document.createElement('link');
+  link.type = 'text/css';
+  link.rel = 'stylesheet';
+  link.href =
+    'https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap';
+  document.head.appendChild(link);
+}
+
+const noImage =
+  'data:image/svg+xml;base64,PHN2ZyBpZD0iZ2x5cGhpY29ucy1iYXNpYyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMzIgMzIiPgogIDxwYXRoIGZpbGw9IiNiNWI1YjUiIGlkPSJwaWN0dXJlIiBkPSJNMjcuNSw1SDQuNUExLjUwMDA4LDEuNTAwMDgsMCwwLDAsMyw2LjV2MTlBMS41MDAwOCwxLjUwMDA4LDAsMCwwLDQuNSwyN2gyM0ExLjUwMDA4LDEuNTAwMDgsMCwwLDAsMjksMjUuNVY2LjVBMS41MDAwOCwxLjUwMDA4LDAsMCwwLDI3LjUsNVpNMjYsMTguNWwtNC43OTQyNS01LjIzMDFhLjk5MzgzLjk5MzgzLDAsMCwwLTEuNDQ0MjgtLjAzMTM3bC01LjM0NzQxLDUuMzQ3NDFMMTkuODI4MTIsMjRIMTdsLTQuNzkyOTEtNC43OTNhMS4wMDAyMiwxLjAwMDIyLDAsMCwwLTEuNDE0MTgsMEw2LDI0VjhIMjZabS0xNy45LTZhMi40LDIuNCwwLDEsMSwyLjQsMi40QTIuNDAwMDUsMi40MDAwNSwwLDAsMSw4LjEsMTIuNVoiLz4KPC9zdmc+Cg==';
+
+class MovieAppPanel extends ActionsHandler(SearchMixin(s)) {
+  _hass;
+  _upcomingState;
+  _kodiState;
+  static get properties() {
+    return {
+      _entity: { state: true },
+      _upcoming: { state: true },
+      cinemaMovies: { type: Array },
+      kodiMovies: { type: Array },
+      upcomingMovies: { type: Array },
+      search: { type: String },
+      searchResults: { type: Array },
+      isSearchActive: { type: Boolean },
+    };
+  }
+
+  static get styles() {
+    return [combinedStyles];
+  }
+
+  constructor() {
+    super();
+    loadCSS();
+    this.boundHandleScroll = this.handleScroll.bind(this);
+    this.cinemaMovies = [];
+    this.kodiMovies = [];
+    this.upcomingMovies = [];
+    this.search = '';
+    this.searchResults = [];
+    this.isSearchActive = false;
+    this.searchTimeout = null;
+    this.API_URL = `${API_URL}`;
+    this.IMG_PATH = `${IMG_PATH}`;
+    this.URL_PATH = `${URL_PATH}`;
+    this.SEARCH_API = `${SEARCH_API}`;
+    this.getCinemaMovies(this.API_URL);
+    this.getUpcomingMovies();
+  }
+
+  // Method to set configuration
+  setConfig(config) {
+    this._entity = config.entity;
+    this._upcoming = config.upcoming;
+    if (this._hass) {
+      this.hass = this._hass;
+    }
+  }
+
+  /**
+   * @param {{ states: { [x: string]: any; }; callService: (arg0: string, arg1: string, arg2: { file: any; }) => void; }} hass
+   */
+  set hass(hass) {
+    this._hass = hass;
+    this._kodiState = hass.states[this._entity];
+    if (this._kodiState) {
+      // Fetch Kodi movies after entity state is updated
+      this.getKodiMovies();
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.updateNavOnLoad();
+    window.addEventListener('scroll', this.boundHandleScroll);
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('scroll', this.boundHandleScroll);
+    super.disconnectedCallback();
+  }
+
+  updated(changedProperties) {
+    super.updated(changedProperties);
+    // Check if the relevant property has changed
+    if (
+      changedProperties.has('cinemaMovies') ||
+      changedProperties.has('upcomingMovies') ||
+      changedProperties.has('kodiMovies')
+    ) {
+      // console.log('bentoGrid');
+      this.createBentoGrid();
+    }
+  }
+
+  /* ------------------------------ FETCH MOVIES ------------------------------ */
+  async getCinemaMovies(url) {
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      this.cinemaMovies = data.results;
+      this.requestUpdate(); // Forces update
+      // console.log(this.cinemaMovies);
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+    }
+  }
+
+  async getUpcomingMovies() {
+    try {
+      const movies = await getResults();
+      this.upcomingMovies = movies;
+      this.requestUpdate(); // Forces update
+      // console.log(movies);
+    } catch (error) {
+      console.error('Error fetching upcoming movies:', error);
+    }
+  }
+
+  getKodiMovies() {
+    if (
+      this._kodiState &&
+      this._kodiState.attributes &&
+      this._kodiState.attributes.data
+    ) {
+      let data = this._kodiState.attributes.data;
+      this.kodiMovies = data;
+    } else {
+      console.error('Kodi Movies data is not available.');
+    }
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                               RENDER SECTIONS                              */
+  /* -------------------------------------------------------------------------- */
+
+  renderMovie(movie, options = {}) {
+    const { isLarge = false, useKodiData = false } = options;
+    const movieClass = isLarge ? 'movie-l' : 'movie-s';
+    const movieTitle = movie.title;
+    const movieRating = useKodiData ? movie.rating : movie.vote_average;
+    const moviePlot = useKodiData ? movie.plot : movie.overview;
+    const movieURL = useKodiData ? movie.tmdb_link : this.URL_PATH + movie.id;
+    const movieStreamUrl = useKodiData ? movie.strm_url : '';
+
+    let moviePath;
+
+    if (useKodiData) {
+      // For Kodi movies
+      moviePath = isLarge
+        ? movie.fanart_url || noImage
+        : movie.poster_url || noImage;
+    } else {
+      // For non-Kodi movies
+      if (isLarge) {
+        moviePath = movie.backdrop_path
+          ? this.IMG_PATH + movie.backdrop_path
+          : movie.poster_path
+          ? this.IMG_PATH + movie.poster_path
+          : noImage;
+      } else {
+        moviePath = movie.poster_path
+          ? this.IMG_PATH + movie.poster_path
+          : noImage;
+      }
+    }
+    let ratingGradient = '#0000007d'; // default
+    if (movieRating >= 8) ratingGradient = '#008704';
+    else if (movieRating >= 6.5) ratingGradient = '#8a5200';
+
+    const ratingGradientBg = {
+      background: `linear-gradient(15deg, #bbbbbb 0%, ${ratingGradient} 40%)`,
+    };
+
+    return x`
+      <div class="${movieClass}">
+        <img src="${moviePath}" alt="${movieTitle}" />
+        <div class="movie-info">
+          ${!isLarge && movieRating
+            ? x`<h3>${movieTitle}</h3>
+                <span class="vote" style=${o(ratingGradientBg)}
+                  >⭐ ${movieRating.toFixed(1)}</span
+                >`
+            : !movieRating
+            ? x`<h3>${movieTitle}</h3>`
+            : ''}
+        </div>
+        <div class="overview ${!isLarge ? 'hidden' : 'visible'}">
+          <h3>${movieTitle}</h3>
+          <p>${moviePlot}</p>
+          <div class="buttons">
+            ${useKodiData
+              ? x`<button
+                  class="watch-now"
+                  @click="${() => this._playMovie(movieStreamUrl)}"
+                >
+                  Watch now
+                </button>`
+              : ''}
+
+            <button
+              class="watch-later"
+              @click="${() => this._openPopup(movieURL)}"
+            >
+              +
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  renderMovieSections(sectionId, movies, subsections, useKodiData = false) {
+    return x`
+      <section id="${sectionId}" class="inner_content">
+        ${subsections.map(({ title, id }, index) => {
+          const sectionMovies =
+            index === 0 ? movies.slice(0, 5) : movies.slice(5);
+          const displayedMovies = sectionMovies.map((movie) =>
+            this.renderMovie(movie, { isLarge: index === 0, useKodiData })
+          );
+          const containerClass =
+            index === 0 ? 'horizontal-list' : 'items-container';
+
+          return x`
+            <div id="${id}" class="subsection">
+              <h2 id="subsection-title">${title}</h2>
+              <div class="${containerClass}">${displayedMovies}</div>
+            </div>
+          `;
+        })}
+      </section>
+    `;
+  }
+
+  renderSearchResults() {
+    // Render the current or last search results
+    return x`
+      <div class="searched">
+        ${this.searchResults.map((movie) =>
+          this.renderMovie(movie, false, false)
+        )}
+      </div>
+    `;
+  }
+
+  renderNavLink(linkId, title) {
+    const isActive = this.currentActiveSection === linkId;
+    return x`
+      <li>
+        <a
+          href="#${linkId}"
+          data-target="${linkId}"
+          @click="${this.scrollToSection}"
+          class="${isActive ? 'active' : ''}"
+          >${title}</a
+        >
+      </li>
+    `;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /*                              MAIN PAGE RENDER                              */
+  /* -------------------------------------------------------------------------- */
+
+  render() {
+    // console.log(`Rendering with active section: ${this.currentActiveSection}`);
+    return x`
+      <div class="header">
+        <ul>
+          ${this.renderNavLink('kodi-movies', 'Kodi')}
+          ${this.renderNavLink('upcoming-movies', 'Cinema')}
+          ${this.renderNavLink('tmdb-movies', 'Popular')}
+        </ul>
+        ${this.renderSearchForm()}
+      </div>
+      <main>
+        ${!this.isSearchActive
+          ? x`
+              ${this.renderMovieSections(
+                'kodi-movies',
+                this.kodiMovies,
+                [{ title: 'Recently added' }, { title: 'Kodi library' }],
+                true
+              )}
+              ${this.renderMovieSections(
+                'upcoming-movies',
+                this.upcomingMovies,
+                [{ title: 'In cinemas' }, { title: 'Movies' }]
+              )}
+              ${this.renderMovieSections('tmdb-movies', this.cinemaMovies, [
+                { title: 'Most Popular' },
+                { title: 'Recommended for you' },
+              ])}
+            `
+          : x`<section id="search-results" class="inner_content">
+              ${this.renderSearchResults()}
+            </section>`}
+        ${this.renderToast()}
+        <dialog id="popup-dialog"></dialog>
+      </main>
+    `;
+  }
+
+  static getStubConfig() {
+    return {
+      entity: 'sensor.kodi_all_movies',
+      upcoming: 'sensor.upcoming_all_movies',
+    };
+  }
+}
+
+// Registering the custom element
+customElements.define('movie-app-panel', MovieAppPanel);
+console.info('%c 📻 Movie App Panel ', 'background: #222; color: #bada55');
+
+window.customCards = window.customCards || [];
+window.customCards.push({
+  preview: false,
+  type: 'movie-app-panel',
+  name: 'Movie App Panel',
+});

@@ -53,13 +53,6 @@ export default css`
     width: fit-content;
   }
 
-  /* .items-container,
-  .searched {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  } */
-
   .items-container,
   .searched {
     display: grid;

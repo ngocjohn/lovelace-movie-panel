@@ -1,10 +1,6 @@
 import { LitElement, html } from 'lit';
 import { styleMap } from 'lit-html/directives/style-map.js';
-import styles from './css/mainstyles.js';
-import mediaquerystyles from './css/mediaquerystyles.js';
-import dialogcss from './css/dialogcss.js';
-import headercss from './css/headercss.js';
-
+import combinedStyles from './css/styles.js';
 import { SearchMixin } from './helpers/search.js';
 import { ActionsHandler } from './helpers/actions.js';
 import { SEARCH_API, IMG_PATH, API_URL, URL_PATH } from './helpers/apiTmdb.js';
@@ -28,7 +24,10 @@ class MovieAppPanel extends ActionsHandler(SearchMixin(LitElement)) {
       isSearchActive: { type: Boolean },
     };
   }
-  static styles = [styles, headercss, mediaquerystyles, dialogcss];
+
+  static get styles() {
+    return [combinedStyles];
+  }
 
   constructor() {
     super();
